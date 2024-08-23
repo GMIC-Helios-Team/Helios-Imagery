@@ -1,0 +1,72 @@
+version: "3.8"
+
+services:
+  app:
+    build:
+      context: .
+      dockerfile: ./Dockerfile
+    volumes:
+      - ..:/usr/src/app
+    env_file: [.env]
+    ports:
+      - 5100:5100
+      - 5000:5000
+    networks:
+      - helios-network
+    command: sleep infinity
+    deploy:
+      resources:
+        limits:
+          cpus: '2.0'  # Allocate 2 CPUs
+  mongo:
+    image: mongo:latest
+    restart: unless-stopped
+    hostname: mongo
+    env_file: [.env]
+    volumes:
+      - mongodb-data:/data/db
+      - ./docker-entrypoint-initdb.d:/docker-entrypoint-initdb.d
+    ports:
+      - 27017:27017
+    networks:
+      - helios-network
+    # You can include other services not opened by VS Code as well
+  s3:
+      image: minio/minio:latest
+      hostname: minio
+      networks:
+      - helios-network
+      restart: unless-stopped
+      command: server --console-address ":9001" /data
+      ports:
+        - '9000:9000'
+        - '9001:9001'
+      volumes:
+         - s3-data:/data
+      env_file: [.env]
+
+
+
+  # Runs at startup to create the catalog bucket in Minio
+  initContainer:
+      image: minio/mc:latest
+      network_mode: service:s3
+      depends_on:
+          - s3
+      entrypoint: >
+          /bin/sh -c "
+          /bin/sleep 10;
+          /usr/bin/mc alias set s3minio http://minio:9000 "$${MINIO_ROOT_USER}" "$${MINIO_ROOT_PASSWORD}";
+          /usr/bin/mc mb s3minio/"$${BUCKET_NAME}";
+          /usr/bin/mc admin user add s3minio "$${S3_ACCESS_KEY_ID}" "$${S3_SECRET_ACCESS_KEY}";
+          /usr/bin/mc admin policy attach s3minio readwrite --user "$${ACCESS_KEY}"
+          exit 0;
+          "
+      env_file: [.env]
+
+volumes:
+  mongodb-data:
+  s3-data:
+
+networks:
+  helios-network:

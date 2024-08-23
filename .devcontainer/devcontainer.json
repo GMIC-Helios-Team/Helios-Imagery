@@ -1,0 +1,29 @@
+{
+  "name": "${localWorkspaceFolderBasename}",
+  "dockerComposeFile": "docker-compose.yml",
+  "service": "app",
+  "workspaceFolder": "/usr/src/app",
+  "customizations": {
+    "vscode": {
+      "extensions": [
+        "streetsidesoftware.code-spell-checker",
+        "expo.vscode-expo-tools",
+        "esbenp.prettier-vscode",
+        "VisualStudioExptTeam.vscodeintellicode",
+        "Postman.postman-for-vscode",
+        "github.copilot",
+        "vscode-icons-team.vscode-icons",
+        "github.vscode-github-actions",
+        "wayou.vscode-todo-highlight",
+        "mongodb.mongodb-vscode",
+        "eamodio.gitlens",
+        "gabrielgrinberg.auto-run-command",
+        "ms-azuretools.vscode-docker"
+      ],
+      "settings": {
+        "dev.containers.copyGitConfig": true
+      }
+    }
+  },
+  "postCreateCommand": "git config --global --add safe.directory /usr/src/app",
+}
