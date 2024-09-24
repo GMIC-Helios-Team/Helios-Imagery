@@ -10,6 +10,7 @@ const HomePage = () => {
   useEffect(() => {
 
     if (typeof window !== 'undefined') {
+      // eslint-disable-next-line @typescript-eslint/no-var-requires
       const Holder = require('holderjs');
       Holder.run();
     }
