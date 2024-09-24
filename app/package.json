@@ -8,6 +8,9 @@
     "start": "next start",
     "lint": "next lint"
   },
+  "engines": {
+    "node": "21.7.x"
+  },
   "dependencies": {
     "@popperjs/core": "2.11.8",
     "bootstrap": "5.3.3",
