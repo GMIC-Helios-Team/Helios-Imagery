@@ -9,7 +9,7 @@ interface AiGenPageProps {
 }
 const AiGenPage: React.FC<AiGenPageProps> = ({ email }) => {
 
-  const HeliosGalleryUrl: string = process.env.NEXT_PUBLIC_HELIOS_GALLERY;
+  const HeliosGalleryUrl: string | undefined = process.env.NEXT_PUBLIC_HELIOS_GALLERY;
 
   const [formData, setFormData] = useState({
     input1: '',
