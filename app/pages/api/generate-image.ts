@@ -18,7 +18,7 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
     try {
       const url = new URL(`${apiUrl}${generationEndpoint}`);
 
-      console.log(url, prompt, credentials);
+      console.log(url, prompt);
 
       const response = await fetch(url.toString(), {
         method: 'POST',
