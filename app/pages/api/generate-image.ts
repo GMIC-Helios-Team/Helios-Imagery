@@ -5,18 +5,20 @@ import { GenerationResponse } from '../../models/generation-response';
 
 export default async function handler(req: NextApiRequest, res: NextApiResponse) {
   if (req.method === 'POST') {
-    const { name, noun, verb } = req.body;
+    const {name, prompt} = req.body;
 
     // Credentials
     const username = process.env.API_USERNAME;;
     const password = process.env.API_PASSWORD;
     const apiUrl = process.env.AI_API_URL;
-    const generationEndpoint = process.env.VALIDATION_ENDPOINT;
+    const generationEndpoint = process.env.TESTGEN_ENDPOINT;
 
     const credentials = Buffer.from(`${username}:${password}`).toString('base64');
 
     try {
-      const url = new URL(`${apiUrl}/${generationEndpoint}`);
+      const url = new URL(`${apiUrl}${generationEndpoint}`);
+
+      console.log(url, prompt, credentials);
 
       const response = await fetch(url.toString(), {
         method: 'POST',
@@ -24,7 +26,7 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
           'Content-Type': 'application/json',
           'Authorization': `Basic ${credentials}`,
         },
-        body: JSON.stringify({ name, noun, verb }),
+        body: JSON.stringify({name,prompt})
 
       });
 
