@@ -9,7 +9,7 @@ const JokesPage: React.FC = () => {
   const [data, setData] = useState<Joke | null>(null);
   const [error, setError] = useState<string | null>(null);
   const [radioValue, setRadioValue] = useState('Programming');
-  const [url, setUrl] = useState<string>(`${process.env.NEXT_PUBLIC_JOKE_URL}/Programming`);
+  const [url, setUrl] = useState<string>(`${process.env.NEXT_PUBLIC_JOKE_URL}/Programming?safe-mode`);
   const [isClient, setIsClient] = useState<boolean>(false);
 
   useEffect(() => {
@@ -18,7 +18,7 @@ const JokesPage: React.FC = () => {
 
   const handleRadioChange = (value: string) => {
     setRadioValue(value);
-    setUrl(`${process.env.NEXT_PUBLIC_JOKE_URL}/${value}`);
+    setUrl(`${process.env.NEXT_PUBLIC_JOKE_URL}/${value}?safe-mode`);
 
   };
 
