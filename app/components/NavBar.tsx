@@ -2,12 +2,17 @@
 import React from 'react';
 import Link from 'next/link';
 
-const NavBar = () => {
+interface NavBarProps {
+  isDarkTheme: boolean;  
+  toggleTheme: () => void;
+}
+
+const NavBar: React.FC<NavBarProps> = ({ isDarkTheme, toggleTheme }) => {
   return (
-    <nav className="navbar navbar-expand-lg navbar-light bg-light">
+    <nav className={`navbar navbar-expand-lg ${isDarkTheme ? 'navbar-dark bg-dark' : 'navbar-light bg-light'}`}>
       <div className="container-fluid">
-        <Link href="/" className="navbar-brand">
-          Helios
+        <Link href="/" legacyBehavior>
+          <a className="navbar-brand">Helios</a>
         </Link>
         <button
           className="navbar-toggler"
@@ -23,26 +28,24 @@ const NavBar = () => {
         <div className="collapse navbar-collapse" id="navbarNav">
           <ul className="navbar-nav">
             <li className="nav-item">
-              <Link href="/" className="nav-link">
-                Dashboard
+              <Link href="/" legacyBehavior>
+                <a className="nav-link">Dashboard</a>
               </Link>
             </li>
             <li className="nav-item">
-              <Link href="/profile" className="nav-link">
-                Profile
+              <Link href="/profile" legacyBehavior>
+                <a className="nav-link">Profile</a>
               </Link>
             </li>
             <li className="nav-item">
-              <Link href="/ai-gen" className="nav-link">
-                AI-Gen
+              <Link href="/ai-gen" legacyBehavior>
+                <a className="nav-link">AI-Gen</a>
               </Link>
             </li>
-            <li className="nav-item">
-              <Link href="/jokes" className="nav-link">
-                Jokes
-              </Link>
-            </li>
-          </ul>
+          </ul>          
+          <button onClick={toggleTheme} className="btn btn-outline-secondary">
+            Switch to {isDarkTheme ? 'Light' : 'Dark'} Theme
+          </button>
         </div>
       </div>
     </nav>

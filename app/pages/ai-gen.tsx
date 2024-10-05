@@ -5,6 +5,7 @@ import { ApiResponse } from '../models/validate-response';
 import { GenerationResponse } from '../models/generation-response';
 import { promises as fs } from 'fs';
 import { json } from 'stream/consumers';
+import { useTheme } from '../contexts/theme-context';
 
 interface AiGenPageProps {
   email: string;
@@ -12,7 +13,8 @@ interface AiGenPageProps {
 }
 
 const AiGenPage: React.FC<AiGenPageProps> = ({ email, data }) => {
-
+  const { isDarkTheme } = useTheme();
+  
   const HeliosGalleryUrl: string | undefined = process.env.NEXT_PUBLIC_HELIOS_GALLERY;
 
   // Initial state with additional fields for tier 3 customization
@@ -137,8 +139,10 @@ const AiGenPage: React.FC<AiGenPageProps> = ({ email, data }) => {
       <Container>
         <Row className="mb-4">
           <Col md={{ offset: 2, span: 8 }}>
-            <Card>
-              <Card.Header>AI Generator</Card.Header>
+            <Card className={isDarkTheme ? 'bg-dark text-light' : 'bg-light text-dark'}>
+              <Card.Header>
+                AI Generator
+              </Card.Header>
               <Card.Body>
                 <Card.Text>
                   <Form onSubmit={handleSubmit}>
