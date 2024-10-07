@@ -1,15 +1,15 @@
 // components/Footer.tsx
 import React from 'react';
+import Navbar from 'react-bootstrap/Navbar';
 
 const Footer = () => {
   return (
-    <footer className="footer bg-light text-center text-lg-start">
-
-      <div className="text-center p-3" style={{ backgroundColor: 'rgba(250, 250, 253, 253)' }}>
-        <span>© 2023 Copyright:&nbsp;</span>
+    <Navbar expand="lg" className="bg-body-tertiary" fixed="bottom" >
+      <div className="p-3">
+        <span>© 2024 Copyright:&nbsp;</span>
         <a className="text-dark" href="https://futurama-helios.com/">futurama-helios.com</a>
       </div>
-    </footer>
+    </Navbar>
   );
 };
 

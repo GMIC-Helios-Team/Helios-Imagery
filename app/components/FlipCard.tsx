@@ -1,6 +1,5 @@
 // components/FlipCard.tsx
 import React, { useState } from 'react';
-import './FlipCard.css'; // Import the CSS file for styling
 
 const FlipCard = () => {
   const [isFlipped, setIsFlipped] = useState(false);
