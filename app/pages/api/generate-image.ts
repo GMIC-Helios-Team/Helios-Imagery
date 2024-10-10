@@ -11,14 +11,15 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
     const username = process.env.API_USERNAME;;
     const password = process.env.API_PASSWORD;
     const apiUrl = process.env.AI_API_URL;
-    const generationEndpoint = process.env.TESTGEN_ENDPOINT;
+    // const generationEndpoint = process.env.GENERATION_ENDPOINT;
+    const promptGenerationEndpoint = process.env.PROMPT_GENERATION_ENDPOINT;
 
     const credentials = Buffer.from(`${username}:${password}`).toString('base64');
 
     try {
-      const url = new URL(`${apiUrl}${generationEndpoint}`);
+      const url = new URL(`${apiUrl}/${promptGenerationEndpoint}`);
 
-      console.log(url, prompt);
+      console.log(`url: ${url.toString()} \n ${prompt}`);
 
       const response = await fetch(url.toString(), {
         method: 'POST',

@@ -99,7 +99,7 @@ const AiGenPage: React.FC<AiGenPageProps> = ({ prompt }) => {
         headers: {
           'Content-Type': 'application/json',
         },
-        body: JSON.stringify({ name: formData.name, prompt: data }),
+        body: JSON.stringify({ name: formData.name, email: formData.email, prompt: data }),
       });
 
       if (!generateImageResponse.ok) {
@@ -107,7 +107,7 @@ const AiGenPage: React.FC<AiGenPageProps> = ({ prompt }) => {
       }
 
       const generateImageResult: GenerationResponse = await generateImageResponse.json();
-      setImageUrl(`${HeliosGalleryUrl}/${generateImageResult.imageThumbnailfilename}`);
+      setImageUrl(`${HeliosGalleryUrl}/${generateImageResult.imagefilename}`);
       console.log('Generated Image:', generateImageResult);
 
       return true;
@@ -418,7 +418,7 @@ const AiGenPage: React.FC<AiGenPageProps> = ({ prompt }) => {
               <Card.Body>
                 <Card.Text>
                 {submissionError && <Alert variant="danger">{submissionError}</Alert>} {/* Render error message */}
-                <Form noValidate>
+                <Form noValidate style={{ marginLeft:'15px', marginRight: '15px'}}>
                     <Form.Group as={Row} className="mb-3" controlId="email">
                       <Form.Control
                         disabled={isLoading}
