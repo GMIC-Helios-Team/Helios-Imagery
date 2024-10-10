@@ -1,52 +1,21 @@
-// components/NavBar.tsx
-import React from 'react';
-import Link from 'next/link';
+import Nav from 'react-bootstrap/Nav';
+import Navbar from 'react-bootstrap/Navbar';
 
-const NavBar = () => {
+function NavBar() {
   return (
-    <nav className="navbar navbar-expand-lg navbar-light bg-light">
-      <div className="container-fluid">
-        <Link href="/" className="navbar-brand">
-          Helios
-        </Link>
-        <button
-          className="navbar-toggler"
-          type="button"
-          data-bs-toggle="collapse"
-          data-bs-target="#navbarNav"
-          aria-controls="navbarNav"
-          aria-expanded="false"
-          aria-label="Toggle navigation"
-        >
-          <span className="navbar-toggler-icon"></span>
-        </button>
-        <div className="collapse navbar-collapse" id="navbarNav">
-          <ul className="navbar-nav">
-            <li className="nav-item">
-              <Link href="/" className="nav-link">
-                Dashboard
-              </Link>
-            </li>
-            <li className="nav-item">
-              <Link href="/profile" className="nav-link">
-                Profile
-              </Link>
-            </li>
-            <li className="nav-item">
-              <Link href="/ai-gen" className="nav-link">
-                AI-Gen
-              </Link>
-            </li>
-            <li className="nav-item">
-              <Link href="/jokes" className="nav-link">
-                Jokes
-              </Link>
-            </li>
-          </ul>
-        </div>
-      </div>
-    </nav>
+    <Navbar expand="lg" className="bg-body-tertiary">
+        <Navbar.Brand href="/">Helios</Navbar.Brand>
+        <Navbar.Toggle aria-controls="basic-navbar-nav" />
+        <Navbar.Collapse id="basic-navbar-nav">
+          <Nav className="me-auto">
+            <Nav.Link href="/">Dashboard</Nav.Link>
+            <Nav.Link href="/profile">Profile</Nav.Link>
+            <Nav.Link href="/ai-gen">AI-Gen</Nav.Link>
+            <Nav.Link href="/jokes">Jokes</Nav.Link>
+          </Nav>
+        </Navbar.Collapse>
+    </Navbar>
   );
-};
+}
 
 export default NavBar;
