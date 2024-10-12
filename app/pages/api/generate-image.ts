@@ -5,7 +5,7 @@ import { GenerationResponse } from '../../models/generation-response';
 
 export default async function handler(req: NextApiRequest, res: NextApiResponse) {
   if (req.method === 'POST') {
-    const {name, prompt} = req.body;
+    const {name,email, prompt} = req.body;
 
     // Credentials
     const username = process.env.API_USERNAME;;
@@ -27,7 +27,7 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
           'Content-Type': 'application/json',
           'Authorization': `Basic ${credentials}`,
         },
-        body: JSON.stringify({name,prompt})
+        body: JSON.stringify({name, email, prompt})
 
       });
 
