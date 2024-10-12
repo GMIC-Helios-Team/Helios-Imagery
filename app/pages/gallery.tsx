@@ -1,3 +1,4 @@
+import Jokes from '@/components/Jokes';
 import React from 'react';
 import { Container, Row } from 'react-bootstrap';
 
@@ -8,7 +9,7 @@ const GalleryPage = () => {
       <Container>
         <Row className="mb-4">
         </Row>
-        <h1>Gallery Page</h1>
+        <Jokes jokeType='Spooky' heading='Gallery'/>
       </Container>
 
     </>

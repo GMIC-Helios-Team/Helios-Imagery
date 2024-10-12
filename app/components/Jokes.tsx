@@ -1,14 +1,18 @@
 import React, { useState, useEffect } from 'react';
 import Button from 'react-bootstrap/Button';
 import Container from 'react-bootstrap/Container'
-import { Joke } from '../models/joke';
+import { Joke } from '@/models/joke';
 import { Col, Row, ButtonGroup, ToggleButton, Card } from 'react-bootstrap';
 
-const JokesPage: React.FC = () => {
+interface JokesProps {
+  jokeType: string;
+  heading: string
+}
+const Jokes: React.FC<JokesProps> = ({jokeType, heading}) => {
 
   const [data, setData] = useState<Joke | null>(null);
   const [error, setError] = useState<string | null>(null);
-  const [radioValue, setRadioValue] = useState('Programming');
+  const [radioValue, setRadioValue] = useState(jokeType);
   const [url, setUrl] = useState<string>(`${process.env.NEXT_PUBLIC_JOKE_URL}/Programming?safe-mode`);
   const [isClient, setIsClient] = useState<boolean>(false);
 
@@ -64,7 +68,7 @@ const JokesPage: React.FC = () => {
           <Col md={{ offset: 2, span: 8 }}>
 
             <Card>
-              <Card.Header>Joke</Card.Header>
+              <Card.Header>Joke - {heading}</Card.Header>
               <Card.Body>
                 <Card className="mb-4">
                   <Card.Header>Category</Card.Header>
@@ -117,18 +121,13 @@ const JokesPage: React.FC = () => {
                     <p>Loading...</p>
                   )}
                 </Card.Text>
-
               </Card.Body>
             </Card>
-
           </Col>
-
         </Row >
-
-
       </Container >
     </>
   );
 };
 
-export default JokesPage;
+export default Jokes;
