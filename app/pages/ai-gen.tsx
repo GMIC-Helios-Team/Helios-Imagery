@@ -1,19 +1,20 @@
 import React, { useState, useEffect } from 'react';
 import { GetServerSideProps } from 'next';
 import { Alert, Spinner, Container, Card, Row, Form, Col, Button, Image } from 'react-bootstrap';
-import { ApiResponse } from '@/models/validate-response';
-import { GenerationResponse } from '@/models/generation-response';
-import EmailInput from './components/Email';
-import { InputFields } from './types/models';
-import NameInput from './components/Name';
-import NounInput from './components/Noun';
-import VerbInput from './components/Verb';
-import FontStyleInput from './components/FontStyle';
-import ColorPaletteSelect from './components/ColorPalette';
-import ThemeInput from './components/Theme';
-import ArtStyleInput from './components/ArtStyle';
-import { validateWithAPI } from './helpers/ValidateWithApi';
-import { initialErrors, initialFormData, initialIsValid } from './helpers/Reset';
+import { ApiResponse } from '@/types/validate-response';
+import { GenerationResponse } from '@/types/generation-response';
+import EmailInput from '@/components/ai-gen/Email';
+import { InputFields } from '@/types/ai-gen';
+import NameInput from '@/components/ai-gen/Name';
+import NounInput from '@/components/ai-gen/Noun';
+import VerbInput from '@/components/ai-gen/Verb';
+import FontStyleInput from '@/components/ai-gen/FontStyle';
+import ColorPaletteSelect from '@/components/ai-gen/ColorPalette';
+import ThemeInput from '@/components/ai-gen/Theme';
+import ArtStyleInput from '@/components/ai-gen/ArtStyle';
+import { validateWithAPI } from '@/helpers/ValidateWithApi';
+import { initialErrors, initialFormData, initialIsValid } from '@/helpers/Reset';
+import aigen from '@/styles/ai-gen.module.css';
 
 interface AiGenPageProps {
   prompt: string;
@@ -35,7 +36,7 @@ const AiGenPage: React.FC<AiGenPageProps> = ({ prompt }) => {
   useEffect(() => {
     // Check form validity whenever formData changes
     const isFormValid = Object.values(formData).every(value => value.trim() !== '');
-      //  && Object.values(isValid).every(value => value === true);
+    //  && Object.values(isValid).every(value => value === true);
     setIsFormValid(isFormValid);
   }, [formData]);
 
@@ -80,18 +81,27 @@ const AiGenPage: React.FC<AiGenPageProps> = ({ prompt }) => {
       });
 
       if (!generateImageResponse.ok) {
-        throw new Error('Image generation request failed');
+        if (generateImageResponse.status === 500) {
+          const errorData = await generateImageResponse.json();
+          throw new Error(errorData.message);
+        } else {
+          throw new Error('Image generation request failed');
+        }
       }
 
       const generateImageResult: GenerationResponse = await generateImageResponse.json();
+
       setImageUrl(`${HeliosGalleryUrl}/${generateImageResult.imagefilename}`);
       console.log('Generated Image:', generateImageResult);
 
       return true;
     }
     catch (error) {
-      console.error('Error generating image:', error);
-      setSubmissionError('Error generating image');
+      if (error instanceof Error) {
+        setSubmissionError(error.message);
+      } else {
+        setSubmissionError('An unknown error occurred');
+      }
       return false;
     }
     finally {
@@ -152,7 +162,6 @@ const AiGenPage: React.FC<AiGenPageProps> = ({ prompt }) => {
     setErrors(initialErrors);
     setIsValid(initialIsValid);
     setSubmissionError('');
-    // reset(setFormData, setErrors, setIsValid, setSubmissionError);
   }
 
   if (!isClient) {
@@ -170,7 +179,7 @@ const AiGenPage: React.FC<AiGenPageProps> = ({ prompt }) => {
               <Card.Body>
                 <Card.Text>
                   {submissionError && <Alert variant="danger">{submissionError}</Alert>} {/* Render error message */}
-                  <Form noValidate style={{ marginLeft: '15px', marginRight: '15px' }}>
+                  <Form noValidate className={aigen.marginLeftRight}>
                     <EmailInput
                       formData={formData}
                       handleChange={handleChange}
@@ -238,14 +247,14 @@ const AiGenPage: React.FC<AiGenPageProps> = ({ prompt }) => {
                     <Button type="button" variant="primary" onClick={handleSubmit} disabled={!isFormValid}>
                       {isLoading ? <Spinner as="span" animation="border" size="sm" role="status" aria-hidden="true" /> : 'Generate'}
                     </Button>
-                    <Button type="button" variant="link" disabled={isLoading} onClick={resetFields} style={{ float: 'right' }}>Reset Input</Button>
+                    <Button type="button" variant="link" disabled={isLoading} onClick={resetFields} className={aigen.floatRight}>Reset Input</Button>
 
                   </Form>
                 </Card.Text>
                 <Image
                   src={imageUrl || `${HeliosGalleryUrl}/Helios-Images/2024-09-20-12-47-56.gilbert.png`}
                   fluid
-                  style={{ width: '600px', height: 'auto' }}
+                  className={aigen.generatedImage}
                   alt="Generated Image"
                 />
               </Card.Body>

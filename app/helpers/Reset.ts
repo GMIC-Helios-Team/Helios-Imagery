@@ -1,4 +1,4 @@
-import { InputFields } from "../types/models";
+import { InputFields } from "@/types/ai-gen";
 
 export const initialFormData: InputFields = {
   email: '',

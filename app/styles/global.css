@@ -13,3 +13,8 @@ html, body {
 .footer {
   margin-top: auto;
 }
+
+.navbarMargin {
+  margin-left: 5px; 
+  margin-right: 5px;
+}

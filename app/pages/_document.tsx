@@ -13,7 +13,7 @@ class MyDocument extends Document {
         <Head>
           {/* Add custom meta tags, links, scripts, etc. */}
         </Head>
-        <body className="custom-body-class" style={{ marginLeft: '5px', marginRight: '5px'}}>
+        <body className="addSomeStylingHere" >
           <Main />
           <NextScript />
         </body>

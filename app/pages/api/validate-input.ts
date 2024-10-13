@@ -1,6 +1,6 @@
 // pages/api/validate-input.ts
 import { NextApiRequest, NextApiResponse } from 'next';
-import { ApiResponse } from '../../models/validate-response';
+import { ApiResponse } from '@/types/validate-response';
 
 interface ValidationResult {
   result: boolean | { value: boolean };

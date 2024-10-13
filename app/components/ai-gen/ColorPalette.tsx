@@ -2,7 +2,7 @@
 
 import React from "react";
 import { Form, Row } from "react-bootstrap";  
-import { SelectProps } from "../types/models";
+import { SelectProps } from "@/types/ai-gen";
 
 const ColorPaletteSelect: React.FC<SelectProps> = ({ formData,handleChange, handleBlur,isValid, isLoading }) => ( 
   <Form.Group as={Row} className="mb-3" controlId="colorPalette">

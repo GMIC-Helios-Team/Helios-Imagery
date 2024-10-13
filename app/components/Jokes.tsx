@@ -1,13 +1,14 @@
 import React, { useState, useEffect } from 'react';
 import Button from 'react-bootstrap/Button';
 import Container from 'react-bootstrap/Container'
-import { Joke } from '@/models/joke';
+import { Joke } from '@/types/joke';
 import { Col, Row, ButtonGroup, ToggleButton, Card } from 'react-bootstrap';
 
 interface JokesProps {
   jokeType: string;
   heading: string
 }
+
 const Jokes: React.FC<JokesProps> = ({jokeType, heading}) => {
 
   const [data, setData] = useState<Joke | null>(null);
@@ -15,6 +16,7 @@ const Jokes: React.FC<JokesProps> = ({jokeType, heading}) => {
   const [radioValue, setRadioValue] = useState(jokeType);
   const [url, setUrl] = useState<string>(`${process.env.NEXT_PUBLIC_JOKE_URL}/Programming?safe-mode`);
   const [isClient, setIsClient] = useState<boolean>(false);
+  const [isLoading, setIsLoading] = useState<boolean>(false);
 
   useEffect(() => {
     setIsClient(true);
@@ -28,6 +30,7 @@ const Jokes: React.FC<JokesProps> = ({jokeType, heading}) => {
 
   const fetchData = async () => {
     try {
+      setIsLoading(true);
       const res = await fetch(url);
       if (!res.ok) {
         throw new Error(`Error: ${res.status} ${res.statusText}`);
@@ -41,12 +44,16 @@ const Jokes: React.FC<JokesProps> = ({jokeType, heading}) => {
         setError('An unknown error occurred');
       }
     }
+    finally {
+      setIsLoading(false);
+    }
   };
 
   useEffect(() => {
     if (isClient && url) {
       fetchData();
     }
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [url, isClient]);
 
   const radios = [
@@ -95,30 +102,14 @@ const Jokes: React.FC<JokesProps> = ({jokeType, heading}) => {
                   <Button variant="link" onClick={fetchData} >Next Joke</Button>
                 </Card.Subtitle>
                 <Card.Text>
-                  {error ? (
-                    <p><strong>Error:</strong> {error}</p>
-                  ) : data ? (
-                    <>
-                      {data.error ? (
-                        <p><strong>Error:</strong> {data.message}</p>
-                      ) :
-                        (
-                          <>
-                            <p><strong>Category:</strong> {data.category}</p>
-                            {data.type === 'single' ? (
-                              <>
-                                <p><strong>Joke:</strong> {data.joke}</p>
-                              </>
-                            ) : (
-                              <>
-                                <p><strong>Setup:</strong> {data.setup}</p>
-                                <p><strong>Delivery:</strong> {data.delivery}</p>
-                              </>
-                            )}
-                          </>
-                        )}
-                    </>) : (
+                  {isLoading ? (
                     <p>Loading...</p>
+                  ) : error ? (
+                    <ErrorMessage message={error} />
+                  ) : data ? (
+                    <JokeDisplay data={data} />
+                  ) : (
+                    <p>No Joke Loaded</p>
                   )}
                 </Card.Text>
               </Card.Body>
@@ -131,3 +122,27 @@ const Jokes: React.FC<JokesProps> = ({jokeType, heading}) => {
 };
 
 export default Jokes;
+
+const ErrorMessage: React.FC<{ message: string }> = ({ message }) => (
+  <p><strong>Error:</strong> {message}</p>
+);
+
+const JokeDisplay: React.FC<{ data: Joke }> = ({ data }) => (
+  <>
+    {data.error ? (
+      <p><strong>Error:</strong> {data.message}</p>
+    ) : (
+      <>
+        <p><strong>Category:</strong> {data.category}</p>
+        {data.type === 'single' ? (
+          <p><strong>Joke:</strong> {data.joke}</p>
+        ) : (
+          <>
+            <p><strong>Setup:</strong> {data.setup}</p>
+            <p><strong>Delivery:</strong> {data.delivery}</p>
+          </>
+        )}
+      </>
+    )}
+  </>
+);
