@@ -1,11 +1,11 @@
 // pages/api/validate-input.ts
 import { NextApiRequest, NextApiResponse } from 'next';
 
-import { GenerationResponse } from '../../models/generation-response';
+import { GenerationResponse } from '@/types/generation-response';
 
 export default async function handler(req: NextApiRequest, res: NextApiResponse) {
   if (req.method === 'POST') {
-    const {name,email, prompt} = req.body;
+    const { name, email, prompt } = req.body;
 
     // Credentials
     const username = process.env.API_USERNAME;;
@@ -27,17 +27,19 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
           'Content-Type': 'application/json',
           'Authorization': `Basic ${credentials}`,
         },
-        body: JSON.stringify({name, email, prompt})
+        body: JSON.stringify({ name, email, prompt })
 
       });
 
       const data: GenerationResponse = await response.json();
-
       if (response.ok) {
         res.status(200).json(data);
+      } else if (response.status === 500) {
+        res.status(500).json({ message: data.message });
       } else {
         res.status(400).json({ message: 'Bad request' });
       }
+
     } catch (error) {
       res.status(500).json({ message: 'Internal server error' });
     }

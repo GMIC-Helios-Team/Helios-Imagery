@@ -1,5 +1,0 @@
-{
-  "prompts": {
-    "helios": "An illustration for GM Insurance's Digital Enablement Platform group, known as Helios. The design should incorporate a {theme} theme. Use the Helios team logo prominently on the front with a sunburst pattern in {colorPalette} {verb} from it. Position the GM Insurance logo at the top center and depict a stylized {noun} with rays {verb} outward, each representing Cloud Engineering, API Development, and Site Reliability Engineering with appropriate icons (cloud, code brackets, gears). Use a {fontStyle}, {theme} font for the text 'Digital Enablement Platform' below the central illustration. The color palette should be limited to {colorPalette} for easy screen printing. The entire image should be heavily influenced by {artStyle}"
-  }
-}

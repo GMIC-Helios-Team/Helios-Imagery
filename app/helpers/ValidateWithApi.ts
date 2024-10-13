@@ -1,4 +1,4 @@
-import { ApiResponse } from "@/models/validate-response";
+import { ApiResponse } from "@/types/validate-response";
 
 // /app/pages/ai-gen/helpers/validateWithAPI.ts
 export const validateWithAPI = async (classification: string, word: string): Promise<ApiResponse> => {

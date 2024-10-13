@@ -1,6 +1,6 @@
 import React from "react";
 import { Form, Row } from "react-bootstrap";  
-import { InputProps } from "../types/models";
+import { InputProps } from "@/types/ai-gen";
 
 const NameInput: React.FC<InputProps> = ({ formData,handleChange, handleBlur,isValid, errors, isLoading }) => (
   <Form.Group as={Row} className="mb-3" controlId="name">

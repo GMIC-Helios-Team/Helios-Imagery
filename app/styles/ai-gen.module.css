@@ -1,0 +1,17 @@
+.generated-image {
+  width: 100%;
+  height: auto;
+  max-width: 500px; /* Adjust the max-width as needed */
+  max-height: 500px; /* Adjust the max-height as needed */
+  display: block;
+  margin: 0 auto; /* Center the image */
+}
+
+.marginLeftRight {
+  margin-left: 10px; /* Adjust the value as needed */
+  margin-right: 10px; /* Adjust the value as needed */
+}
+
+.floatRight {
+  float: right;
+}
