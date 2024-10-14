@@ -1,6 +1,5 @@
 import React, { useState, useEffect } from 'react';
 import { GetServerSideProps } from 'next';
-import { promises as fs } from 'fs';
 import { useTheme } from '../contexts/theme-context';
 import { Alert, Spinner, Container, Card, Row, Form, Col, Button, Image } from 'react-bootstrap';
 import { ApiResponse } from '@/types/validate-response';

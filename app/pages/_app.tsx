@@ -3,7 +3,6 @@ import React, { ReactNode } from 'react';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import '../styles/global.css'; 
 import { AppProps } from 'next/app';
-import Layout from '../components/Layout';
 import { ThemeProvider, useTheme } from '../contexts/theme-context';
 
 function HeliosFuturamaApp({ Component, pageProps }: AppProps) {
