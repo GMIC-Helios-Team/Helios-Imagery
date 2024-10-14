@@ -253,7 +253,6 @@ const AiGenPage: React.FC<AiGenPageProps> = ({ prompt }) => {
                       handleChange={handleChange}
                       handleBlur={handleBlur}
                       isValid={isValid}
-                      errors={errors}
                       isLoading={isLoading}
                     />
                     <ColorPaletteSelect
@@ -303,7 +302,7 @@ const AiGenPage: React.FC<AiGenPageProps> = ({ prompt }) => {
 };
 
 export const getServerSideProps: GetServerSideProps = async () => {
-  const prompt = "An illustration for GM Insurance's Digital Enablement Platform group, known as Helios. The design should incorporate a {theme} theme. Use the Helios team logo prominently on the front with a sunburst pattern in {colorPalette} {verb} from it. Position the GM Insurance logo at the top center and depict a stylized {noun} with rays {verb} outward, each representing Cloud Engineering, API Development, and Site Reliability Engineering with appropriate icons (cloud, code brackets, gears). Use a {fontStyle}, {theme} font for the text 'Digital Enablement Platform' below the central illustration. The color palette should be limited to {colorPalette} for easy screen printing. The entire image should be heavily influenced by {artStyle}"
+  const prompt = "An illustration for GM Insurance's Digital Enablement Platform group, known as Helios. The design should embrace a {theme} theme, which drives the visual and symbolic direction of the artwork. Use the Helios team logo prominently at the center with a sunburst pattern in {colorPalette} {verb} from it. Position the GM Insurance logo at the top center and, at the core of the design, depict a stylized {noun}. Rays {verb} outward from the {noun}, representing Cloud Engineering, API Development, and Site Reliability Engineering, each with appropriate {theme} icons (clouds, code brackets, gears). Use a {fontStyle}, {theme} font for the text 'Digital Enablement Platform' below the illustration to unify the design. The color palette should remain limited to {colorPalette} for clean, streamlined screen printing. The overall illustration should be shaped by a {artStyle} influence, ensuring the design stays true to the chosen {theme}."
   return {
     props: {
       prompt
