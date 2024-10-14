@@ -2,12 +2,12 @@ import React, { useState, useEffect } from 'react';
 import Link from 'next/link';
 import { useTheme } from '../contexts/theme-context';
 import { Navbar, Nav, ButtonGroup, ToggleButton } from 'react-bootstrap';
-import styles from './NavBar.module.css'; // or import './NavBar.module.css' if using module CSS
+import styles from '../styles/NavBar.module.css'; // Import the CSS Module
 
 const NavBar: React.FC = () => {
   const { isDarkTheme, toggleTheme } = useTheme();
   const [isWarping, setIsWarping] = useState(false);
-  const [imageSrc, setImageSrc] = useState(isDarkTheme ? '/images/DEPLogo.png' : '/images/HeliosLogo.png');
+  const [imageSrc, setImageSrc] = useState('');
 
   useEffect(() => {
     setImageSrc(isDarkTheme ? '/images/DEPLogo.png' : '/images/HeliosLogo.png');
@@ -41,7 +41,13 @@ const NavBar: React.FC = () => {
         </Link>
         <Navbar.Toggle aria-controls="basic-navbar-nav" />
         <Navbar.Collapse id="basic-navbar-nav">
-          <Nav className="me-auto">
+          <Nav className="me-auto">            
+            <Link href="/" legacyBehavior>
+              <a className={`nav-link ${styles.navLink}`}>Home</a>
+            </Link>
+            <Link href="/gallery" legacyBehavior>
+              <a className={`nav-link ${styles.navLink}`}>Gallery</a>
+            </Link>
             <Link href="/profile" legacyBehavior>
               <a className={`nav-link ${styles.navLink}`}>Profile</a>
             </Link>
@@ -59,26 +65,26 @@ const NavBar: React.FC = () => {
                 name="radio"
                 value={radio.value}
                 checked={isDarkTheme ? radio.value === 'dark' : radio.value === 'light'}
-                onChange={(e) => handleRadioChange(e.currentTarget.value)}
+                onChange={() => handleRadioChange(radio.value)}
                 style={{
-        backgroundColor: radio.value === 'dark' ? (isDarkTheme ? '#2d345b' : 'white') : (isDarkTheme ? 'white' : '#e1a629'),
-        color: radio.value === 'dark' ? (isDarkTheme ? 'white' : '#2d345b') : (isDarkTheme ? '#e1a629' : 'white'),
-        borderColor:radio.value === 'dark' ? '#2d345b': '#e1a629'
-      }}
+                  backgroundColor: radio.value === 'dark' ? (isDarkTheme ? '#2d345b' : 'white') : (isDarkTheme ? 'white' : '#e1a629'),
+                  color: radio.value === 'dark' ? (isDarkTheme ? 'white' : '#2d345b') : (isDarkTheme ? '#e1a629' : 'white'),
+                  borderColor: radio.value === 'dark' ? '#2d345b' : '#e1a629'
+                }}
               >
                 {radio.name}
               </ToggleButton>
             ))}
           </ButtonGroup>
-        <div className="position-absolute start-50 translate-middle-x">
-          <button onClick={handleThemeToggle} className="btn btn-link" style={{ marginBottom: '0' }}>
-            <img
-              src={imageSrc}
-              alt={isDarkTheme ? 'Light Mode' : 'Dark Mode'}
-              style={{ width: '350px', height: '80px' }}
-              className={isWarping ? 'warp-animation' : ''}
-            />
-          </button>
+          <div className="position-absolute start-50 translate-middle-x">
+            <button onClick={handleThemeToggle} className="btn btn-link" style={{ marginBottom: '0' }}>
+              <img
+                src={imageSrc}
+                alt={isDarkTheme ? 'Light Mode' : 'Dark Mode'}
+                style={{ width: '350px', height: '80px' }}
+                className={isWarping ? styles.warpAnimation : ''}
+              />
+            </button>
           </div>
         </Navbar.Collapse>
       </div>
