@@ -1,54 +1,54 @@
 import React, { useState, useEffect } from 'react';
 import Link from 'next/link';
 import { useTheme } from '../contexts/theme-context';
-import 'bootstrap/dist/css/bootstrap.min.css';
-import { ButtonGroup, ToggleButton } from 'react-bootstrap';
+import { Navbar, Nav, ButtonGroup, ToggleButton } from 'react-bootstrap';
+import styles from './NavBar.module.css'; // or import './NavBar.module.css' if using module CSS
 
 const NavBar: React.FC = () => {
   const { isDarkTheme, toggleTheme } = useTheme();
   const [isWarping, setIsWarping] = useState(false);
   const [imageSrc, setImageSrc] = useState(isDarkTheme ? '/images/DEPLogo.png' : '/images/HeliosLogo.png');
-  const radios = [
-    { name: 'Helios', value: 'light' },
-    { name: 'DEP', value: 'dark' },
-  ];
+
+  useEffect(() => {
+    setImageSrc(isDarkTheme ? '/images/DEPLogo.png' : '/images/HeliosLogo.png');
+  }, [isDarkTheme]);
 
   const handleRadioChange = (value: string) => {
     if ((value === 'dark' && !isDarkTheme) || (value === 'light' && isDarkTheme)) {
       toggleTheme();
     }
   };
-  useEffect(() => {
-    setImageSrc(isDarkTheme ? '/images/DEPLogo.png' : '/images/HeliosLogo.png');
-  }, [isDarkTheme]);
 
   const handleThemeToggle = () => {
-    toggleTheme();
     setIsWarping(true);
     setImageSrc(isDarkTheme ? '/images/HeliosLogo.png' : '/images/DEPLogo.png'); // Update image source immediately
     setTimeout(() => {
+      toggleTheme();
       setIsWarping(false);
     }, 600); // Duration of the warp animation
   };
 
+  const radios = [
+    { name: 'Light', value: 'light' },
+    { name: 'Dark', value: 'dark' },
+  ];
+
   return (
-    <nav className={`navbar navbar-expand-lg ${isDarkTheme ? 'navbar-dark bg-dark' : 'navbar-light bg-light'}`} style={{ height: '80px' }}>
-      <div className="container-fluid d-flex justify-content-between align-items-center position-relative">
+    <Navbar expand="lg" className={isDarkTheme ? 'navbar-dark bg-dark' : 'navbar-light bg-light'} style={{ height: '80px' }}>
+      <div className="container-fluid">
         <Link href="/" legacyBehavior>
-          <a className="navbar-brand">Helios</a>
+          <a className={`navbar-brand ${styles.navbarBrand}`}>Helios</a>
         </Link>
-        <ul className="navbar-nav me-auto">
-          <li className="nav-item">
+        <Navbar.Toggle aria-controls="basic-navbar-nav" />
+        <Navbar.Collapse id="basic-navbar-nav">
+          <Nav className="me-auto">
             <Link href="/profile" legacyBehavior>
-              <a className="nav-link">Profile</a>
+              <a className={`nav-link ${styles.navLink}`}>Profile</a>
             </Link>
-          </li>
-          <li className="nav-item">
             <Link href="/ai-gen" legacyBehavior>
-              <a className="nav-link">AI-Gen</a>
+              <a className={`nav-link ${styles.navLink}`}>AI-Gen</a>
             </Link>
-          </li>
-        </ul>   
+          </Nav>
           <ButtonGroup>
             {radios.map((radio, idx) => (
               <ToggleButton
@@ -79,10 +79,11 @@ const NavBar: React.FC = () => {
               className={isWarping ? 'warp-animation' : ''}
             />
           </button>
-        </div>
+          </div>
+        </Navbar.Collapse>
       </div>
-    </nav>
+    </Navbar>
   );
-}
+};
 
 export default NavBar;
