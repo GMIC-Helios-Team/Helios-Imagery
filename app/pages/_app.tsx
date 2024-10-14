@@ -4,19 +4,15 @@ import 'bootstrap/dist/css/bootstrap.min.css';
 import '../styles/global.css'; 
 import { AppProps } from 'next/app';
 import { ThemeProvider, useTheme } from '../contexts/theme-context';
+import NavBar from '../components/NavBar';
+import Footer from '../components/Footer';
 
 function HeliosFuturamaApp({ Component, pageProps }: AppProps) {
   return (
     <ThemeProvider>
       <ThemeWrapper>
-        <Head>
-          <title>Helios Futurama</title>
-          <script src="/js/bootstrap.bundle.min.js"></script>
-        </Head>
         <NavBarWithTheme />
-        <ErrorBoundary>
           <Component {...pageProps} />
-        </ErrorBoundary>
         <FooterWithTheme />
       </ThemeWrapper>
     </ThemeProvider>

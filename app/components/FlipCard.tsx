@@ -1,11 +1,9 @@
 // components/FlipCard.tsx
 import React, { useState } from 'react';
-import { useTheme } from '../contexts/theme-context';
 import style from '@/styles/FlipCard.module.css';
 
 const FlipCard = () => {
   const [isFlipped, setIsFlipped] = useState(false);
-  const { isDarkTheme } = useTheme();
 
   const handleFlip = () => {
     setIsFlipped(!isFlipped);
