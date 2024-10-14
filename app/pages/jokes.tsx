@@ -8,19 +8,13 @@ const JokesPage: React.FC = () => {
 
   const [data, setData] = useState<Joke | null>(null);
   const [error, setError] = useState<string | null>(null);
-  const [radioValue, setRadioValue] = useState('Programming');
+  const [selectedOption, setSelectedOption] = useState('Programming');
   const [url, setUrl] = useState<string>(`${process.env.NEXT_PUBLIC_JOKE_URL}/Programming`);
   const [isClient, setIsClient] = useState<boolean>(false);
 
   useEffect(() => {
     setIsClient(true);
   }, []);
-
-  const handleRadioChange = (value: string) => {
-    setRadioValue(value);
-    setUrl(`${process.env.NEXT_PUBLIC_JOKE_URL}/${value}`);
-
-  };
 
   const fetchData = async () => {
     try {
@@ -45,10 +39,16 @@ const JokesPage: React.FC = () => {
     }
   }, [url, isClient]);
 
-  const radios = [
-    { name: 'Programming', value: '1' },
-    { name: 'Spooky', value: '2' },
+  const options = [
+    { name: 'Programming', value: 'programming' },
+    { name: 'Spooky', value: 'spooky' },
   ];
+
+  const handleOptionChange = (value: string) => {
+    setSelectedOption(value);
+    setUrl(`${process.env.NEXT_PUBLIC_JOKE_URL}/${value}`);
+
+  };
 
   if (!isClient) {
     return null; // Render nothing on the server
@@ -70,18 +70,18 @@ const JokesPage: React.FC = () => {
                   <Card.Header>Category</Card.Header>
                   <Card.Body>
                     <ButtonGroup>
-                      {radios.map((radio, idx) => (
+                      {options.map((option, idx) => (
                         <ToggleButton
                           key={idx}
-                          id={`radio-${idx}`}
+                          id={`option-${idx}`}
                           type="radio"
                           variant={idx % 2 ? 'outline-secondary' : 'outline-primary'}
-                          name="radio"
-                          value={radio.name}
-                          checked={radioValue === radio.name}
-                          onChange={(e) => handleRadioChange(e.currentTarget.value)}
+                          name="options"
+                          value={option.name}
+                          checked={selectedOption === option.name}
+                          onChange={(e) => handleOptionChange(e.currentTarget.value)}
                         >
-                          {radio.name}
+                          {option.name}
                         </ToggleButton>
                       ))}
                     </ButtonGroup>

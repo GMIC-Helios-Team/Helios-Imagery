@@ -14,7 +14,7 @@ const NavBar: React.FC<NavBarProps> = ({ isDarkTheme, toggleTheme }) => {
     { name: 'DEP', value: 'dark' },
   ];
 
-  const handleRadioChange = (value: string) => {
+  const handleThemeRadioChange = (value: string) => {
     if ((value === 'dark' && !isDarkTheme) || (value === 'light' && isDarkTheme)) {
       toggleTheme();
     }
@@ -65,7 +65,7 @@ const NavBar: React.FC<NavBarProps> = ({ isDarkTheme, toggleTheme }) => {
                 name="radio"
                 value={radio.value}
                 checked={isDarkTheme ? radio.value === 'dark' : radio.value === 'light'}
-                onChange={(e) => handleRadioChange(e.currentTarget.value)}
+                onChange={(e) => handleThemeRadioChange(e.currentTarget.value)}
                 style={{
         backgroundColor: radio.value === 'dark' ? (isDarkTheme ? '#2d345b' : 'white') : (isDarkTheme ? 'white' : '#e1a629'),
         color: radio.value === 'dark' ? (isDarkTheme ? 'white' : '#2d345b') : (isDarkTheme ? '#e1a629' : 'white'),
