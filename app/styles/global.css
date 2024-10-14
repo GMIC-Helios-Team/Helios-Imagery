@@ -27,3 +27,19 @@ body.dark-theme {
 .footer {
   margin-top: auto;
 }
+
+@keyframes warp {
+  0% {
+    transform: scale(1);
+  }
+  50% {
+    transform: scale(0);
+  }
+  100% {
+    transform: scale(1);
+  }
+}
+
+.warp-animation {
+  animation: warp 0.6s ease-in-out;
+}

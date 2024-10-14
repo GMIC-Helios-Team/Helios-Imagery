@@ -41,8 +41,7 @@ const ThemeWrapper: React.FC<{ children: ReactNode }> = ({ children }) => {
 };
 
 const NavBarWithTheme: React.FC = () => {
-  const { isDarkTheme, toggleTheme } = useTheme();
-  return <NavBar isDarkTheme={isDarkTheme} toggleTheme={toggleTheme} />;
+  return <NavBar />;
 };
 
 const FooterWithTheme: React.FC = () => {

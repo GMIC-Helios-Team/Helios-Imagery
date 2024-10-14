@@ -1,12 +1,9 @@
 import React, { useState, useEffect } from 'react';
 import { GetServerSideProps } from 'next';
 import { Container, Card, Row, Form, Col, Button, Image } from 'react-bootstrap';
-import { ApiResponse } from '../models/validate-response';
 import { GenerationResponse } from '../models/generation-response';
 import { promises as fs } from 'fs';
-import { json } from 'stream/consumers';
 import { useTheme } from '../contexts/theme-context';
-
 interface AiGenPageProps {
   email: string;
   data: string;
@@ -65,8 +62,6 @@ const AiGenPage: React.FC<AiGenPageProps> = ({ email, data }) => {
       theme: '',
       artStyle: '',
     };
-
-    const url = new URL('/api/validate-input', window.location.origin);
 
     // Validate each field similarly, including new fields for tier 3 customization
     if (!formData.input1) {
