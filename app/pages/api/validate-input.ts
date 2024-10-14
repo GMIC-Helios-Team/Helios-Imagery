@@ -1,9 +1,9 @@
 // pages/api/validate-input.ts
 import { NextApiRequest, NextApiResponse } from 'next';
-import { ApiResponse } from '../../models/validate-response';
+import { ApiResponse } from '@/types/validate-response';
 
 interface ValidationResult {
-  result: boolean;
+  result: boolean | { value: boolean };
   message: string;
 }
 
@@ -16,11 +16,7 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
     const password = process.env.API_PASSWORD;
     const apiUrl = process.env.AI_API_URL;
     const validationEndpoint = process.env.VALIDATION_ENDPOINT;
-
     const credentials = Buffer.from(`${username}:${password}`).toString('base64');
-
-    // console.log("classification: " + classification);
-    // console.log("word: " + word);
 
     try {
       const url = new URL(`${apiUrl}/${validationEndpoint}`);
@@ -45,15 +41,21 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
 
       const data: ValidationResult[] = await response.json();
 
-      // console.log(JSON.stringify(data));
+      let isValid: boolean;
+      if (typeof data[0].result === 'boolean') {
+        isValid = data[0].result;
+      } else if (typeof data[0].result === 'object' && typeof data[0].result.value === 'boolean') {
+        isValid = data[0].result.value;
+      } else {
+        throw new Error('Unexpected result type');
+      }
 
       const responseObject: ApiResponse = {
-        isValid: !data[0].result,
+        isValid: !isValid,
         message: data[0].message
       };
 
-      // console.log(data[0].result);
-      if (data[0].result === false) {
+      if (isValid === false) {
         res.status(200).json(responseObject);
       } else {
         res.status(400).json(responseObject);

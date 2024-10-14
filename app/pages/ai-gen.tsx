@@ -1,42 +1,47 @@
 import React, { useState, useEffect } from 'react';
 import { GetServerSideProps } from 'next';
-import { Container, Card, Row, Form, Col, Button, Image } from 'react-bootstrap';
-import { GenerationResponse } from '../models/generation-response';
 import { promises as fs } from 'fs';
 import { useTheme } from '../contexts/theme-context';
+import { Alert, Spinner, Container, Card, Row, Form, Col, Button, Image } from 'react-bootstrap';
+import { ApiResponse } from '@/types/validate-response';
+import { GenerationResponse } from '@/types/generation-response';
+import EmailInput from '@/components/ai-gen/Email';
+import { InputFields } from '@/types/ai-gen';
+import NameInput from '@/components/ai-gen/Name';
+import NounInput from '@/components/ai-gen/Noun';
+import VerbInput from '@/components/ai-gen/Verb';
+import FontStyleInput from '@/components/ai-gen/FontStyle';
+import ColorPaletteSelect from '@/components/ai-gen/ColorPalette';
+import ThemeInput from '@/components/ai-gen/Theme';
+import ArtStyleInput from '@/components/ai-gen/ArtStyle';
+import { validateWithAPI } from '@/helpers/ValidateWithApi';
+import { initialErrors, initialFormData, initialIsValid } from '@/helpers/Reset';
+import aigen from '@/styles/ai-gen.module.css';
+
 interface AiGenPageProps {
-  email: string;
-  data: string;
+  prompt: string;
 }
 
-const AiGenPage: React.FC<AiGenPageProps> = ({ email, data }) => {
+const AiGenPage: React.FC<AiGenPageProps> = ({ prompt }) => {
   const { isDarkTheme } = useTheme();
-  
+
   const HeliosGalleryUrl: string | undefined = process.env.NEXT_PUBLIC_HELIOS_GALLERY;
 
-  // Initial state with additional fields for tier 3 customization
-  const [formData, setFormData] = useState({
-    input1: '',
-    input2: '',
-    input3: '',
-    fontStyle: '', // New tier 3 input
-    colorPalette: '', // New tier 3 input
-    theme: '', // New tier 3 input
-    artStyle: '', // New tier 3 input
-  });
-
-  const [errors, setErrors] = useState({
-    input1: '',
-    input2: '',
-    input3: '',
-    fontStyle: '', // New error field
-    colorPalette: '', // New error field
-    theme: '', // New error field
-    artStyle: '', // New error field
-  });
-
+  const [formData, setFormData] = useState<InputFields>(initialFormData);
+  const [errors, setErrors] = useState<InputFields>(initialErrors);
+  const [isValid, setIsValid] = useState<Record<keyof InputFields, boolean>>(initialIsValid);
+  const [submissionError, setSubmissionError] = useState<string>('');
   const [isClient, setIsClient] = useState<boolean>(false);
-  const [imageUrl, setImageUrl] = useState<string>(''); // State variable for the image URL
+  const [imageUrl, setImageUrl] = useState<string>('');
+  const [isFormValid, setIsFormValid] = useState<boolean>(false);
+  const [isLoading, setIsLoading] = useState<boolean>(false);
+
+  useEffect(() => {
+    // Check form validity whenever formData changes
+    const isFormValid = Object.values(formData).every(value => value.trim() !== '');
+    //  && Object.values(isValid).every(value => value === true);
+    setIsFormValid(isFormValid);
+  }, [formData]);
 
   useEffect(() => {
     setIsClient(true);
@@ -52,77 +57,115 @@ const AiGenPage: React.FC<AiGenPageProps> = ({ email, data }) => {
     }));
   };
 
-  const validate = async () => {
-    const newErrors = {
-      input1: '',
-      input2: '',
-      input3: '',
-      fontStyle: '',
-      colorPalette: '',
-      theme: '',
-      artStyle: '',
-    };
+  const generateImage = async () => {
 
-    // Validate each field similarly, including new fields for tier 3 customization
-    if (!formData.input1) {
-      newErrors.input1 = 'Name is required';
-    }
+    try {
+      setIsLoading(true);
+      setSubmissionError('');
 
-    if (!formData.colorPalette) {
-      newErrors.colorPalette = 'Color palette is required';
-    }
+      console.log("starting generation");
 
-    setErrors(newErrors);
-
-    // Check if all fields are valid
-    const isValid = !Object.values(newErrors).some((error) => error);
-
-    console.log("made it through validation", {isValid});
-
-    // If valid, generate the image
-    if (isValid) {
-      try { 
-        console.log("starting generation");
-
-        data = data
-        .replace('{noun}', formData.input2)
-        .replaceAll('{verb}', formData.input3)
+      const data = prompt
+        .replace('{noun}', formData.noun)
+        .replaceAll('{verb}', formData.verb)
         .replace('{fontStyle}', formData.fontStyle)
         .replaceAll('{colorPalette}', formData.colorPalette)
         .replaceAll('{theme}', formData.theme)
         .replace('{artStyle}', formData.artStyle);
 
-        console.log(data);
+      console.log(data);
 
-        const generateImageResponse = await fetch('/api/generate-image', {
-          method: 'POST',
-          headers: {
-            'Content-Type': 'application/json',
-          },
-          body: JSON.stringify({name:formData.input1, prompt: data}),
-        });
+      const generateImageResponse = await fetch('/api/generate-image', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({ name: formData.name, email: formData.email, prompt: data }),
+      });
 
-        if (!generateImageResponse.ok) {
+      if (!generateImageResponse.ok) {
+        if (generateImageResponse.status === 500) {
+          const errorData = await generateImageResponse.json();
+          throw new Error(errorData.message);
+        } else {
           throw new Error('Image generation request failed');
         }
-
-        const generateImageResult: GenerationResponse = await generateImageResponse.json();
-        setImageUrl(`${HeliosGalleryUrl}/${generateImageResult.imageThumbnailfilename}`);
-        console.log('Generated Image:', generateImageResult);
-      } catch (error) {
-        console.error('Error generating image:', error);
       }
+
+      const generateImageResult: GenerationResponse = await generateImageResponse.json();
+
+      setImageUrl(`${HeliosGalleryUrl}/${generateImageResult.imagefilename}`);
+      console.log('Generated Image:', generateImageResult);
+
+      return true;
+    }
+    catch (error) {
+      if (error instanceof Error) {
+        setSubmissionError(error.message);
+      } else {
+        setSubmissionError('An unknown error occurred');
+      }
+      return false;
+    }
+    finally {
+      setIsLoading(false);
     }
 
-    return isValid;
   };
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    if (await validate()) {
+    console.log('Form submitted:', formData);
+    if (await generateImage()) {
       console.log('Form submitted:', formData);
     }
   };
+
+  const capitalizeFirstLetter = (string: string) => {
+    return string.charAt(0).toUpperCase() + string.slice(1);
+  };
+
+  const validateField = async (name: string, value: string) => {
+    const singleWordRegex = /^[a-zA-Z]+$/;
+    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    const capitalizedFieldName = capitalizeFirstLetter(name);
+    const regex = name === 'email' ? emailRegex : singleWordRegex;
+    const regexError = name === 'email'
+      ? 'Email must be a valid email address'
+      : `${capitalizedFieldName} must be a single word with no spaces or special characters`;
+
+    setIsValid({ ...isValid, [name]: false });
+    if (value.trim() === '') {
+      setErrors({ ...errors, [name]: `${capitalizedFieldName} is required` });
+    } else if (!regex.test(value)) {
+      setErrors({ ...errors, [name]: regexError });
+    } else {
+      try {
+        const result: ApiResponse = await validateWithAPI(name, value);
+        if (!result.isValid) {
+          setErrors({ ...errors, [name]: result.message });
+        } else {
+          setErrors({ ...errors, [name]: '' });
+          setIsValid({ ...isValid, [name]: true });
+        }
+      } catch (error) {
+        setErrors({ ...errors, [name]: 'Validation request failed' });
+      }
+    }
+
+  }
+
+  const handleBlur = (e: React.FocusEvent<HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement>) => {
+    const { id, value } = e.target;
+    validateField(id, value);
+  };
+
+  const resetFields = () => {
+    setFormData(initialFormData);
+    setErrors(initialErrors);
+    setIsValid(initialIsValid);
+    setSubmissionError('');
+  }
 
   if (!isClient) {
     return null; // Render nothing on the server
@@ -140,109 +183,83 @@ const AiGenPage: React.FC<AiGenPageProps> = ({ email, data }) => {
               </Card.Header>
               <Card.Body>
                 <Card.Text>
-                  <Form onSubmit={handleSubmit}>
-                    <Form.Group as={Row} className="mb-3" controlId="formPlaintextEmail">
-                      <Form.Label column sm="2">Email</Form.Label>
-                      <Col sm="10">
-                        <Form.Control plaintext readOnly defaultValue={email} />
-                      </Col>
-                    </Form.Group>
-                    <Form.Group as={Row} className="mb-3" controlId="input1">
-                      <Form.Label column sm="2">Name</Form.Label>
-                      <Col sm="10">
-                        <Form.Control
-                          type="text"
-                          placeholder="Input 1"
-                          value={formData.input1}
-                          onChange={(e) => handleChange(e as React.ChangeEvent<HTMLInputElement>)}
-                          isInvalid={!!errors.input1} />
-                        <Form.Control.Feedback type="invalid">{errors.input1}</Form.Control.Feedback>
-                      </Col>
-                    </Form.Group>
-                    <Form.Group as={Row} className="mb-3" controlId="input2">
-                      <Form.Label column sm="2">Noun</Form.Label>
-                      <Col sm="10">
-                        <Form.Control
-                          type="text"
-                          placeholder="Input 2"
-                          value={formData.input2}
-                          onChange={(e) => handleChange(e as React.ChangeEvent<HTMLInputElement>)}
-                          isInvalid={!!errors.input2} />
-                        <Form.Control.Feedback type="invalid">{errors.input2}</Form.Control.Feedback>
-                      </Col>
-                    </Form.Group>
-                    <Form.Group as={Row} className="mb-3" controlId="input3">
-                      <Form.Label column sm="2">Verb</Form.Label>
-                      <Col sm="10">
-                        <Form.Control
-                          type="text"
-                          placeholder="Input 3"
-                          value={formData.input3}
-                          onChange={(e) => handleChange(e as React.ChangeEvent<HTMLInputElement>)}
-                          isInvalid={!!errors.input3} />
-                        <Form.Control.Feedback type="invalid">{errors.input3}</Form.Control.Feedback>
-                      </Col>
-                    </Form.Group>
+                  {submissionError && <Alert variant="danger">{submissionError}</Alert>} {/* Render error message */}
+                  <Form noValidate className={aigen.marginLeftRight}>
+                    <EmailInput
+                      formData={formData}
+                      handleChange={handleChange}
+                      handleBlur={handleBlur}
+                      isValid={isValid}
+                      errors={errors}
+                      isLoading={isLoading}
+                    />
+                    <NameInput
+                      formData={formData}
+                      handleChange={handleChange}
+                      handleBlur={handleBlur}
+                      isValid={isValid}
+                      errors={errors}
+                      isLoading={isLoading}
+                    />
+                    <NounInput
+                      formData={formData}
+                      handleChange={handleChange}
+                      handleBlur={handleBlur}
+                      isValid={isValid}
+                      errors={errors}
+                      isLoading={isLoading}
+                    />
+                    <VerbInput
+                      formData={formData}
+                      handleChange={handleChange}
+                      handleBlur={handleBlur}
+                      isValid={isValid}
+                      errors={errors}
+                      isLoading={isLoading}
+                    />
+                    <FontStyleInput
+                      formData={formData}
+                      handleChange={handleChange}
+                      handleBlur={handleBlur}
+                      isValid={isValid}
+                      errors={errors}
+                      isLoading={isLoading}
+                    />
+                    <ColorPaletteSelect
+                      formData={formData}
+                      handleChange={handleChange}
+                      handleBlur={handleBlur}
+                      isValid={isValid}
+                      isLoading={isLoading}
+                    />
+                    <ThemeInput
+                      formData={formData}
+                      handleChange={handleChange}
+                      handleBlur={handleBlur}
+                      isValid={isValid}
+                      errors={errors}
+                      isLoading={isLoading}
+                    />
+                    <ArtStyleInput
+                      formData={formData}
+                      handleChange={handleChange}
+                      handleBlur={handleBlur}
+                      isValid={isValid}
+                      errors={errors}
+                      isLoading={isLoading}
+                    />
 
-                    {/* New Tier 3 customization inputs */}
-                    <Form.Group as={Row} className="mb-3" controlId="fontStyle">
-                      <Form.Label column sm="2">Font Style</Form.Label>
-                      <Col sm="10">
-                        <Form.Control
-                          type="text"
-                          placeholder="Font Style"
-                          value={formData.fontStyle}
-                          onChange={(e) => handleChange(e as React.ChangeEvent<HTMLInputElement>)}
-                          isInvalid={!!errors.fontStyle} />
-                        <Form.Control.Feedback type="invalid">{errors.fontStyle}</Form.Control.Feedback>
-                      </Col>
-                    </Form.Group>
-                    <Form.Group as={Row} className="mb-3" controlId="colorPalette">
-                      <Form.Label column sm="2">Color Palette</Form.Label>
-                      <Col sm="10">
-                        <Form.Control
-                          as="select"
-                          value={formData.colorPalette}
-                          onChange={(e) => handleChange(e as React.ChangeEvent<HTMLInputElement>)}>
-                          <option value="">Select Palette</option>
-                          <option value="warm">Warm</option>
-                          <option value="cool">Cool</option>
-                          <option value="neutral">Neutral</option>
-                        </Form.Control>
-                      </Col>
-                    </Form.Group>
-                    <Form.Group as={Row} className="mb-3" controlId="theme">
-                      <Form.Label column sm="2">Theme</Form.Label>
-                      <Col sm="10">
-                        <Form.Control
-                          type="text"
-                          placeholder="Theme"
-                          value={formData.theme}
-                          onChange={(e) => handleChange(e as React.ChangeEvent<HTMLInputElement>)}
-                          isInvalid={!!errors.theme} />
-                        <Form.Control.Feedback type="invalid">{errors.theme}</Form.Control.Feedback>
-                      </Col>
-                    </Form.Group>
-                    <Form.Group as={Row} className="mb-3" controlId="artStyle">
-                      <Form.Label column sm="2">Art Style</Form.Label>
-                      <Col sm="10">
-                        <Form.Control
-                          type="text"
-                          placeholder="Art Style"
-                          value={formData.artStyle}
-                          onChange={(e) => handleChange(e as React.ChangeEvent<HTMLInputElement>)}
-                          isInvalid={!!errors.artStyle} />
-                        <Form.Control.Feedback type="invalid">{errors.artStyle}</Form.Control.Feedback>
-                      </Col>
-                    </Form.Group>
+                    <Button type="button" variant="primary" onClick={handleSubmit} disabled={!isFormValid}>
+                      {isLoading ? <Spinner as="span" animation="border" size="sm" role="status" aria-hidden="true" /> : 'Generate'}
+                    </Button>
+                    <Button type="button" variant="link" disabled={isLoading} onClick={resetFields} className={aigen.floatRight}>Reset Input</Button>
 
-                    <Button type="button" onClick={handleSubmit}>Generate</Button>
                   </Form>
                 </Card.Text>
                 <Image
-                  src={imageUrl || `${HeliosGalleryUrl}/Helios-Images/placeholder.png`}
+                  src={imageUrl || `${HeliosGalleryUrl}/Helios-Images/2024-09-20-12-47-56.gilbert.png`}
                   fluid
-                  style={{ width: '600px', height: 'auto' }}
+                  className={aigen.generatedImage}
                   alt="Generated Image"
                 />
               </Card.Body>
@@ -255,17 +272,10 @@ const AiGenPage: React.FC<AiGenPageProps> = ({ email, data }) => {
 };
 
 export const getServerSideProps: GetServerSideProps = async () => {
-  // Fetch data here. For example, you can fetch user data from an API.
-  const email = 'email@example.com'; // Replace this with actual data fetching logic
-
-  const file = await fs.readFile(process.cwd() + '/public/prompts.json', 'utf8');
-  const dataFile = JSON.parse(file);
-  let dataPrompt = dataFile.prompts.helios;
-  const data = JSON.stringify(dataPrompt);
+  const prompt = "An illustration for GM Insurance's Digital Enablement Platform group, known as Helios. The design should incorporate a {theme} theme. Use the Helios team logo prominently on the front with a sunburst pattern in {colorPalette} {verb} from it. Position the GM Insurance logo at the top center and depict a stylized {noun} with rays {verb} outward, each representing Cloud Engineering, API Development, and Site Reliability Engineering with appropriate icons (cloud, code brackets, gears). Use a {fontStyle}, {theme} font for the text 'Digital Enablement Platform' below the central illustration. The color palette should be limited to {colorPalette} for easy screen printing. The entire image should be heavily influenced by {artStyle}"
   return {
     props: {
-      email,
-      data
+      prompt
     },
   };
 };

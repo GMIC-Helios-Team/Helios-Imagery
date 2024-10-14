@@ -1,15 +1,9 @@
-/* eslint-disable @next/next/no-sync-scripts */
 // pages/_app.tsx
 import React, { ReactNode } from 'react';
 import 'bootstrap/dist/css/bootstrap.min.css';
-
+import '../styles/global.css'; 
 import { AppProps } from 'next/app';
-import Head from 'next/head';
-import '../styles/global.css'; // Import the global CSS file
-
-import NavBar from '../components/NavBar';
-import Footer from '../components/Footer';
-import ErrorBoundary from '../components/ErrorBoundary';
+import Layout from '../components/Layout';
 import { ThemeProvider, useTheme } from '../contexts/theme-context';
 
 function HeliosFuturamaApp({ Component, pageProps }: AppProps) {

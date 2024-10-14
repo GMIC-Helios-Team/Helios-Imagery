@@ -2,14 +2,14 @@ import Jokes from '@/components/Jokes';
 import React from 'react';
 import { Container, Row } from 'react-bootstrap';
 
-const HomePage = () => {
+const GalleryPage = () => {
 
   return (
     <>
       <Container>
         <Row className="mb-4">
         </Row>
-          <Jokes jokeType='Programming' heading='Home'/>
+        <Jokes jokeType='Spooky' heading='Gallery'/>
       </Container>
 
     </>
@@ -17,4 +17,4 @@ const HomePage = () => {
   );
 };
 
-export default HomePage;
+export default GalleryPage;
