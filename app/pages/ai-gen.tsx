@@ -29,9 +29,10 @@ const AiGenPage: React.FC<AiGenPageProps> = ({ prompt }) => {
   const [isValid, setIsValid] = useState<Record<keyof InputFields, boolean>>(initialIsValid);
   const [submissionError, setSubmissionError] = useState<string>('');
   const [isClient, setIsClient] = useState<boolean>(false);
-  const [imageUrl, setImageUrl] = useState<string>('');
+  const [imageUrl, setImageUrl] = useState<string>(`${HeliosGalleryUrl}/Helios-Images/2024-09-20-12-47-56.gilbert.png`);
   const [isFormValid, setIsFormValid] = useState<boolean>(false);
   const [isLoading, setIsLoading] = useState<boolean>(false);
+  const [hid, setHid] = useState<string>('');
 
   useEffect(() => {
     // Check form validity whenever formData changes
@@ -63,12 +64,12 @@ const AiGenPage: React.FC<AiGenPageProps> = ({ prompt }) => {
       console.log("starting generation");
 
       const data = prompt
-        .replace('{noun}', formData.noun)
-        .replaceAll('{verb}', formData.verb)
-        .replace('{fontStyle}', formData.fontStyle)
-        .replaceAll('{colorPalette}', formData.colorPalette)
-        .replaceAll('{theme}', formData.theme)
-        .replace('{artStyle}', formData.artStyle);
+        .replace('{noun}', formData.noun.trim())
+        .replaceAll('{verb}', formData.verb.trim())
+        .replace('{fontStyle}', formData.fontStyle.trim())
+        .replaceAll('{colorPalette}', formData.colorPalette.trim())
+        .replaceAll('{theme}', formData.theme.trim())
+        .replace('{artStyle}', formData.artStyle.trim());
 
       console.log(data);
 
@@ -91,8 +92,8 @@ const AiGenPage: React.FC<AiGenPageProps> = ({ prompt }) => {
 
       const generateImageResult: GenerationResponse = await generateImageResponse.json();
 
-      setImageUrl(`${HeliosGalleryUrl}/${generateImageResult.imagefilename}`);
-      console.log('Generated Image:', generateImageResult);
+      setHid(generateImageResult.HID);
+      console.log('HID:', generateImageResult.HID);
 
       return true;
     }
@@ -114,7 +115,40 @@ const AiGenPage: React.FC<AiGenPageProps> = ({ prompt }) => {
     e.preventDefault();
     console.log('Form submitted:', formData);
     if (await generateImage()) {
-      console.log('Form submitted:', formData);
+      let elapsedTime = 0;
+      const interval = 10000; // 10 seconds
+      const maxTime = 40000; // 40 seconds
+
+      const intervalId = setInterval(async () => {
+        if (elapsedTime >= maxTime) {
+          clearInterval(intervalId);
+          return;
+        }
+
+        console.log('Issuing API request');
+        // try {
+        //   const url = new URL('/api/generate-image', window.location.origin);
+        //   url.searchParams.append('HID', hid);
+
+        //   const imageReadyResponse = await fetch(url.toString(), {
+        //     method: 'GET',
+        //     headers: {
+        //       'Content-Type': 'application/json',
+        //     },
+        //  });
+        //   const imageReadyResult = await imageReadyResponse.json();
+
+        //   console.log('API response:', imageReadyResult);
+        // }
+        // catch (error) {
+        //   console.error('API request failed:', error);         
+        // }        
+        // finally {
+        //   clearInterval(intervalId);
+        // }
+
+        elapsedTime += interval;
+      }, interval);
     }
   };
 
@@ -134,7 +168,7 @@ const AiGenPage: React.FC<AiGenPageProps> = ({ prompt }) => {
     setIsValid({ ...isValid, [name]: false });
     if (value.trim() === '') {
       setErrors({ ...errors, [name]: `${capitalizedFieldName} is required` });
-    } else if (!regex.test(value)) {
+    } else if (!regex.test(value.trim())) {
       setErrors({ ...errors, [name]: regexError });
     } else {
       try {
@@ -171,6 +205,8 @@ const AiGenPage: React.FC<AiGenPageProps> = ({ prompt }) => {
   return (
     <>
       <Row className="mb-4"></Row>
+      {/* <pre>{JSON.stringify(isValid)}</pre> */}
+      <pre>HID: {hid}</pre>
       <Container>
         <Row className="mb-4">
           <Col md={{ offset: 3, span: 6 }}>
@@ -252,7 +288,7 @@ const AiGenPage: React.FC<AiGenPageProps> = ({ prompt }) => {
                   </Form>
                 </Card.Text>
                 <Image
-                  src={imageUrl || `${HeliosGalleryUrl}/Helios-Images/2024-09-20-12-47-56.gilbert.png`}
+                  src={imageUrl}
                   fluid
                   className={aigen.generatedImage}
                   alt="Generated Image"

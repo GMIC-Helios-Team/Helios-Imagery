@@ -1,5 +1,4 @@
 export interface GenerationResponse {
-  imagefilename: string;
-  imageThumbnailfilename: string;
+  HID: string
   message: string;
 }
