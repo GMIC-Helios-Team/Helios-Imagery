@@ -6,6 +6,7 @@ interface ImageModalProps {
     src: string;
     title: string;
     description: string;
+    likesAmount?: number;
   };
   onClose: () => void;
 }
@@ -19,6 +20,11 @@ const ImageModal: React.FC<ImageModalProps> = ({ image, onClose }) => {
     }
   };
 
+  const LikeAnImage = () => {
+    // Do like image actions
+    // Check if it has already been liked somehow and if not, increment the like amount of the image
+  }
+
   return (
     <div style={modalStyles.overlay} onClick={handleOverlayClick}>
       <div style={modalStyles.modal}>
@@ -28,6 +34,8 @@ const ImageModal: React.FC<ImageModalProps> = ({ image, onClose }) => {
         <img src={image.src} alt={image.title} style={{ width: '100%' }} />
         <h2>{image.title}</h2>
         <p>{image.description}</p>
+        <span><p>liked: {image.likesAmount ?? 0}</p><button onClick={() => LikeAnImage()}>I like this</button></span>
+        
       </div>
     </div>
   );
