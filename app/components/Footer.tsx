@@ -1,11 +1,11 @@
 import React from 'react';
 import Navbar from 'react-bootstrap/Navbar';
+import { useTheme } from '../contexts/theme-context';
 
-interface FooterProps {
-  isDarkTheme: boolean;
-}
+const Footer: React.FC = () => {
+  
+  const { isDarkTheme } = useTheme();
 
-const Footer: React.FC<FooterProps> = ({ isDarkTheme }) => {
   return (
     <Navbar expand="lg" className={`${isDarkTheme ? 'bg-dark text-light' : 'bg-light text-dark'}`} fixed="bottom">
       <div className="p-3">
