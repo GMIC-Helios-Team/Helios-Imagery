@@ -13,9 +13,11 @@ const ColorPaletteSelect: React.FC<SelectProps> = ({ formData,handleChange, hand
     isValid={isValid.colorPalette}
     onChange={handleChange}
     onBlur={handleBlur}>
+    <option value="bright">Bright</option>
     <option value="warm">Warm</option>
-    <option value="cool">Cool</option>
     <option value="neutral">Neutral</option>
+    <option value="cool">Cool</option>
+    <option value="dark">Dark</option>
   </Form.Select>
   <Form.Control.Feedback type="valid" >
     <i className="bi bi-check-circle-fill"></i>
