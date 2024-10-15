@@ -15,7 +15,7 @@ import ArtStyleInput from '@/components/ai-gen/ArtStyle';
 import { validateWithAPI } from '@/helpers/ValidateWithApi';
 import { initialErrors, initialFormData, initialIsValid } from '@/helpers/Reset';
 import aigen from '@/styles/ai-gen.module.css';
-import { useTheme } from '@/contexts/theme-context';
+// import { useTheme } from '@/contexts/theme-context';
 
 import { useRouter } from 'next/router';
 interface AiGenPageProps {
@@ -23,7 +23,7 @@ interface AiGenPageProps {
 }
 
 const AiGenPage: React.FC<AiGenPageProps> = ({ prompt }) => {
-  const { isDarkTheme } = useTheme();
+  // const { isDarkTheme } = useTheme();
 
   const [formData, setFormData] = useState<InputFields>(initialFormData);
   const [errors, setErrors] = useState<InputFields>(initialErrors);
@@ -178,7 +178,7 @@ const AiGenPage: React.FC<AiGenPageProps> = ({ prompt }) => {
     <Container style={{ marginTop: '50px' }}>
       <Row className="mb-4">
         <Col md={{ offset: 3, span: 6 }}>
-          <Card className={isDarkTheme ? 'bg-dark text-light' : 'bg-light text-dark'}>
+          <Card>
             <Card.Header>
                 AI Generator
               </Card.Header>
