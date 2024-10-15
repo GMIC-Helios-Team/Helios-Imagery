@@ -10,9 +10,17 @@ interface ImageModalProps {
   onClose: () => void;
 }
 
+
 const ImageModal: React.FC<ImageModalProps> = ({ image, onClose }) => {
+  // Handle click outside the modal content
+  const handleOverlayClick = (e: React.MouseEvent<HTMLDivElement, MouseEvent>) => {
+    if (e.target === e.currentTarget) {  // Check if the click is on the overlay itself
+      onClose();  // Close the modal if clicked outside the modal content
+    }
+  };
+
   return (
-    <div style={modalStyles.overlay}>
+    <div style={modalStyles.overlay} onClick={handleOverlayClick}>
       <div style={modalStyles.modal}>
         <button onClick={onClose} style={modalStyles.closeButton}>
           &times;
