@@ -1,19 +1,13 @@
 import React, { useState, useEffect } from 'react';
 import FlipCard from '../components/FlipCard';
-import { Carousel, Row, Col, Container, Table, Card } from 'react-bootstrap';
+import { Row, Col, Container, Card } from 'react-bootstrap';
 
 const ProfilePage = () => {
-
-  const [index, setIndex] = useState(0);
   const [isClient, setIsClient] = useState(false);
 
   useEffect(() => {
     setIsClient(true);
   }, []);
-
-  const handleSelect = (selectedIndex: React.SetStateAction<number>) => {
-    setIndex(selectedIndex);
-  };
 
   if (!isClient) {
     return null; // Render nothing on the server
@@ -34,8 +28,6 @@ const ProfilePage = () => {
             </Card>
           </Col>
         </Row>
-
-
       </Container>
 
     </>

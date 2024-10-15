@@ -1,9 +1,8 @@
 import Jokes from '@/components/Jokes';
 import React from 'react';
-import { Card, Col, Container, Row } from 'react-bootstrap';
+import { Card, Col, Container, Row, Image, Alert } from 'react-bootstrap';
 
 const GalleryPage = () => {
-
   return (
     <>
       <Container style={{ marginTop: '50px' }}>
@@ -11,7 +10,9 @@ const GalleryPage = () => {
           <Col md={{ offset: 3, span: 6 }}>
             <Card>
               <Card.Header>Gallery Image</Card.Header>
-              <Card.Img variant="bottom" src="/happy-helios.png" alt="Home Page Card" width={500} height={500} style={{padding:'2px'}}/>
+              <Alert variant="light">
+                <Image src="/happy-helios.png" alt="Gallery Card" fluid roundedCircle width={200} height={200} style={{ padding: '2px' }} />
+              </Alert>
               <Card.Body>
                 <Jokes />
               </Card.Body>
@@ -19,9 +20,7 @@ const GalleryPage = () => {
           </Col>
         </Row>
       </Container>
-
     </>
-
   );
 };
 

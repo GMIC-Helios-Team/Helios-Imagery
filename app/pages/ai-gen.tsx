@@ -178,7 +178,7 @@ const AiGenPage: React.FC<AiGenPageProps> = ({ prompt }) => {
         <Col md={{ offset: 3, span: 6 }}>
           <Card>
             <Card.Header>AI Generator</Card.Header>
-             <Card.Body>
+            <Card.Body>
               <Card.Text>
                 {submissionError && <Alert variant="danger">{submissionError}</Alert>}
                 <Form noValidate className={aigen.marginLeftRight}>
@@ -244,16 +244,16 @@ const AiGenPage: React.FC<AiGenPageProps> = ({ prompt }) => {
                     errors={errors}
                     isLoading={isLoading}
                   />
-
                   <Button type="button" variant="link" onClick={handleSubmit} disabled={!isFormValid}>
                     {isLoading ? <Spinner as="span" animation="border" size="sm" role="status" aria-hidden="true" /> : 'Generate'}
                   </Button>
                   <Button type="button" variant="link" disabled={isLoading} onClick={resetFields} className={aigen.floatRight}>Reset Input</Button>
-
                 </Form>
               </Card.Text>
             </Card.Body>
-            <Card.Img variant="top" src="/image-gen.png" alt="Home Page Card" width={300} height={210} style={{padding:'5px'}}/>
+            <Alert variant="light">
+              <Card.Img variant="top" src="/image-gen.png" alt="Home Page Card" width={300} height={210} style={{ padding: '5px' }} />
+            </Alert>
           </Card>
         </Col>
       </Row>
