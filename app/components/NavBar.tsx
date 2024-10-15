@@ -8,10 +8,9 @@ function NavBar() {
         <Navbar.Toggle aria-controls="basic-navbar-nav" />
         <Navbar.Collapse id="basic-navbar-nav">
           <Nav className='navbarMargin' >
-            <Nav.Link href="/">Home</Nav.Link>
             <Nav.Link href="/gallery">Gallery</Nav.Link>
             <Nav.Link href="/profile">Profile</Nav.Link>
-            <Nav.Link href="/ai-gen">AI-Gen</Nav.Link>
+            <Nav.Link href="/ai-gen">Creative Canvas</Nav.Link>
           </Nav>
         </Navbar.Collapse>
     </Navbar>

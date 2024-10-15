@@ -8,8 +8,8 @@ const FontStyleInput: React.FC<SelectProps> = ({ formData,handleChange, handleBl
   <Form.Select
     disabled={isLoading}
     size="sm"
-    value={formData.colorPalette}
-    isValid={isValid.colorPalette}
+    value={formData.fontStyle}
+    isValid={isValid.fontStyle}
     onChange={handleChange}
     onBlur={handleBlur}>
     <option value="sans-serif">Sans-Serif (e.g., Helvetica, Arial)</option>

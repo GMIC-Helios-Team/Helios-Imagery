@@ -1,7 +1,7 @@
 // pages/api/validate-input.ts
 import { NextApiRequest, NextApiResponse } from 'next';
 
-import { GenerationResponse } from '@/types/generation-response';
+import { GenerationResponse, GetGeneratedImage } from '@/types/generation-response';
 
 
 export default async function handler(req: NextApiRequest, res: NextApiResponse) {
@@ -51,11 +51,11 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
     const username = process.env.API_USERNAME;;
     const password = process.env.API_PASSWORD;
     const apiUrl = process.env.AI_API_URL;
-    const promptGenerationEndpoint = process.env.PROMPT_GENERATION_ENDPOINT;
+    const generatedImageEndpoint = process.env.GET_GENERATED_IMAGE_ENDPOINT;
     const credentials = Buffer.from(`${username}:${password}`).toString('base64');
 
     try {
-      const url = new URL(`${apiUrl}/${promptGenerationEndpoint}`);
+      const url = new URL(`${apiUrl}/${generatedImageEndpoint}`);
       console.log(`url: ${url.toString()} \n ${HID}`);
 
       if (HID) {
@@ -71,17 +71,9 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
           'Authorization': `Basic ${credentials}`,
         },
       });
-      
-      const data1 = await response.json();
-      console.log(`after fetch ${JSON.stringify(data1)}`);
-      if (!response.ok) {
-        throw new Error('Validation request failed');
-      }
-      const data = await response.json();
-      console.log(`in generate image ${JSON.stringify(data)}`);
 
-      res.status(200).json(data);
-
+      const data: GetGeneratedImage[] = await response.json();
+      res.status(200).json(data[0]);
 
     } catch (error) {
       console.log('ouch some error');

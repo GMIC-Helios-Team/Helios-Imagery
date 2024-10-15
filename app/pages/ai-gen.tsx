@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { GetServerSideProps } from 'next';
-import { Alert, Spinner, Container, Card, Row, Form, Col, Button, Image } from 'react-bootstrap';
+import { Alert, Spinner, Container, Card, Row, Form, Col, Button } from 'react-bootstrap';
 import { ApiResponse } from '@/types/validate-response';
 import { GenerationResponse } from '@/types/generation-response';
 import EmailInput from '@/components/ai-gen/Email';
@@ -16,26 +16,22 @@ import { validateWithAPI } from '@/helpers/ValidateWithApi';
 import { initialErrors, initialFormData, initialIsValid } from '@/helpers/Reset';
 import aigen from '@/styles/ai-gen.module.css';
 
+import { useRouter } from 'next/router';
 interface AiGenPageProps {
   prompt: string;
 }
 
 const AiGenPage: React.FC<AiGenPageProps> = ({ prompt }) => {
 
-  const HeliosGalleryUrl: string | undefined = process.env.NEXT_PUBLIC_HELIOS_GALLERY;
-
   const [formData, setFormData] = useState<InputFields>(initialFormData);
   const [errors, setErrors] = useState<InputFields>(initialErrors);
   const [isValid, setIsValid] = useState<Record<keyof InputFields, boolean>>(initialIsValid);
   const [submissionError, setSubmissionError] = useState<string>('');
   const [isClient, setIsClient] = useState<boolean>(false);
-  const [imageUrl, setImageUrl] = useState<string>(`${HeliosGalleryUrl}/Helios-Images/2024-09-20-12-47-56.gilbert.png`);
   const [isFormValid, setIsFormValid] = useState<boolean>(false);
   const [isLoading, setIsLoading] = useState<boolean>(false);
-  const [hid, setHid] = useState<string>('');
 
   useEffect(() => {
-    // Check form validity whenever formData changes
     const isFormValid = Object.values(formData).every(value => value.trim() !== '');
     //  && Object.values(isValid).every(value => value === true);
     setIsFormValid(isFormValid);
@@ -45,9 +41,11 @@ const AiGenPage: React.FC<AiGenPageProps> = ({ prompt }) => {
     setIsClient(true);
   }, []);
 
+  const router = useRouter();
+
   // Updated handleChange function with proper event typing for FormControl
   const handleChange = (e: React.FormEvent<HTMLInputElement | HTMLSelectElement>) => {
-    const target = e.target as HTMLInputElement | HTMLSelectElement; // Type assertion to resolve the error
+    const target = e.target as HTMLInputElement | HTMLSelectElement;
     const { id, value } = target;
     setFormData((prevData) => ({
       ...prevData,
@@ -55,7 +53,12 @@ const AiGenPage: React.FC<AiGenPageProps> = ({ prompt }) => {
     }));
   };
 
-  const generateImage = async () => {
+
+  const routeToWait = (hid: string) => {
+    router.push(`/ai-gen/wait/${hid}`);
+  };
+
+  const generateImage = async (): Promise<string | null> => {
 
     try {
       setIsLoading(true);
@@ -64,12 +67,12 @@ const AiGenPage: React.FC<AiGenPageProps> = ({ prompt }) => {
       console.log("starting generation");
 
       const data = prompt
-        .replace('{noun}', formData.noun.trim())
-        .replaceAll('{verb}', formData.verb.trim())
-        .replace('{fontStyle}', formData.fontStyle.trim())
-        .replaceAll('{colorPalette}', formData.colorPalette.trim())
-        .replaceAll('{theme}', formData.theme.trim())
-        .replace('{artStyle}', formData.artStyle.trim());
+        .replace('{noun}', formData.noun)
+        .replaceAll('{verb}', formData.verb)
+        .replace('{fontStyle}', formData.fontStyle)
+        .replaceAll('{colorPalette}', formData.colorPalette)
+        .replaceAll('{theme}', formData.theme)
+        .replace('{artStyle}', formData.artStyle);
 
       console.log(data);
 
@@ -91,11 +94,8 @@ const AiGenPage: React.FC<AiGenPageProps> = ({ prompt }) => {
       }
 
       const generateImageResult: GenerationResponse = await generateImageResponse.json();
+      return generateImageResult.HID
 
-      setHid(generateImageResult.HID);
-      console.log('HID:', generateImageResult.HID);
-
-      return true;
     }
     catch (error) {
       if (error instanceof Error) {
@@ -103,7 +103,7 @@ const AiGenPage: React.FC<AiGenPageProps> = ({ prompt }) => {
       } else {
         setSubmissionError('An unknown error occurred');
       }
-      return false;
+      return null;
     }
     finally {
       setIsLoading(false);
@@ -114,50 +114,20 @@ const AiGenPage: React.FC<AiGenPageProps> = ({ prompt }) => {
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     console.log('Form submitted:', formData);
-    if (await generateImage()) {
-      let elapsedTime = 0;
-      const interval = 10000; // 10 seconds
-      const maxTime = 40000; // 40 seconds
-
-      const intervalId = setInterval(async () => {
-        if (elapsedTime >= maxTime) {
-          clearInterval(intervalId);
-          return;
-        }
-
-        console.log('Issuing API request');
-        // try {
-        //   const url = new URL('/api/generate-image', window.location.origin);
-        //   url.searchParams.append('HID', hid);
-
-        //   const imageReadyResponse = await fetch(url.toString(), {
-        //     method: 'GET',
-        //     headers: {
-        //       'Content-Type': 'application/json',
-        //     },
-        //  });
-        //   const imageReadyResult = await imageReadyResponse.json();
-
-        //   console.log('API response:', imageReadyResult);
-        // }
-        // catch (error) {
-        //   console.error('API request failed:', error);         
-        // }        
-        // finally {
-        //   clearInterval(intervalId);
-        // }
-
-        elapsedTime += interval;
-      }, interval);
+    const hid = await generateImage();
+    if (hid) {
+      routeToWait(hid);
     }
   };
+
 
   const capitalizeFirstLetter = (string: string) => {
     return string.charAt(0).toUpperCase() + string.slice(1);
   };
 
   const validateField = async (name: string, value: string) => {
-    const singleWordRegex = /^[a-zA-Z]+$/;
+    const singleWordRegex = /^[a-zA-Z\s'-]+$/;
+
     const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
     const capitalizedFieldName = capitalizeFirstLetter(name);
     const regex = name === 'email' ? emailRegex : singleWordRegex;
@@ -168,7 +138,7 @@ const AiGenPage: React.FC<AiGenPageProps> = ({ prompt }) => {
     setIsValid({ ...isValid, [name]: false });
     if (value.trim() === '') {
       setErrors({ ...errors, [name]: `${capitalizedFieldName} is required` });
-    } else if (!regex.test(value.trim())) {
+    } else if (!regex.test(value)) {
       setErrors({ ...errors, [name]: regexError });
     } else {
       try {
@@ -203,101 +173,90 @@ const AiGenPage: React.FC<AiGenPageProps> = ({ prompt }) => {
   }
 
   return (
-    <>
-      <Row className="mb-4"></Row>
-      {/* <pre>{JSON.stringify(isValid)}</pre> */}
-      <pre>HID: {hid}</pre>
-      <Container>
-        <Row className="mb-4">
-          <Col md={{ offset: 3, span: 6 }}>
-            <Card>
-              <Card.Header>AI Generator</Card.Header>
-              <Card.Body>
-                <Card.Text>
-                  {submissionError && <Alert variant="danger">{submissionError}</Alert>} {/* Render error message */}
-                  <Form noValidate className={aigen.marginLeftRight}>
-                    <EmailInput
-                      formData={formData}
-                      handleChange={handleChange}
-                      handleBlur={handleBlur}
-                      isValid={isValid}
-                      errors={errors}
-                      isLoading={isLoading}
-                    />
-                    <NameInput
-                      formData={formData}
-                      handleChange={handleChange}
-                      handleBlur={handleBlur}
-                      isValid={isValid}
-                      errors={errors}
-                      isLoading={isLoading}
-                    />
-                    <NounInput
-                      formData={formData}
-                      handleChange={handleChange}
-                      handleBlur={handleBlur}
-                      isValid={isValid}
-                      errors={errors}
-                      isLoading={isLoading}
-                    />
-                    <VerbInput
-                      formData={formData}
-                      handleChange={handleChange}
-                      handleBlur={handleBlur}
-                      isValid={isValid}
-                      errors={errors}
-                      isLoading={isLoading}
-                    />
-                    <FontStyleInput
-                      formData={formData}
-                      handleChange={handleChange}
-                      handleBlur={handleBlur}
-                      isValid={isValid}
-                      isLoading={isLoading}
-                    />
-                    <ColorPaletteSelect
-                      formData={formData}
-                      handleChange={handleChange}
-                      handleBlur={handleBlur}
-                      isValid={isValid}
-                      isLoading={isLoading}
-                    />
-                    <ThemeInput
-                      formData={formData}
-                      handleChange={handleChange}
-                      handleBlur={handleBlur}
-                      isValid={isValid}
-                      errors={errors}
-                      isLoading={isLoading}
-                    />
-                    <ArtStyleInput
-                      formData={formData}
-                      handleChange={handleChange}
-                      handleBlur={handleBlur}
-                      isValid={isValid}
-                      errors={errors}
-                      isLoading={isLoading}
-                    />
+    <Container style={{ marginTop: '50px' }}>
+      <Row className="mb-4">
+        <Col md={{ offset: 3, span: 6 }}>
+          <Card>
+            <Card.Header>AI Generator</Card.Header>
+            <Card.Body>
+              <Card.Text>
+                {submissionError && <Alert variant="danger">{submissionError}</Alert>}
+                <Form noValidate className={aigen.marginLeftRight}>
+                  <EmailInput
+                    formData={formData}
+                    handleChange={handleChange}
+                    handleBlur={handleBlur}
+                    isValid={isValid}
+                    errors={errors}
+                    isLoading={isLoading}
+                  />
+                  <NameInput
+                    formData={formData}
+                    handleChange={handleChange}
+                    handleBlur={handleBlur}
+                    isValid={isValid}
+                    errors={errors}
+                    isLoading={isLoading}
+                  />
+                  <NounInput
+                    formData={formData}
+                    handleChange={handleChange}
+                    handleBlur={handleBlur}
+                    isValid={isValid}
+                    errors={errors}
+                    isLoading={isLoading}
+                  />
+                  <VerbInput
+                    formData={formData}
+                    handleChange={handleChange}
+                    handleBlur={handleBlur}
+                    isValid={isValid}
+                    errors={errors}
+                    isLoading={isLoading}
+                  />
+                  <FontStyleInput
+                    formData={formData}
+                    handleChange={handleChange}
+                    handleBlur={handleBlur}
+                    isValid={isValid}
+                    isLoading={isLoading}
+                  />
+                  <ColorPaletteSelect
+                    formData={formData}
+                    handleChange={handleChange}
+                    handleBlur={handleBlur}
+                    isValid={isValid}
+                    isLoading={isLoading}
+                  />
+                  <ThemeInput
+                    formData={formData}
+                    handleChange={handleChange}
+                    handleBlur={handleBlur}
+                    isValid={isValid}
+                    errors={errors}
+                    isLoading={isLoading}
+                  />
+                  <ArtStyleInput
+                    formData={formData}
+                    handleChange={handleChange}
+                    handleBlur={handleBlur}
+                    isValid={isValid}
+                    errors={errors}
+                    isLoading={isLoading}
+                  />
 
-                    <Button type="button" variant="primary" onClick={handleSubmit} disabled={!isFormValid}>
-                      {isLoading ? <Spinner as="span" animation="border" size="sm" role="status" aria-hidden="true" /> : 'Generate'}
-                    </Button>
-                    <Button type="button" variant="link" disabled={isLoading} onClick={resetFields} className={aigen.floatRight}>Reset Input</Button>
+                  <Button type="button" variant="primary" onClick={handleSubmit} disabled={!isFormValid}>
+                    {isLoading ? <Spinner as="span" animation="border" size="sm" role="status" aria-hidden="true" /> : 'Generate'}
+                  </Button>
+                  <Button type="button" variant="link" disabled={isLoading} onClick={resetFields} className={aigen.floatRight}>Reset Input</Button>
 
-                  </Form>
-                </Card.Text>
-                <Image
-                  src={imageUrl}
-                  fluid
-                  className={aigen.generatedImage}
-                  alt="Generated Image"
-                />
-              </Card.Body>
-            </Card>
-          </Col>
-        </Row>
-      </Container>
-    </>
+                </Form>
+              </Card.Text>
+            </Card.Body>
+          </Card>
+        </Col>
+      </Row>
+    </Container>
   );
 };
 
