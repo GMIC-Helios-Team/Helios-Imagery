@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { GetServerSideProps } from 'next';
+import { useTheme } from '../contexts/theme-context';
 import { Alert, Spinner, Container, Card, Row, Form, Col, Button, Image } from 'react-bootstrap';
 import { ApiResponse } from '@/types/validate-response';
 import { GenerationResponse } from '@/types/generation-response';
@@ -21,6 +22,7 @@ interface AiGenPageProps {
 }
 
 const AiGenPage: React.FC<AiGenPageProps> = ({ prompt }) => {
+  const { isDarkTheme } = useTheme();
 
   const HeliosGalleryUrl: string | undefined = process.env.NEXT_PUBLIC_HELIOS_GALLERY;
 
@@ -173,9 +175,11 @@ const AiGenPage: React.FC<AiGenPageProps> = ({ prompt }) => {
       <Row className="mb-4"></Row>
       <Container>
         <Row className="mb-4">
-          <Col md={{ offset: 3, span: 6 }}>
-            <Card>
-              <Card.Header>AI Generator</Card.Header>
+          <Col md={{ offset: 2, span: 8 }}>
+            <Card className={isDarkTheme ? 'bg-dark text-light' : 'bg-light text-dark'}>
+              <Card.Header>
+                AI Generator
+              </Card.Header>
               <Card.Body>
                 <Card.Text>
                   {submissionError && <Alert variant="danger">{submissionError}</Alert>} {/* Render error message */}
