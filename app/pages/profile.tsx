@@ -29,7 +29,6 @@ const ProfilePage = () => {
           </Col>
         </Row>
       </Container>
-
     </>
   );
 };
