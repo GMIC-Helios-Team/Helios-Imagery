@@ -72,7 +72,7 @@ const TimeoutImage = () => (
     <Card >
       <Card.Header>Sorry for the delay</Card.Header>
       <Card.Body>
-      <Card.Img variant="top" src="/ImageGenerationTimeout.png" alt="Image Generation Timeout" width={200} height={300}  />
+      <Card.Img variant="top" src="/ImageGenerationTimeout.png" alt="Image Generation Timeout" width={500} height={500}  />
         <Card.Text>
           <Alert variant="light">
             <Alert.Heading>Oh snap! You got an error!</Alert.Heading>
