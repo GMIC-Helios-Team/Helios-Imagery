@@ -27,7 +27,6 @@ const ImageModal: React.FC<ImageModalProps> = ({ image, onClose }) => {
 
 const modalStyles = {
   overlay: {
-   // position: 'fixed',
     top: 0,
     left: 0,
     width: '100%',
@@ -43,10 +42,8 @@ const modalStyles = {
     padding: '20px',
     borderRadius: '8px',
     width: '400px',
-    //position: 'relative',
   },
   closeButton: {
-    //position: 'absolute',
     top: '10px',
     right: '10px',
     background: 'transparent',
