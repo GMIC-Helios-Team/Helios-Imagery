@@ -94,7 +94,6 @@ const JokeDisplay: React.FC<{ data: Joke }> = ({ data }) => (
       <p><strong>Error:</strong> {data.message}</p>
     ) : (
       <>
-        <p><strong>Category:</strong> {data.category}</p>
         {data.type === 'single' ? (
           <p><strong>Joke:</strong> {data.joke}</p>
         ) : (

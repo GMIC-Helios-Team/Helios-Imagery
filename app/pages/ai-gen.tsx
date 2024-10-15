@@ -16,7 +16,6 @@ import { validateWithAPI } from '@/helpers/ValidateWithApi';
 import { initialErrors, initialFormData, initialIsValid } from '@/helpers/Reset';
 import aigen from '@/styles/ai-gen.module.css';
 import { useTheme } from '@/contexts/theme-context';
-
 import { useRouter } from 'next/router';
 interface AiGenPageProps {
   prompt: string;
