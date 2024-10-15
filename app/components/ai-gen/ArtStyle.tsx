@@ -8,7 +8,7 @@ const ArtStyleInput: React.FC<InputProps> = ({ formData,handleChange, handleBlur
   <Form.Control
     disabled={isLoading}
     type="text"
-    placeholder="Art Style"
+    placeholder="Choose the artistic influence (e.g., watercolor, abstract, sci-fi)."
     size="sm"
     value={formData.artStyle}
     onChange={(e) => handleChange(e as React.ChangeEvent<HTMLInputElement>)}

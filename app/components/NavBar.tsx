@@ -1,50 +1,27 @@
-import React, { useState, useEffect } from 'react';
 import Link from 'next/link';
 import { useTheme } from '../contexts/theme-context';
 import { Navbar, Nav, ButtonGroup, ToggleButton } from 'react-bootstrap';
 import styles from '../styles/NavBar.module.css'; // Import the CSS Module
-
 const NavBar: React.FC = () => {
   const { isDarkTheme, toggleTheme } = useTheme();
-  const [isWarping, setIsWarping] = useState(false);
-  const [imageSrc, setImageSrc] = useState('');
-
-  useEffect(() => {
-    setImageSrc(isDarkTheme ? '/images/DEPLogo.png' : '/images/HeliosLogo.png');
-  }, [isDarkTheme]);
-
   const handleRadioChange = (value: string) => {
     if ((value === 'dark' && !isDarkTheme) || (value === 'light' && isDarkTheme)) {
       toggleTheme();
     }
   };
-
-  const handleThemeToggle = () => {
-    setIsWarping(true);
-    setImageSrc(isDarkTheme ? '/images/HeliosLogo.png' : '/images/DEPLogo.png'); // Update image source immediately
-    setTimeout(() => {
-      toggleTheme();
-      setIsWarping(false);
-    }, 600); // Duration of the warp animation
-  };
-
   const radios = [
-    { name: 'Light', value: 'light' },
-    { name: 'Dark', value: 'dark' },
+    { name: 'Helios', value: 'light' },
+    { name: 'DEP', value: 'dark' },
   ];
-
   return (
     <Navbar expand="lg" className={isDarkTheme ? 'navbar-dark bg-dark' : 'navbar-light bg-light'} style={{ height: '80px' }}>
       <div className="container-fluid">
         <Link href="/" legacyBehavior>
-          <a className={`navbar-brand ${styles.navbarBrand}`}>Helios</a>
+          <a className={`navbar-brand ${styles.navbarBrand}`}>{isDarkTheme ? 'DEP' : 'Helios'}</a>
         </Link>
         <Navbar.Toggle aria-controls="basic-navbar-nav" />
         <Navbar.Collapse id="basic-navbar-nav">
-          <Nav className="me-auto">            
-            <Link href="/" legacyBehavior>
-              <a className={`nav-link ${styles.navLink}`}>Home</a>
-            </Link>
+          <Nav className="me-auto">
             <Link href="/gallery" legacyBehavior>
               <a className={`nav-link ${styles.navLink}`}>Gallery</a>
             </Link>
@@ -52,7 +29,7 @@ const NavBar: React.FC = () => {
               <a className={`nav-link ${styles.navLink}`}>Profile</a>
             </Link>
             <Link href="/ai-gen" legacyBehavior>
-              <a className={`nav-link ${styles.navLink}`}>AI-Gen</a>
+              <a className={`nav-link ${styles.navLink}`}>Creative Canvas</a>
             </Link>
           </Nav>
           <ButtonGroup>
@@ -76,20 +53,9 @@ const NavBar: React.FC = () => {
               </ToggleButton>
             ))}
           </ButtonGroup>
-          <div className="position-absolute start-50 translate-middle-x">
-            <button onClick={handleThemeToggle} className="btn btn-link" style={{ marginBottom: '0' }}>
-              <img
-                src={imageSrc}
-                alt={isDarkTheme ? 'Light Mode' : 'Dark Mode'}
-                style={{ width: '350px', height: '80px' }}
-                className={isWarping ? styles.warpAnimation : ''}
-              />
-            </button>
-          </div>
         </Navbar.Collapse>
       </div>
     </Navbar>
   );
 };
-
 export default NavBar;

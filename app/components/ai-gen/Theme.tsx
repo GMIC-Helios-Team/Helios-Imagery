@@ -8,7 +8,7 @@ const ThemeInput: React.FC<InputProps> = ({ formData,handleChange, handleBlur,is
   <Form.Control
     disabled={isLoading}
     type="text"
-    placeholder="Theme"
+    placeholder="Choose the overall visual theme (e.g., modern, futuristic, retro)."
     size="sm"
     value={formData.theme}
     onChange={(e) => handleChange(e as React.ChangeEvent<HTMLInputElement>)}

@@ -7,7 +7,7 @@ const NounInput: React.FC<InputProps> = ({ formData,handleChange, handleBlur,isV
   <Form.Control
     disabled={isLoading}
     type="text"
-    placeholder="Noun"
+    placeholder="Symbol or centerpiece of the design (e.g., phoenix, rocket, gear)."
     size="sm"
     value={formData.noun}
     onChange={(e) => handleChange(e as React.ChangeEvent<HTMLInputElement>)}

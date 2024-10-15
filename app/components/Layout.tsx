@@ -1,19 +1,28 @@
-import React from 'react';
-import Navbar from 'react-bootstrap/Navbar';
+import React, { ReactNode } from 'react';
+import { ThemeProvider, useTheme } from '../contexts/theme-context';
+import NavBar from './NavBar';
+import Footer from './Footer';
 
-interface FooterProps {
-  isDarkTheme: boolean;
-}
-
-const Footer: React.FC<FooterProps> = ({ isDarkTheme }) => {
+const Layout: React.FC<{ children: ReactNode }> = ({ children }) => {
   return (
-    <Navbar expand="lg" className={`${isDarkTheme ? 'bg-dark text-light' : 'bg-light text-dark'}`} fixed="bottom">
-      <div className="p-3">
-        <span>© 2024 Copyright:&nbsp;</span>
-        <a className={isDarkTheme ? 'text-light' : 'text-dark'} href="https://helios.gallery/">futurama-helios.com</a>
-      </div>
-    </Navbar>
+    <ThemeProvider>
+      <ThemeWrapper>
+        <NavBar />
+        {children}
+        <Footer />
+      </ThemeWrapper>
+    </ThemeProvider>
   );
 };
 
-export default Footer;
+const ThemeWrapper: React.FC<{ children: ReactNode }> = ({ children }) => {
+  const { isDarkTheme } = useTheme();
+
+  React.useEffect(() => {
+    document.body.className = isDarkTheme ? 'dark-theme' : 'light-theme';
+  }, [isDarkTheme]);
+
+  return <>{children}</>;
+};
+
+export default Layout;
