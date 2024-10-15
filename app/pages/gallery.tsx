@@ -1,19 +1,17 @@
-import Jokes from '@/components/Jokes';
 import React from 'react';
-import { Container, Row } from 'react-bootstrap';
+import { Container } from 'react-bootstrap';
+import PhotoGallery from './photo-gallery';
 
 const GalleryPage = () => {
 
   return (
     <>
       <Container>
-        <Row className="mb-4">
-        </Row>
-        <Jokes jokeType='Spooky' heading='Gallery'/>
+        <div>
+            <PhotoGallery></PhotoGallery>
+        </div>
       </Container>
-
     </>
-
   );
 };
 

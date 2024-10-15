@@ -41,14 +41,6 @@ const NavBar: React.FC = () => {
         </Link>
         <Navbar.Toggle aria-controls="basic-navbar-nav" />
         <Navbar.Collapse id="basic-navbar-nav">
-<<<<<<< HEAD
-          <Nav className='navbarMargin' >
-            <Nav.Link href="/">Home</Nav.Link>
-            <Nav.Link href="/gallery">Gallery</Nav.Link>
-            <Nav.Link href="/profile">Profile</Nav.Link>
-            <Nav.Link href="/ai-gen">AI-Gen</Nav.Link>
-            <Nav.Link href="/image-gallery">Image Gallery</Nav.Link>
-=======
           <Nav className="me-auto">            
             <Link href="/" legacyBehavior>
               <a className={`nav-link ${styles.navLink}`}>Home</a>
@@ -62,7 +54,6 @@ const NavBar: React.FC = () => {
             <Link href="/ai-gen" legacyBehavior>
               <a className={`nav-link ${styles.navLink}`}>AI-Gen</a>
             </Link>
->>>>>>> origin/main
           </Nav>
           <ButtonGroup>
             {radios.map((radio, idx) => (

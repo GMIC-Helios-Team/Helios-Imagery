@@ -1,25 +1,19 @@
-import Navbar from './NavBar'
-import Footer from './Footer'
-import ErrorBoundary from './ErrorBoundary'
-import Head from 'next/head';
-import { ReactNode } from 'react';
+import React from 'react';
+import Navbar from 'react-bootstrap/Navbar';
 
-interface LayoutProps {
-  readonly children: ReactNode
+interface FooterProps {
+  isDarkTheme: boolean;
 }
 
-export default function Layout({ children }: LayoutProps) {
+const Footer: React.FC<FooterProps> = ({ isDarkTheme }) => {
   return (
-    <>
-      <Head>
-        <title>Helios Futurama</title>
-        <link rel="icon" href="/favicon.ico"/>
-      </Head>
-      <Navbar />
-      <ErrorBoundary>
-        <main>{children}</main>
-      </ErrorBoundary>
-      <Footer />
-    </>
-  )
-}
+    <Navbar expand="lg" className={`${isDarkTheme ? 'bg-dark text-light' : 'bg-light text-dark'}`} fixed="bottom">
+      <div className="p-3">
+        <span>© 2024 Copyright:&nbsp;</span>
+        <a className={isDarkTheme ? 'text-light' : 'text-dark'} href="https://helios.gallery/">futurama-helios.com</a>
+      </div>
+    </Navbar>
+  );
+};
+
+export default Footer;

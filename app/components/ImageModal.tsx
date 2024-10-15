@@ -23,6 +23,7 @@ const ImageModal: React.FC<ImageModalProps> = ({ image, onClose }) => {
   const LikeAnImage = () => {
     // Do like image actions
     // Check if it has already been liked somehow and if not, increment the like amount of the image
+    
   }
 
   return (
