@@ -12,6 +12,7 @@ function NavBar() {
             <Nav.Link href="/gallery">Gallery</Nav.Link>
             <Nav.Link href="/profile">Profile</Nav.Link>
             <Nav.Link href="/ai-gen">AI-Gen</Nav.Link>
+            <Nav.Link href="/image-gallery">Image Gallery</Nav.Link>
           </Nav>
         </Navbar.Collapse>
     </Navbar>
