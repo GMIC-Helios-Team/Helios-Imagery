@@ -68,10 +68,9 @@ const PhotoGallery = () => {
               
               {/* Center the link under the image */}
               <a 
-                //href={image.url} 
                 target="_blank" 
                 rel="noopener noreferrer"
-                style={{ textDecoration: 'none' }}
+                style={{ textDecoration: 'none', color:'brown', cursor:'pointer' }}
                 onClick={() => openImageDetail(image.hid)}
               >
                 View
@@ -79,7 +78,7 @@ const PhotoGallery = () => {
             </div>
           ))}
         </div>
-        {selectedImage && <ImageModal url={selectedImage!.url} hid={selectedImage!.hid} name={selectedImage!.name} prompt={selectedImage!.prompt} likesAmount={selectedImage!.likesAmount} imageThumbnailfilename='' imagefilename='' email='' createDatetime='' updateDatetime='' id={1} onClose={closeModal} />}
+        {selectedImage && <ImageModal url={selectedImage.url ?? 'not found'} hid={selectedImage.hid ?? 'not found'} name={selectedImage.name ?? 'not found'} prompt={selectedImage.prompt ?? 'not found'} likesAmount={selectedImage.likesAmount ?? 0} imageThumbnailfilename='' imagefilename='' email='' createDatetime='' updateDatetime='' id={1} onClose={closeModal} />}
       </div>
     );
   };
