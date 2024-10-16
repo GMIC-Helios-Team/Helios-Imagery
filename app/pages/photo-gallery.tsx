@@ -72,14 +72,14 @@ const PhotoGallery = () => {
                 target="_blank" 
                 rel="noopener noreferrer"
                 style={{ textDecoration: 'none' }}
-                onClick={() => openImageDetail(image.HID)}
+                onClick={() => openImageDetail(image.hid)}
               >
-                {image.HID}
+                View
               </a>
             </div>
           ))}
         </div>
-        {selectedImage && <ImageModal url={selectedImage!.url} HID={selectedImage!.HID} name={selectedImage!.name} prompt={selectedImage!.prompt} likesAmount={selectedImage!.likesAmount} imageThumbnailfilename='' imagefilename='' email='' createDatetime='' updateDatetime='' id={1} onClose={closeModal} />}
+        {selectedImage && <ImageModal url={selectedImage!.url} hid={selectedImage!.hid} name={selectedImage!.name} prompt={selectedImage!.prompt} likesAmount={selectedImage!.likesAmount} imageThumbnailfilename='' imagefilename='' email='' createDatetime='' updateDatetime='' id={1} onClose={closeModal} />}
       </div>
     );
   };

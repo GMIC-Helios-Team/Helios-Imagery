@@ -1,7 +1,7 @@
 import { GetGeneratedImageItem } from '@/types/generation-response';
 import React from 'react';
 
-const ImageModal: React.FC<GetGeneratedImageItem> = ({ url, HID, name, prompt, likesAmount,  onClose }) => {
+const ImageModal: React.FC<GetGeneratedImageItem> = ({ url, hid, name, prompt, likesAmount,  onClose }) => {
   // Handle click outside the modal content
   const handleOverlayClick = (e: React.MouseEvent<HTMLDivElement, MouseEvent>) => {
     if (e.target === e.currentTarget) {  // Check if the click is on the overlay itself
@@ -22,7 +22,7 @@ const ImageModal: React.FC<GetGeneratedImageItem> = ({ url, HID, name, prompt, l
           &times;
         </button>
         <img src={url} alt={name} style={{ width: '100%' }} />
-        <h2>{HID}</h2>
+        <h2>{hid}</h2>
         <p>{prompt}</p>
         <span><p>liked: {likesAmount ?? 0}</p><button onClick={() => LikeAnImage()}>I like this</button></span>
         
