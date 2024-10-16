@@ -33,6 +33,8 @@ const Wait = () => {
       } catch (error) {
         console.error('API request failed:', error);
         clearInterval(intervalId);
+        router.push(`/gallery/image/${id}`);        
+        return;
       }
 
       elapsedTime += interval;
