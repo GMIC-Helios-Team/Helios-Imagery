@@ -1,8 +1,8 @@
 import React, { useState, useEffect } from 'react';
 import { useRouter } from 'next/router'
 import Jokes from '@/components/Jokes';
-import { GetGeneratedImage } from '@/types/generation-response';
 import { Alert, Button, Card, Col, Container, Row } from 'react-bootstrap';
+import { fetchImage } from '@/helpers/get-generated-image-api';
 
 const Wait = () => {
   const [isTimeout, setIsTimeout] = useState<boolean>(false);
@@ -25,22 +25,11 @@ const Wait = () => {
 
       console.log('Issuing API request');
       try {
-        const url = new URL('/api/generate-image', window.location.origin);
-        url.searchParams.append('HID', id as string);
-
-        const imageReadyResponse = await fetch(url.toString(), {
-          method: 'GET',
-          headers: {
-            'Content-Type': 'application/json',
-          },
-        });
-        const imageReadyResult: GetGeneratedImage = await imageReadyResponse.json();
-        if (imageReadyResult.imagefilename) {
+        const generatedImage = await fetchImage(id as string);  
+        if (generatedImage.imagefilename) {
           clearInterval(intervalId);
           router.push(`/gallery/image/${id}`);
         }
-
-        console.log('API response:', imageReadyResult);
       } catch (error) {
         console.error('API request failed:', error);
         clearInterval(intervalId);

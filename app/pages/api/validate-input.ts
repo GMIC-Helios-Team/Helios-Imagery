@@ -61,7 +61,11 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
         res.status(400).json(responseObject);
       }
     } catch (error) {
-      res.status(503).json({ message: 'Service is not Available' });
+      if (error instanceof Error) {
+        res.status(503).json({ message: error.message });
+      } else {
+        res.status(503).json({ message: 'An unknown error occurred' });
+      }
     }
   } else {
     res.status(405).json({ message: 'Method not allowed' });
