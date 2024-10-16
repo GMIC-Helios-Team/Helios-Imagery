@@ -181,7 +181,7 @@ const AiGenPage: React.FC<AiGenPageProps> = ({ prompt }) => {
     <Container style={{ marginTop: '50px' }}>
       <Row className="mb-4">
         <Col md={{ offset: 3, span: 6 }}>
-          <Card className={isDarkTheme ? 'bg-dark text-light' : 'bg-light text-dark'}>
+          <Card className={`${aigen.cardBackgroundCustom} ${aigen.cardShadowCustom} ${isDarkTheme ? 'bg-dark text-light' : 'bg-light text-dark'}`}>
             <Card.Header>
               AI Generator
             </Card.Header>

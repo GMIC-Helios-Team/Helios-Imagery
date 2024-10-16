@@ -20,12 +20,12 @@ const GalleryImage = () => {
         setData(generatedImage);
       } catch (error) {
         const errImage: GetGeneratedImage = {
-          imagefilename: '/images/error.jpg',
-          prompt: "Error Prompt",
-          name: "Error Name",
-          email: "Error Email",
-          HID: "Error HID",
-          imageThumbnailfilename: "/images/error.jpg"
+          imagefilename: '/err-pirate.png',
+          prompt: "Yarr! Our robo-pirates searched every corner of the digital seas, but the image has gone overboard! Maybe it walked the plank? Sail back to safer waters",
+          name: "Lost at Sea-Bot: Image Not Found",
+          email: "",
+          HID: "",
+          imageThumbnailfilename: ""
         }
         setData(errImage);
       }
@@ -39,7 +39,7 @@ const GalleryImage = () => {
     <Container style={{ marginTop: '50px' }}>
       <Row className="mb-4">
         <Col md={{ offset: 3, span: 6 }}>
-          <Card className={style.cardBackgroundCustom}>
+          <Card className={`${style.cardBackgroundCustom} ${style.cardShadowCustom}`}>
             <Card.Header>Gallery Image</Card.Header>
             <Card.Body>
               <Card.Title>{data?.name}</Card.Title>
