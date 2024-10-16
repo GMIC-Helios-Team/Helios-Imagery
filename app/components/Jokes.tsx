@@ -13,17 +13,25 @@ const Jokes: React.FC = () => {
     setIsClient(true);
   }, []);
 
-  const alternateCategories = (): string => {
-    let localCategory = '';
-    if (category === 'Programming') {
-      localCategory = "Spooky";
+  useEffect(() => {
+    if (isClient && category) {
+      fetchData(category);
     }
-    else {
-      localCategory = 'Programming';
+  }, [category, isClient]);
+
+  useEffect(() => {
+    const toggleCategories = () => {
+      if (category === 'Programming') {
+        setCategory("Spooky");
+      }
+      else {
+        setCategory("Programming");
+      }
     }
-    setCategory(localCategory);
-    return localCategory;
-  }
+    const intervalId = setInterval(toggleCategories, 8000); // 8 seconds
+
+    return () => clearInterval(intervalId); // Cleanup on unmount
+  }, [category]);
 
   const fetchData = async (category: string) => {
     const url = `${process.env.NEXT_PUBLIC_JOKE_URL}/${category}?safe-mode`;
@@ -46,22 +54,6 @@ const Jokes: React.FC = () => {
       setIsLoading(false);
     }
   };
-  const alternateAndFetch = () => {
-    fetchData(alternateCategories());
-  }
-
-  useEffect(() => {
-    if (isClient && category) {
-      fetchData(category);
-    }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [category, isClient]);
-
-  useEffect(() => {
-    const intervalId = setInterval(alternateAndFetch, 8000); // 8 seconds
-
-    return () => clearInterval(intervalId); // Cleanup on unmount
-  }, [alternateAndFetch]);
 
   if (!isClient) {
     return null; // Render nothing on the server

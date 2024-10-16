@@ -151,7 +151,11 @@ const AiGenPage: React.FC<AiGenPageProps> = ({ prompt }) => {
           setIsValid({ ...isValid, [name]: true });
         }
       } catch (error) {
-        setErrors({ ...errors, [name]: 'Validation request failed' });
+        if (error instanceof Error) {
+          setErrors({ ...errors, [name]: error.message });
+        } else {
+          setErrors({ ...errors, [name]: 'An unexpected error occurred' });
+        }
       }
     }
 

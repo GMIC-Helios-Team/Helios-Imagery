@@ -1,40 +1,37 @@
-import { GetGeneratedImage } from '@/types/generation-response';
 import { useRouter } from 'next/router';
 import React, { useEffect, useState } from 'react';
 import { Col, Container, Row, Image, Card } from 'react-bootstrap';
-// import Image from 'next/image';
+import { fetchImage } from '@/helpers/get-generated-image-api';
+import { GetGeneratedImage } from '@/types/generation-response';
+import style from '@/styles/gallery-image.module.css';
 
 const GalleryImage = () => {
-  const [imageUrl, setImageUrl] = useState<string>('');
-
+  const [data, setData] = useState<GetGeneratedImage | null>(null);
   const router = useRouter();
   const { id } = router.query;
   useEffect(() => {
     if (!id) return;
 
-    const fetchImage = async () => {
+    const retrieveImage = async () => {
       console.log('Issuing API request');
       try {
-        const url = new URL('/api/generate-image', window.location.origin);
-        url.searchParams.append('HID', id as string);
-
-        const imageReadyResponse = await fetch(url.toString(), {
-          method: 'GET',
-          headers: {
-            'Content-Type': 'application/json',
-          },
-        });
-        const imageReadyResult: GetGeneratedImage = await imageReadyResponse.json();
-        if (imageReadyResult.imagefilename) {
-          setImageUrl(`https://cdn.helios.gallery/${imageReadyResult.imagefilename}`);
-        }
-        console.log('API response:', imageReadyResult);
+        const generatedImage = await fetchImage(id as string);
+        generatedImage.imagefilename = `${process.env.NEXT_PUBLIC_HELIOS_GALLERY}/${generatedImage.imagefilename}`
+        setData(generatedImage);
       } catch (error) {
-        console.error('API request failed:', error);
+        const errImage: GetGeneratedImage = {
+          imagefilename: '/images/error.jpg',
+          prompt: "Error Prompt",
+          name: "Error Name",
+          email: "Error Email",
+          HID: "Error HID",
+          imageThumbnailfilename: "/images/error.jpg"
+        }
+        setData(errImage);
       }
     };
 
-    fetchImage();
+    retrieveImage();
 
   }, [id, router]);
 
@@ -42,19 +39,19 @@ const GalleryImage = () => {
     <Container style={{ marginTop: '50px' }}>
       <Row className="mb-4">
         <Col md={{ offset: 3, span: 6 }}>
-          <Card>
+          <Card className={style.cardBackgroundCustom}>
             <Card.Header>Gallery Image</Card.Header>
             <Card.Body>
+              <Card.Title>{data?.name}</Card.Title>
               <Image
-                src={imageUrl}
+                src={data?.imagefilename}
                 fluid
-                // className={aigen.generatedImage}
+                className={style.imageBeveled}
                 alt="Generated Image"
               />
+              <Card.Text className={style.cardTextCustom}>{data?.prompt}</Card.Text>
             </Card.Body>
           </Card>
-
-          {/* <Image src={imageUrl} alt="Generated Image" fluid/> */}
         </Col>
       </Row>
     </Container>

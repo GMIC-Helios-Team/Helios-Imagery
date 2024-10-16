@@ -1,8 +1,6 @@
 // pages/api/validate-input.ts
 import { NextApiRequest, NextApiResponse } from 'next';
-
 import { GenerationResponse, GetGeneratedImage } from '@/types/generation-response';
-
 
 export default async function handler(req: NextApiRequest, res: NextApiResponse) {
   if (req.method === 'POST') {
@@ -18,9 +16,6 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
 
     try {
       const url = new URL(`${apiUrl}/${promptGenerationEndpoint}`);
-
-      console.log(`url: ${url.toString()} \n ${prompt}`);
-
       const response = await fetch(url.toString(), {
         method: 'POST',
         headers: {
@@ -32,7 +27,6 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
       });
 
       const data: GenerationResponse = await response.json();
-      console.log(data);
       if (response.ok) {
         res.status(200).json(data);
       } else if (response.status === 500) {
@@ -56,7 +50,6 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
 
     try {
       const url = new URL(`${apiUrl}/${generatedImageEndpoint}`);
-      console.log(`url: ${url.toString()} \n ${HID}`);
 
       if (HID) {
         url.searchParams.append('HID', HID as string);
@@ -71,12 +64,15 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
           'Authorization': `Basic ${credentials}`,
         },
       });
+      
+      if (!response.ok) {
+        throw new Error('Validation request failed');
+      }
 
       const data: GetGeneratedImage[] = await response.json();
       res.status(200).json(data[0]);
 
     } catch (error) {
-      console.log('ouch some error');
       res.status(503).json({ message: 'Service is not Available' });
     }
 

@@ -13,5 +13,10 @@ export const validateWithAPI = async (classification: string, word: string): Pro
     },
   });
 
+  console.log('response', response);
+  if (!response.ok) {
+    throw new Error('Validate request failed');
+  }
+
   return response.json();
 };
