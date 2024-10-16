@@ -68,12 +68,12 @@ const AiGenPage: React.FC<AiGenPageProps> = ({ prompt }) => {
       console.log("starting generation");
 
       const data = prompt
-        .replace('{noun}', formData.noun)
+        .replaceAll('{noun}', formData.noun)
         .replaceAll('{verb}', formData.verb)
-        .replace('{fontStyle}', formData.fontStyle)
+        .replaceAll('{fontStyle}', formData.fontStyle)
         .replaceAll('{colorPalette}', formData.colorPalette)
         .replaceAll('{theme}', formData.theme)
-        .replace('{artStyle}', formData.artStyle);
+        .replaceAll('{artStyle}', formData.artStyle);
 
       console.log(data);
 
