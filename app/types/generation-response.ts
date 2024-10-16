@@ -14,15 +14,22 @@ export interface GetGeneratedImage{
   imageThumbnailfilename: string;
 }
 
-export interface GetGeneratedImageListItem{
+export interface GetGeneratedImageItem{
   HID: string;
   name: string;
   email: string;
   prompt: string;
   imagefilename: string;
   imageThumbnailfilename: string;
+  createDatetime: string;
+  updateDatetime: string;
+  url: string;
+  id: number;
+  likesAmount?: number;
+  onClose: () => void;
 }
 
 export interface GetGeneratedImageList{
-  images: GetGeneratedImageListItem[];
+  images: GetGeneratedImageItem[];
+  message: string;
 }

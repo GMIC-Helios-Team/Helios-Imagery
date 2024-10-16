@@ -1,45 +1,37 @@
-// pages/api/validate-input.ts
-import { NextApiRequest, NextApiResponse } from 'next';
+// apiService.js
 
-import { GenerationResponse } from '@/types/generation-response';
-
-export default async function handler(req: NextApiRequest, res: NextApiResponse) {
-  if (req.method === 'GET') {
-
-    // Credentials
+export const GetImageList = async () => {
     const username = process.env.API_USERNAME;;
     const password = process.env.API_PASSWORD;
-    const apiUrl = process.env.AI_API_URL;
-    // const generationEndpoint = process.env.GENERATION_ENDPOINT;
-    // const promptGenerationEndpoint = process.env.PROMPT_GENERATION_ENDPOINT;
-    const getImageListEndpoint = process.env.GET_IMAGE_LIST_ENDPOINT;
-
+    // const apiUrl = process.env.AI_API_URL;
+    // const getImageListEndpoint = process.env.GET_IMAGE_LIST_ENDPOINT;
+    const apiUrl = 'https://localhost:7244';
+    const getImageListEndpoint = 'OpenAi/GetImages';
+  
+    // Encode the username and password in Base64
     const credentials = Buffer.from(`${username}:${password}`).toString('base64');
-
+  
+    // Make the API request
     try {
-      const url = new URL(`${apiUrl}/${getImageListEndpoint}`);
+        const url = new URL(`${apiUrl}/${getImageListEndpoint}`);
 
-      const response = await fetch(url.toString(), {
-        method: 'POST',
+        console.log(`url: ${url.toString()}`);
+
+      const response = await fetch(url, {
+        method: 'GET',
         headers: {
-          'Content-Type': 'application/json',
           'Authorization': `Basic ${credentials}`,
-        }
+          'Content-Type': 'application/json',
+        },
       });
-
-      const data: GenerationResponse = await response.json();
-      if (response.ok) {
-        res.status(200).json(data);
-      } else if (response.status === 500) {
-        res.status(500).json({ message: data.message });
-      } else {
-        res.status(400).json({ message: 'Bad request' });
+      if (!response.ok) {
+        throw new Error(`HTTP error! Status: ${response.status}`);
       }
-
+  
+      const data = await response.json();
+      return data;
     } catch (error) {
-      res.status(500).json({ message: 'Internal server error' });
+      console.error('Error fetching images:', error);
+      throw error;  // You can handle this error in your component
     }
-  } else {
-    res.status(405).json({ message: 'Method not allowed' });
-  }
-}
+  };

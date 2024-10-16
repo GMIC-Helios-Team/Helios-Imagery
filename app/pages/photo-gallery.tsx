@@ -1,65 +1,49 @@
-import React, {  useState } from 'react';
+import React, { useState, useEffect } from 'react';
+import { GetImageList } from '@/pages/api/get-image-list'; // Import the API service
+import { GetGeneratedImageItem } from '@/types/generation-response';
 import ImageModal from '@/components/ImageModal';
+import { useRouter } from 'next/router';
 
-interface ImageItem {
-  id: number;
-  src: string;
-  title: string;
-  description: string;
-  likesAmount?: number;
-}
+const PhotoGallery = () => {
 
-const images: ImageItem[] = [
-  { id: 1, src: 'https://upload.wikimedia.org/wikipedia/commons/3/33/Blue_merle_koolie_short_coat_heading_sheep.jpg', title: 'Image 1', description: 'Description for Image 1' , likesAmount: 2},
-  { id: 2, src: 'https://upload.wikimedia.org/wikipedia/commons/9/99/Brooks_Chase_Ranger_of_Jolly_Dogs_Jack_Russell.jpg', title: 'Image 2', description: 'Description for Image 2' },
-  { id: 1, src: 'https://upload.wikimedia.org/wikipedia/commons/3/33/Blue_merle_koolie_short_coat_heading_sheep.jpg', title: 'Image 1', description: 'Description for Image 1' , likesAmount: 2},
-  { id: 2, src: 'https://upload.wikimedia.org/wikipedia/commons/9/99/Brooks_Chase_Ranger_of_Jolly_Dogs_Jack_Russell.jpg', title: 'Image 2', description: 'Description for Image 2' },{ id: 1, src: 'https://upload.wikimedia.org/wikipedia/commons/3/33/Blue_merle_koolie_short_coat_heading_sheep.jpg', title: 'Image 1', description: 'Description for Image 1' , likesAmount: 2},
-  { id: 2, src: 'https://upload.wikimedia.org/wikipedia/commons/9/99/Brooks_Chase_Ranger_of_Jolly_Dogs_Jack_Russell.jpg', title: 'Image 2', description: 'Description for Image 2' },{ id: 1, src: 'https://upload.wikimedia.org/wikipedia/commons/3/33/Blue_merle_koolie_short_coat_heading_sheep.jpg', title: 'Image 1', description: 'Description for Image 1' , likesAmount: 2},
-  { id: 2, src: 'https://upload.wikimedia.org/wikipedia/commons/9/99/Brooks_Chase_Ranger_of_Jolly_Dogs_Jack_Russell.jpg', title: 'Image 2', description: 'Description for Image 2' },{ id: 1, src: 'https://upload.wikimedia.org/wikipedia/commons/3/33/Blue_merle_koolie_short_coat_heading_sheep.jpg', title: 'Image 1', description: 'Description for Image 1' , likesAmount: 2},
-  { id: 2, src: 'https://upload.wikimedia.org/wikipedia/commons/9/99/Brooks_Chase_Ranger_of_Jolly_Dogs_Jack_Russell.jpg', title: 'Image 2', description: 'Description for Image 2' },{ id: 1, src: 'https://upload.wikimedia.org/wikipedia/commons/3/33/Blue_merle_koolie_short_coat_heading_sheep.jpg', title: 'Image 1', description: 'Description for Image 1' , likesAmount: 2},
-  { id: 2, src: 'https://upload.wikimedia.org/wikipedia/commons/9/99/Brooks_Chase_Ranger_of_Jolly_Dogs_Jack_Russell.jpg', title: 'Image 2', description: 'Description for Image 2' },{ id: 1, src: 'https://upload.wikimedia.org/wikipedia/commons/3/33/Blue_merle_koolie_short_coat_heading_sheep.jpg', title: 'Image 1', description: 'Description for Image 1' , likesAmount: 2},
-  { id: 2, src: 'https://upload.wikimedia.org/wikipedia/commons/9/99/Brooks_Chase_Ranger_of_Jolly_Dogs_Jack_Russell.jpg', title: 'Image 2', description: 'Description for Image 2' },{ id: 1, src: 'https://upload.wikimedia.org/wikipedia/commons/3/33/Blue_merle_koolie_short_coat_heading_sheep.jpg', title: 'Image 1', description: 'Description for Image 1' , likesAmount: 2},
-  { id: 2, src: 'https://upload.wikimedia.org/wikipedia/commons/9/99/Brooks_Chase_Ranger_of_Jolly_Dogs_Jack_Russell.jpg', title: 'Image 2', description: 'Description for Image 2' },{ id: 1, src: 'https://upload.wikimedia.org/wikipedia/commons/3/33/Blue_merle_koolie_short_coat_heading_sheep.jpg', title: 'Image 1', description: 'Description for Image 1' , likesAmount: 2},
-  { id: 2, src: 'https://upload.wikimedia.org/wikipedia/commons/9/99/Brooks_Chase_Ranger_of_Jolly_Dogs_Jack_Russell.jpg', title: 'Image 2', description: 'Description for Image 2' },{ id: 1, src: 'https://upload.wikimedia.org/wikipedia/commons/3/33/Blue_merle_koolie_short_coat_heading_sheep.jpg', title: 'Image 1', description: 'Description for Image 1' , likesAmount: 2},
-  { id: 2, src: 'https://upload.wikimedia.org/wikipedia/commons/9/99/Brooks_Chase_Ranger_of_Jolly_Dogs_Jack_Russell.jpg', title: 'Image 2', description: 'Description for Image 2' },{ id: 1, src: 'https://upload.wikimedia.org/wikipedia/commons/3/33/Blue_merle_koolie_short_coat_heading_sheep.jpg', title: 'Image 1', description: 'Description for Image 1' , likesAmount: 2},
-  { id: 2, src: 'https://upload.wikimedia.org/wikipedia/commons/9/99/Brooks_Chase_Ranger_of_Jolly_Dogs_Jack_Russell.jpg', title: 'Image 2', description: 'Description for Image 2' },{ id: 1, src: 'https://upload.wikimedia.org/wikipedia/commons/3/33/Blue_merle_koolie_short_coat_heading_sheep.jpg', title: 'Image 1', description: 'Description for Image 1' , likesAmount: 2},
-  { id: 2, src: 'https://upload.wikimedia.org/wikipedia/commons/9/99/Brooks_Chase_Ranger_of_Jolly_Dogs_Jack_Russell.jpg', title: 'Image 2', description: 'Description for Image 2' },{ id: 1, src: 'https://upload.wikimedia.org/wikipedia/commons/3/33/Blue_merle_koolie_short_coat_heading_sheep.jpg', title: 'Image 1', description: 'Description for Image 1' , likesAmount: 2},
-  { id: 2, src: 'https://upload.wikimedia.org/wikipedia/commons/9/99/Brooks_Chase_Ranger_of_Jolly_Dogs_Jack_Russell.jpg', title: 'Image 2', description: 'Description for Image 2' },{ id: 1, src: 'https://upload.wikimedia.org/wikipedia/commons/3/33/Blue_merle_koolie_short_coat_heading_sheep.jpg', title: 'Image 1', description: 'Description for Image 1' , likesAmount: 2},
-  { id: 2, src: 'https://upload.wikimedia.org/wikipedia/commons/9/99/Brooks_Chase_Ranger_of_Jolly_Dogs_Jack_Russell.jpg', title: 'Image 2', description: 'Description for Image 2' },{ id: 1, src: 'https://upload.wikimedia.org/wikipedia/commons/3/33/Blue_merle_koolie_short_coat_heading_sheep.jpg', title: 'Image 1', description: 'Description for Image 1' , likesAmount: 2},
-  { id: 2, src: 'https://upload.wikimedia.org/wikipedia/commons/9/99/Brooks_Chase_Ranger_of_Jolly_Dogs_Jack_Russell.jpg', title: 'Image 2', description: 'Description for Image 2' },{ id: 1, src: 'https://upload.wikimedia.org/wikipedia/commons/3/33/Blue_merle_koolie_short_coat_heading_sheep.jpg', title: 'Image 1', description: 'Description for Image 1' , likesAmount: 2},
-  { id: 2, src: 'https://upload.wikimedia.org/wikipedia/commons/9/99/Brooks_Chase_Ranger_of_Jolly_Dogs_Jack_Russell.jpg', title: 'Image 2', description: 'Description for Image 2' },{ id: 1, src: 'https://upload.wikimedia.org/wikipedia/commons/3/33/Blue_merle_koolie_short_coat_heading_sheep.jpg', title: 'Image 1', description: 'Description for Image 1' , likesAmount: 2},
-  { id: 2, src: 'https://upload.wikimedia.org/wikipedia/commons/9/99/Brooks_Chase_Ranger_of_Jolly_Dogs_Jack_Russell.jpg', title: 'Image 2', description: 'Description for Image 2' },{ id: 1, src: 'https://upload.wikimedia.org/wikipedia/commons/3/33/Blue_merle_koolie_short_coat_heading_sheep.jpg', title: 'Image 1', description: 'Description for Image 1' , likesAmount: 2},
-  { id: 2, src: 'https://upload.wikimedia.org/wikipedia/commons/9/99/Brooks_Chase_Ranger_of_Jolly_Dogs_Jack_Russell.jpg', title: 'Image 2', description: 'Description for Image 2' },{ id: 1, src: 'https://upload.wikimedia.org/wikipedia/commons/3/33/Blue_merle_koolie_short_coat_heading_sheep.jpg', title: 'Image 1', description: 'Description for Image 1' , likesAmount: 2},
-  { id: 2, src: 'https://upload.wikimedia.org/wikipedia/commons/9/99/Brooks_Chase_Ranger_of_Jolly_Dogs_Jack_Russell.jpg', title: 'Image 2', description: 'Description for Image 2' },{ id: 1, src: 'https://upload.wikimedia.org/wikipedia/commons/3/33/Blue_merle_koolie_short_coat_heading_sheep.jpg', title: 'Image 1', description: 'Description for Image 1' , likesAmount: 2},
-  { id: 2, src: 'https://upload.wikimedia.org/wikipedia/commons/9/99/Brooks_Chase_Ranger_of_Jolly_Dogs_Jack_Russell.jpg', title: 'Image 2', description: 'Description for Image 2' },{ id: 1, src: 'https://upload.wikimedia.org/wikipedia/commons/3/33/Blue_merle_koolie_short_coat_heading_sheep.jpg', title: 'Image 1', description: 'Description for Image 1' , likesAmount: 2},
-  { id: 2, src: 'https://upload.wikimedia.org/wikipedia/commons/9/99/Brooks_Chase_Ranger_of_Jolly_Dogs_Jack_Russell.jpg', title: 'Image 2', description: 'Description for Image 2' },{ id: 1, src: 'https://upload.wikimedia.org/wikipedia/commons/3/33/Blue_merle_koolie_short_coat_heading_sheep.jpg', title: 'Image 1', description: 'Description for Image 1' , likesAmount: 2},
-  { id: 2, src: 'https://upload.wikimedia.org/wikipedia/commons/9/99/Brooks_Chase_Ranger_of_Jolly_Dogs_Jack_Russell.jpg', title: 'Image 2', description: 'Description for Image 2' },{ id: 1, src: 'https://upload.wikimedia.org/wikipedia/commons/3/33/Blue_merle_koolie_short_coat_heading_sheep.jpg', title: 'Image 1', description: 'Description for Image 1' , likesAmount: 2},
-  { id: 2, src: 'https://upload.wikimedia.org/wikipedia/commons/9/99/Brooks_Chase_Ranger_of_Jolly_Dogs_Jack_Russell.jpg', title: 'Image 2', description: 'Description for Image 2' },{ id: 1, src: 'https://upload.wikimedia.org/wikipedia/commons/3/33/Blue_merle_koolie_short_coat_heading_sheep.jpg', title: 'Image 1', description: 'Description for Image 1' , likesAmount: 2},
-  { id: 2, src: 'https://upload.wikimedia.org/wikipedia/commons/9/99/Brooks_Chase_Ranger_of_Jolly_Dogs_Jack_Russell.jpg', title: 'Image 2', description: 'Description for Image 2' },{ id: 1, src: 'https://upload.wikimedia.org/wikipedia/commons/3/33/Blue_merle_koolie_short_coat_heading_sheep.jpg', title: 'Image 1', description: 'Description for Image 1' , likesAmount: 2},
-  { id: 2, src: 'https://upload.wikimedia.org/wikipedia/commons/9/99/Brooks_Chase_Ranger_of_Jolly_Dogs_Jack_Russell.jpg', title: 'Image 2', description: 'Description for Image 2' },
-];
+  const [loading, setLoading] = useState(true);
+  const [images, setImages] = useState<GetGeneratedImageItem[]>([]);
+  const [error, setError] = useState<string | null>(null);
+  const [selectedImage, setSelectedImage] = useState<GetGeneratedImageItem | null>(null);
 
+  const router = useRouter();
+  const openImageDetail = (hid: string) => {
+    router.push(`/gallery/image/${hid}`); // Navigate to /gallery/image/{hid}
+  };
 
-const PhotoGallery: React.FC = () => {
-    const [selectedImage, setSelectedImage] = useState<ImageItem | null>(null);
-  //   const [images, setImages] = useState<ImageItem[]>([]); // State to hold images
+  // Fetch images when the component mounts
+  useEffect(() => {
+    const fetchImages = async () => {
+      try {
+        const fetchedImages = await GetImageList();
+        setImages(fetchedImages);
+      } catch (err) {
+        if (err instanceof Error) {
+          setError(err.message); // Now TypeScript knows 'err' has a 'message' property
+        } else {
+          setError('An unknown error occurred'); // Fallback for non-error objects
+        }
+      } finally {
+        setLoading(false);
+      }
+    };
 
-  //   const fetchImages = async () => {
-  //       try {
-  //         const response = await fetch('https://api.unsplash.com/photos/random?count=10&client_id=YOUR_ACCESS_KEY');  // Replace with your API endpoint and key
-  //         const data = await response.json();
-  //         setImages(data);  // Update state with fetched images
-  //       } catch (error) {
-  //         console.error('Error fetching images:', error);
-  //       }
-  //     };
+    fetchImages();
+  }, []);
 
-  //       // Step 3: Use useEffect to call fetchImages when the component mounts
-  // useEffect(() => {
-  //   fetchImages();
-  // }, []);  // Empty dependency array means this runs once on mount
-  
-    const openModal = (image: ImageItem) => {
+  if (loading) {
+    return <div>Loading...</div>;
+  }
+
+  if (error) {
+    return <div>Error: {error}</div>;
+  }
+    const openModal = (image: GetGeneratedImageItem) => {
       setSelectedImage(image);
     };
   
@@ -75,8 +59,8 @@ const PhotoGallery: React.FC = () => {
             <div key={image.id} style={galleryStyles.itemContainer}>
               
               <img
-                src={image.src}
-                alt={image.title}
+                src={image.url}
+                alt={image.prompt}
                 style={galleryStyles.image}
                 onClick={() => openModal(image)}
               />
@@ -84,18 +68,18 @@ const PhotoGallery: React.FC = () => {
               
               {/* Center the link under the image */}
               <a 
-                href={image.title} 
+                //href={image.url} 
                 target="_blank" 
                 rel="noopener noreferrer"
                 style={{ textDecoration: 'none' }}
+                onClick={() => openImageDetail(image.HID)}
               >
-                View
+                {image.HID}
               </a>
             </div>
           ))}
         </div>
-    
-        {selectedImage && <ImageModal image={selectedImage} onClose={closeModal} />}
+        {selectedImage && <ImageModal url={selectedImage!.url} HID={selectedImage!.HID} name={selectedImage!.name} prompt={selectedImage!.prompt} likesAmount={selectedImage!.likesAmount} imageThumbnailfilename='' imagefilename='' email='' createDatetime='' updateDatetime='' id={1} onClose={closeModal} />}
       </div>
     );
   };
@@ -125,6 +109,5 @@ const PhotoGallery: React.FC = () => {
       borderBottom: '2px solid #ccc' /* Bottom border */
     }
   };
-  
 
 export default PhotoGallery;
