@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import FlipCard from '../components/FlipCard';
+import FlipCard from '@/components/FlipCard';
 import { Row, Col, Container, Card } from 'react-bootstrap';
 
 const ProfilePage = () => {
