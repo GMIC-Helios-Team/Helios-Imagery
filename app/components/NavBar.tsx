@@ -47,9 +47,6 @@ const NavBar: React.FC = () => {
         <Navbar.Toggle aria-controls="basic-navbar-nav" />
         <Navbar.Collapse id="basic-navbar-nav" className={isDarkTheme ? styles.navbarCollapseDark : styles.navbarCollapseLight}>
           <Nav className="ml-auto">
-            <Link href="/" legacyBehavior>
-              <a className={`nav-link ${styles.navLink}`}>Home</a>
-            </Link>
             <Link href="/gallery" legacyBehavior>
               <a className={`nav-link ${styles.navLink}`}>Gallery</a>
             </Link>
