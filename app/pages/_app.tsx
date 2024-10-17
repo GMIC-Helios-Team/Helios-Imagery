@@ -1,6 +1,6 @@
 import React from 'react';
 import 'bootstrap/dist/css/bootstrap.min.css';
-import '../styles/global.css';
+import '@/styles/global.css';
 import { AppProps } from 'next/app';
 import Layout from '@/components/Layout';
 
@@ -8,7 +8,7 @@ import { useEffect } from 'react';
 import { matchRoutes } from 'react-router-dom';
 import { initializeFaro, createReactRouterV6DataOptions, ReactIntegration, getWebInstrumentations } from '@grafana/faro-react';
 import { TracingInstrumentation } from '@grafana/faro-web-tracing';
-import { ThemeProvider } from '../contexts/theme-context';
+import { ThemeProvider } from '@/contexts/theme-context';
 
 function HeliosFuturamaApp({ Component, pageProps }: AppProps) {
   useEffect(() => {

@@ -1,5 +1,5 @@
 import Document, { Html, Head, Main, NextScript } from 'next/document';
-import { ThemeProvider, useTheme } from '../contexts/theme-context';
+import { ThemeProvider, useTheme } from '@/contexts/theme-context';
 import React from 'react';
 
 class MyDocument extends Document {
