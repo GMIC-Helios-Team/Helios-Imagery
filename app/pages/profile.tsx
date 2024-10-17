@@ -96,7 +96,7 @@ const CarouselComponent = () => {
           </span>
         </label>
       </div>
-      <Carousel responsive={responsive} swipeable infinite	arrows={false}  infinite={true} autoPlay={true} autoPlaySpeed={4000}>
+      <Carousel responsive={responsive} swipeable arrows={false}  infinite={true} autoPlay={true} autoPlaySpeed={4000}>
         {people.map((person, index) => {
           const isFlipped = flippedCards[index]; // Check if the current card is flipped
           const profile = isFlipped ? person.back : person.front;
