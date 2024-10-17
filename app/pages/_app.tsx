@@ -1,14 +1,17 @@
-// pages/_app.tsx
+import React from 'react';
 import 'bootstrap/dist/css/bootstrap.min.css';
-import '../styles/global.css'; 
+import '../styles/global.css';
 import { AppProps } from 'next/app';
-import Layout from '@/components/Layout';
+import { ThemeProvider } from '../contexts/theme-context';
+import Layout from '../components/Layout';
 
 function HeliosFuturamaApp({ Component, pageProps }: AppProps) {
   return (
-    <Layout>
+    <ThemeProvider>
+      <Layout>
         <Component {...pageProps} />
-    </Layout>
+      </Layout>
+    </ThemeProvider>
   );
 }
 
