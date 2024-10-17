@@ -7,7 +7,7 @@ const VerbInput: React.FC<InputProps> = ({ formData,handleChange, handleBlur,isV
   <Form.Control
     disabled={isLoading}
     type="text"
-    placeholder="Verb"
+    placeholder="Action word that describes movement or effect (e.g., radiating, flowing)."
     size="sm"
     value={formData.verb}
     onChange={(e) => handleChange(e as React.ChangeEvent<HTMLInputElement>)}

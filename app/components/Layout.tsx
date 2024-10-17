@@ -1,25 +1,28 @@
-import Navbar from './NavBar'
-import Footer from './Footer'
-import ErrorBoundary from './ErrorBoundary'
-import Head from 'next/head';
-import { ReactNode } from 'react';
+import React, { ReactNode } from 'react';
+import { ThemeProvider, useTheme } from '../contexts/theme-context';
+import NavBar from './NavBar';
+import Footer from './Footer';
 
-interface LayoutProps {
-  readonly children: ReactNode
-}
-
-export default function Layout({ children }: LayoutProps) {
+const Layout: React.FC<{ children: ReactNode }> = ({ children }) => {
   return (
-    <>
-      <Head>
-        <title>Helios Futurama</title>
-        <link rel="icon" href="/favicon.ico"/>
-      </Head>
-      <Navbar />
-      <ErrorBoundary>
-        <main>{children}</main>
-      </ErrorBoundary>
-      <Footer />
-    </>
-  )
-}
+    <ThemeProvider>
+      <ThemeWrapper>
+        <NavBar />
+        {children}
+        <Footer />
+      </ThemeWrapper>
+    </ThemeProvider>
+  );
+};
+
+const ThemeWrapper: React.FC<{ children: ReactNode }> = ({ children }) => {
+  const { isDarkTheme } = useTheme();
+
+  React.useEffect(() => {
+    document.body.className = isDarkTheme ? 'dark-theme' : 'light-theme';
+  }, [isDarkTheme]);
+
+  return <>{children}</>;
+};
+
+export default Layout;

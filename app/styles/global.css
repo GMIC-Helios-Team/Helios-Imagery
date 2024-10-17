@@ -4,10 +4,24 @@ html, body {
   margin: 0;
 }
 
+body {
+  transition: background-color 0.3s, color 0.3s;
+}
+
 #__next {
   display: flex;
   flex-direction: column;
   min-height: 100vh;
+}
+
+body.light-theme {
+  background-color: #ffffff;
+  color: #000000;
+}
+
+body.dark-theme {
+  background-color: #121212;
+  color: #ffffff;
 }
 
 .footer {
@@ -147,3 +161,19 @@ input:checked + .slider:before {
 }
 
 /* Profile Page CSS End */
+
+@keyframes warp {
+  0% {
+    transform: scale(1);
+  }
+  50% {
+    transform: scale(0);
+  }
+  100% {
+    transform: scale(1);
+  }
+}
+
+.warp-animation {
+  animation: warp 0.6s ease-in-out;
+}
