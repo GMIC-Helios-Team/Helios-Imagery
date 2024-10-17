@@ -1,6 +1,7 @@
 import React from 'react';
 import { Container, Row, Col, Button, Image } from 'react-bootstrap';
 import { useRouter } from 'next/router';
+import style from '@/styles/404.module.css';
 
 const Custom404 = () => {
   const router = useRouter();
@@ -17,8 +18,8 @@ const Custom404 = () => {
           <h1>404 - Page Not Found</h1>
           <p>Yarr! Our robo-pirates searched every corner of the digital seas, but the page has gone overboard! Maybe it walked the plank? Sail back to safer waters.</p>
           <Image
-            src="/err-pirate.png"
-            // className={style.imageBeveled}
+            src="/err-404.png"
+            className={style.imageBeveled}
             fluid
             alt="Generated Image"
           />
