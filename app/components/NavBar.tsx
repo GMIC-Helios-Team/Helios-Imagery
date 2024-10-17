@@ -2,7 +2,6 @@ import Link from 'next/link';
 import { useTheme } from '../contexts/theme-context';
 import { Navbar, Nav, ButtonGroup, ToggleButton } from 'react-bootstrap';
 import styles from '../styles/NavBar.module.css'; // Import the CSS Module
-
 const NavBar: React.FC = () => {
   const { isDarkTheme, toggleTheme } = useTheme();
 
@@ -15,8 +14,9 @@ const NavBar: React.FC = () => {
   const radios = [
     { name: 'Helios', value: 'light' },
     { name: 'DEP', value: 'dark' },
+    { name: 'Helios', value: 'light' },
+    { name: 'DEP', value: 'dark' },
   ];
-
   return (
     <Navbar expand="lg" className={isDarkTheme ? 'navbar-dark bg-dark' : 'navbar-light bg-light'} style={{ height: '80px' }}>
       <div className="container-fluid">
@@ -25,10 +25,7 @@ const NavBar: React.FC = () => {
         </Link>
         <Navbar.Toggle aria-controls="basic-navbar-nav" />
         <Navbar.Collapse id="basic-navbar-nav">
-          <Nav className="me-auto">            
-            <Link href="/" legacyBehavior>
-              <a className={`nav-link ${styles.navLink}`}>Home</a>
-            </Link>
+          <Nav className="me-auto">
             <Link href="/gallery" legacyBehavior>
               <a className={`nav-link ${styles.navLink}`}>Gallery</a>
             </Link>
@@ -36,7 +33,7 @@ const NavBar: React.FC = () => {
               <a className={`nav-link ${styles.navLink}`}>Profile</a>
             </Link>
             <Link href="/ai-gen" legacyBehavior>
-              <a className={`nav-link ${styles.navLink}`}>AI-Gen</a>
+              <a className={`nav-link ${styles.navLink}`}>Creative Canvas</a>
             </Link>
           </Nav>
           <ButtonGroup>
@@ -65,5 +62,4 @@ const NavBar: React.FC = () => {
     </Navbar>
   );
 };
-
 export default NavBar;
