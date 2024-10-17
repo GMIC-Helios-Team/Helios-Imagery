@@ -3,6 +3,7 @@ import { GetImageList } from '@/pages/api/get-image-list'; // Import the API ser
 import { GetGeneratedImageItem } from '@/types/generation-response';
 import ImageModal from '@/components/ImageModal';
 import { useRouter } from 'next/router';
+import ImageCard from '@/components/ImageCard';
 //import { fetchImage } from '@/helpers/get-generated-image-api';
 
 const PhotoGallery = () => {
@@ -11,6 +12,7 @@ const PhotoGallery = () => {
   const [images, setImages] = useState<GetGeneratedImageItem[]>([]);
   const [error, setError] = useState<string | null>(null);
   const [selectedImage, setSelectedImage] = useState<GetGeneratedImageItem | null>(null);
+
 
   const router = useRouter();
   const openImageDetail = (hid: string) => {
@@ -62,13 +64,8 @@ const PhotoGallery = () => {
         <div style={galleryStyles.container}>
           {images.map((image) => (
             <div key={image.id} style={galleryStyles.itemContainer}>
-              
-              <img
-                src={image.url}
-                alt={image.hid}
-                style={galleryStyles.image}
-                onClick={() => openModal(image)}
-              />
+              <ImageCard image={image} style={galleryStyles.image} onClick={() => openModal(image)}></ImageCard>
+
               <div style={galleryStyles.imageBorder}></div>
               
               {/* Center the link under the image */}
