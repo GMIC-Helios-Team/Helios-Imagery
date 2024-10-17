@@ -1,7 +1,12 @@
 import { GetGeneratedImageItem } from '@/types/generation-response';
 import React from 'react';
 
-const ImageModal: React.FC<GetGeneratedImageItem> = ({ url, hid, name, prompt, likesAmount,  onClose }) => {
+export interface ModalImageItem{
+  imageItem: GetGeneratedImageItem;
+  onClose: () => void;
+}
+
+const ImageModal: React.FC<ModalImageItem> = ({ imageItem, onClose }) => {
   // Handle click outside the modal content
   const handleOverlayClick = (e: React.MouseEvent<HTMLDivElement, MouseEvent>) => {
     if (e.target === e.currentTarget) {  // Check if the click is on the overlay itself
@@ -18,13 +23,13 @@ const ImageModal: React.FC<GetGeneratedImageItem> = ({ url, hid, name, prompt, l
   return (
     <div style={modalStyles.overlay} onClick={handleOverlayClick}>
       <div style={modalStyles.modal}>
-        <button onClick={onClose} style={modalStyles.closeButton}>
+        <button onClick={imageItem.onClose} style={modalStyles.closeButton}>
           &times;
         </button>
-        <img src={url} alt={name} style={{ width: '100%' }} />
-        <h2>{hid}</h2>
-        <p>{prompt}</p>
-        <span><p>liked: {likesAmount ?? 0}</p><button onClick={() => LikeAnImage()}>I like this</button></span>
+        <img src={imageItem.url} alt={imageItem.name} style={{ width: '100%' }} />
+        <h2>{imageItem.hid}</h2>
+        <p>{imageItem.prompt}</p>
+        <span><p>liked: {imageItem.likesAmount ?? 100}</p><button onClick={() => LikeAnImage()}>I like this</button></span>
         
       </div>
     </div>

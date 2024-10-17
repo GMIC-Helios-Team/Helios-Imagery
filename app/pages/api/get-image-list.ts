@@ -1,10 +1,15 @@
 // apiService.js
 
 export const GetImageList = async () => {
-    const username = process.env.API_USERNAME;;
-    const password = process.env.API_PASSWORD;
+    //const username = process.env.API_USERNAME;
+    //const password = process.env.API_PASSWORD;
     // const apiUrl = process.env.AI_API_URL;
     // const getImageListEndpoint = process.env.GET_IMAGE_LIST_ENDPOINT;
+    const username = 'helios';
+    const password = '7gXAsesm6kg8Bkxt7acw';
+     //const apiUrl = 'https://n8n.helios.gallery';
+     //const getImageListEndpoint = 'webhook/GetImageList';
+
     const apiUrl = 'https://localhost:7244';
     const getImageListEndpoint = 'OpenAi/GetImages';
   

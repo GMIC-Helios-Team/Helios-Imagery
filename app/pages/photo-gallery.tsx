@@ -3,6 +3,7 @@ import { GetImageList } from '@/pages/api/get-image-list'; // Import the API ser
 import { GetGeneratedImageItem } from '@/types/generation-response';
 import ImageModal from '@/components/ImageModal';
 import { useRouter } from 'next/router';
+//import { fetchImage } from '@/helpers/get-generated-image-api';
 
 const PhotoGallery = () => {
 
@@ -50,6 +51,10 @@ const PhotoGallery = () => {
     const closeModal = () => {
       setSelectedImage(null);
     };
+
+    // const retrieveImage = async() => {
+
+    // }
   
     return (
       <div>
@@ -60,7 +65,7 @@ const PhotoGallery = () => {
               
               <img
                 src={image.url}
-                alt={image.prompt}
+                alt={image.hid}
                 style={galleryStyles.image}
                 onClick={() => openModal(image)}
               />
@@ -78,7 +83,7 @@ const PhotoGallery = () => {
             </div>
           ))}
         </div>
-        {selectedImage && <ImageModal url={selectedImage.url ?? 'not found'} hid={selectedImage.hid ?? 'not found'} name={selectedImage.name ?? 'not found'} prompt={selectedImage.prompt ?? 'not found'} likesAmount={selectedImage.likesAmount ?? 0} imageThumbnailfilename='' imagefilename='' email='' createDatetime='' updateDatetime='' id={1} onClose={closeModal} />}
+        {selectedImage && <ImageModal imageItem={selectedImage} onClose={closeModal} />}
       </div>
     );
   };
