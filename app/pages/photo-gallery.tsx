@@ -1,24 +1,14 @@
 import React, { useState, useEffect } from 'react';
 import { GetImageList } from '@/pages/api/get-image-list'; // Import the API service
 import { GetGeneratedImageItem } from '@/types/generation-response';
-import ImageModal from '@/components/ImageModal';
 import { useRouter } from 'next/router';
 import ImageCard from '@/components/ImageCard';
-import ReactModal from '@/components/ReactModal';
-import { Button } from 'react-bootstrap';
-import MyVerticallyCenteredModal from '@/components/ReactModal';
-//import ps from '@/styles/photo-gallery.module.css';
-
-//import { fetchImage } from '@/helpers/get-generated-image-api';
 
 const PhotoGallery = () => {
 
   const [loading, setLoading] = useState(true);
   const [images, setImages] = useState<GetGeneratedImageItem[]>([]);
   const [error, setError] = useState<string | null>(null);
-  const [selectedImage, setSelectedImage] = useState<GetGeneratedImageItem | null>(null);
-  const [modalShow, setModalShow] = React.useState(false);
-
 
   const router = useRouter();
   const openImageDetail = (hid: string) => {
@@ -45,14 +35,6 @@ const PhotoGallery = () => {
     fetchImages();
   }, []);
 
-  const openModal = (image: GetGeneratedImageItem) => {
-    setSelectedImage(image);
-  };
-
-  const closeModal = () => {
-    setSelectedImage(null);
-  };
-
   return (
     <>
        {loading ? (
@@ -62,15 +44,11 @@ const PhotoGallery = () => {
       ) : images ? (
         <div>
         <h1 >Generated Images</h1>
-        <ReactModal/>
         <div style={galleryStyles.container}>
           {images.map((image) => (
             <div key={image.id} style={galleryStyles.itemContainer}>
-              <ImageCard image={image} style={galleryStyles.image} onClick={() => openModal(image)}></ImageCard>
-  
+              <ImageCard image={image} style={galleryStyles.image}></ImageCard>
               <div style={galleryStyles.imageBorder}></div>
-  
-              {/* Center the link under the image */}
               <a
                 target="_blank"
                 rel="noopener noreferrer"
@@ -82,7 +60,6 @@ const PhotoGallery = () => {
             </div>
           ))}
         </div>
-        {selectedImage && <ImageModal imageItem={selectedImage!} onClose={closeModal} />}
         </div>
       ) : (
         <p>No Images loaded</p>

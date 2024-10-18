@@ -1,35 +1,48 @@
+import { GetGeneratedImageItem } from '@/types/generation-response';
 import { useState } from 'react';
 import Button from 'react-bootstrap/Button';
 import Modal from 'react-bootstrap/Modal';
 
-function Example() {
-  const [show, setShow] = useState(false);
+interface ImageProperties {
+    src?: string;
+    image: GetGeneratedImageItem;
+    style?: React.CSSProperties;
+}
+const ModalImage: React.FC<ImageProperties> = ({ src, image, style }) => {
+    const [show, setShow] = useState(false);
 
-  const handleClose = () => setShow(false);
-  const handleShow = () => setShow(true);
+    const handleClose = () => setShow(false);
+    const handleShow = () => setShow(true);
 
-  return (
-    <>
-      <Button variant="primary" onClick={handleShow}>
-        Launch demo modal
-      </Button>
-
-      <Modal show={show} onHide={handleClose}>
-        <Modal.Header closeButton>
-          <Modal.Title>Modal heading</Modal.Title>
-        </Modal.Header>
-        <Modal.Body>Woohoo, you are reading this text in a modal!</Modal.Body>
-        <Modal.Footer>
-          <Button variant="secondary" onClick={handleClose}>
-            Close
-          </Button>
-          <Button variant="primary" onClick={handleClose}>
-            Save Changes
-          </Button>
-        </Modal.Footer>
-      </Modal>
-    </>
-  );
+    return (
+        <>
+            <img
+                src={src}
+                alt="Image Not Found"
+                onClick={handleShow}
+                style={style}
+            />
+            <Modal show={show} onHide={handleClose}>
+                <Modal.Header closeButton>
+                    <Modal.Title>{image.name}</Modal.Title>
+                </Modal.Header>
+                <Modal.Header>
+                    <img
+                        src={src}
+                        alt="Image Not Found"
+                        onClick={handleShow}
+                        style={style}
+                    />
+                </Modal.Header>
+                <Modal.Body>{image.prompt}</Modal.Body>
+                <Modal.Footer>
+                    <Button variant="secondary" onClick={handleClose}>
+                        Close
+                    </Button>
+                </Modal.Footer>
+            </Modal>
+        </>
+    );
 }
 
-export default Example;
+export default ModalImage;

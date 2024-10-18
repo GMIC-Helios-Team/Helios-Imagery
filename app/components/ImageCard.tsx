@@ -1,14 +1,14 @@
 import { fetchImage } from '@/helpers/get-generated-image-api';
 import { GetGeneratedImage, GetGeneratedImageItem } from '@/types/generation-response';
 import React, { useEffect, useState } from 'react';
+import ReactModal from './ReactModal';
 
 interface ImageCardProps {
     image: GetGeneratedImageItem;
     style?: React.CSSProperties;
-    onClick: () => void;
 }
 
-const ImageCard: React.FC<ImageCardProps> = ({ image, style, onClick }) => {
+const ImageCard: React.FC<ImageCardProps> = ({ image, style }) => {
     const [data, setData] = useState<GetGeneratedImage | null>(null);
 
     useEffect(() => {
@@ -38,25 +38,10 @@ const ImageCard: React.FC<ImageCardProps> = ({ image, style, onClick }) => {
   }, [image.HID]);
 
     return (
-        <div>
-            <img
-                src={data?.imagefilename}
-                alt="Generated Image"
-                style={style}
-                onClick={onClick}
-            />
-        </div>
+        <>
+            <ReactModal src={data?.imagefilename} image={image} style={style}/>
+        </>
     );
 };
-
-// const galleryStyles: { image: React.CSSProperties } = {
-//     image: {
-//       width: '100%',    // Full width in each grid cell
-//       height: '150px',  // Fixed height for uniformity
-//       objectFit: 'cover',  // Ensure the image maintains its aspect ratio
-//       cursor: 'pointer',  // Indicate the image is clickable
-//       borderRadius: '10px',
-//     }
-//   };
 
 export default ImageCard;
