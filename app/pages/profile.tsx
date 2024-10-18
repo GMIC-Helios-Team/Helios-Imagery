@@ -1,5 +1,5 @@
 import React, { useState, useEffect} from "react";
-import FlipCard from "@/components/FlipCard";
+import ProfileCard from "@/components/ProfileCard";
 import { Card, Col, Container, Dropdown, Row } from "react-bootstrap";
 import style from '@/styles/profile.module.css';
 import { profiles } from '@/helpers/profiles';
@@ -51,7 +51,7 @@ const ProfilePage = () => {
               </Card.Header>
               <Card.Body>
                 <Card.Text>
-                  <FlipCard profile={selectedProfile} />
+                  <ProfileCard profile={selectedProfile} />
                 </Card.Text>
               </Card.Body>
             </Card>
