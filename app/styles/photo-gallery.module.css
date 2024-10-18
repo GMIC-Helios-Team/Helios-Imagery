@@ -21,3 +21,11 @@
       paddingBottom: '3px';
       borderBottom: '2px solid #ccc' 
     } */
+.squareImage {       /* Image max height */
+    text-align: center;  
+    margin: 0 auto;
+}
+
+.imageContainer {      /* Horizontally center */
+    position: relative;       /* Relative positioning for vertical centering */
+}

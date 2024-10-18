@@ -19,6 +19,7 @@ const ImageCard: React.FC<ImageCardProps> = ({ image, style }) => {
       try {
         const generatedImage = await fetchImage(image.HID as string);
         generatedImage.imagefilename = `${process.env.NEXT_PUBLIC_HELIOS_GALLERY}/${generatedImage.imagefilename}`
+        generatedImage.imageThumbnailfilename = `${process.env.NEXT_PUBLIC_HELIOS_GALLERY}/${generatedImage.imageThumbnailfilename}`
         setData(generatedImage);
       } catch (error) {
         const errImage: GetGeneratedImage = {
@@ -39,7 +40,7 @@ const ImageCard: React.FC<ImageCardProps> = ({ image, style }) => {
 
     return (
         <>
-            <ReactModal src={data?.imagefilename} image={image} style={style}/>
+            <ReactModal src={data?.imageThumbnailfilename} image={image} style={style}/>
         </>
     );
 };
