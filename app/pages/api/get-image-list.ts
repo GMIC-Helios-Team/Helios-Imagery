@@ -7,11 +7,11 @@ export const GetImageList = async () => {
     // const getImageListEndpoint = process.env.GET_IMAGE_LIST_ENDPOINT;
     const username = 'helios';
     const password = '7gXAsesm6kg8Bkxt7acw';
-     //const apiUrl = 'https://n8n.helios.gallery';
-     //const getImageListEndpoint = 'webhook/GetImageList';
+    const apiUrl = 'https://n8n.helios.gallery';
+    const getImageListEndpoint = 'webhook/GetImageList';
 
-    const apiUrl = 'https://localhost:7244';
-    const getImageListEndpoint = 'OpenAi/GetImages';
+    //const apiUrl = 'https://localhost:7244';
+    //const getImageListEndpoint = 'OpenAi/GetImages';
   
     // Encode the username and password in Base64
     const credentials = Buffer.from(`${username}:${password}`).toString('base64');

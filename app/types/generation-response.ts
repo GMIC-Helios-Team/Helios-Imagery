@@ -15,7 +15,7 @@ export interface GetGeneratedImage{
 }
 
 export interface GetGeneratedImageItem{
-  hid: string;
+  HID: string;
   name: string;
   email: string;
   prompt: string;

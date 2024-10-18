@@ -7,9 +7,7 @@ const GalleryPage = () => {
   return (
     <>
       <Container>
-        <div>
-            <PhotoGallery></PhotoGallery>
-        </div>
+        <PhotoGallery/>
       </Container>
     </>
   );

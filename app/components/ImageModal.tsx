@@ -23,11 +23,11 @@ const ImageModal: React.FC<ModalImageItem> = ({ imageItem, onClose }) => {
   return (
     <div style={modalStyles.overlay} onClick={handleOverlayClick}>
       <div style={modalStyles.modal}>
-        <button onClick={imageItem.onClose} style={modalStyles.closeButton}>
+        <button onClick={onClose} style={modalStyles.closeButton}>
           &times;
         </button>
         <img src={imageItem.url} alt={imageItem.name} style={{ width: '100%' }} />
-        <h2>{imageItem.hid}</h2>
+        <h2>{imageItem.HID}</h2>
         <p>{imageItem.prompt}</p>
         <span><p>liked: {imageItem.likesAmount ?? 100}</p><button onClick={() => LikeAnImage()}>I like this</button></span>
         

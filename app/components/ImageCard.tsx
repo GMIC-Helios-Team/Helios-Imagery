@@ -12,12 +12,12 @@ const ImageCard: React.FC<ImageCardProps> = ({ image, style, onClick }) => {
     const [data, setData] = useState<GetGeneratedImage | null>(null);
 
     useEffect(() => {
-    if (!image.hid) return;
+    if (!image.HID) return;
 
     const retrieveImage = async () => {
       console.log('Issuing API request');
       try {
-        const generatedImage = await fetchImage(image.hid as string);
+        const generatedImage = await fetchImage(image.HID as string);
         generatedImage.imagefilename = `${process.env.NEXT_PUBLIC_HELIOS_GALLERY}/${generatedImage.imagefilename}`
         setData(generatedImage);
       } catch (error) {
@@ -35,9 +35,7 @@ const ImageCard: React.FC<ImageCardProps> = ({ image, style, onClick }) => {
 
     retrieveImage();
 
-  }, [image.hid]);
-
-
+  }, [image.HID]);
 
     return (
         <div>
