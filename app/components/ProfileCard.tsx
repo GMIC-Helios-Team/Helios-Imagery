@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import style from '@/styles/ProfileCard.module.css';
 import { Profile } from '@/types/profile';
 import { Card, Container, Image } from "react-bootstrap";
+import { useTheme } from '../contexts/theme-context';
 
 interface ProfileCardProps {
   profile: Profile | null | undefined;
@@ -9,14 +10,11 @@ interface ProfileCardProps {
 
 const ProfileCard: React.FC<ProfileCardProps> = ({ profile }) => {
   const [isFlipped, setIsFlipped] = useState(false);
-
-  const handleFlip = () => {
-    setIsFlipped(!isFlipped);
-  };
+  const { isDarkTheme } = useTheme();
 
   return (
     <Container fluid>
-      <div className={`${style.flipCard} ${isFlipped ? style.flipped : ''}`} onClick={handleFlip}>
+      <div className={`${style.flipCard} ${isDarkTheme ? style.flipped : ''}`} >
         <div className={` ${style.flipCardInner} ${style.cardTextCustom}`}>
           <Card className={`${style.flipCardFront}`}>
             <Card.Body>
