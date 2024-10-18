@@ -17,7 +17,7 @@ export const profiles = [
   },
   {
     id: 2,
-    display: "John Doe",
+    display: "Ryan Milton",
     front: {
       name: "Ryan Milton",
       position: "Software Developer",
@@ -33,7 +33,7 @@ export const profiles = [
   },
   {
     id: 3,
-    display: "Jane Doe",
+    display: "Will Ballentine",
     front: {
       name: "Will Ballentine",
       position: "Software Developer",
