@@ -22,6 +22,7 @@ const ModalImage: React.FC<ImageProperties> = ({ src, image, style }) => {
                 alt="Image Not Found"
                 onClick={handleShow}
                 style={style}
+                className={ps.image}
             />
             <Modal show={show} onHide={handleClose}>
                 <Modal.Header closeButton>

@@ -1,26 +1,4 @@
-    /* .container {
-      display: 'grid';
-      gridTemplateColumns: 'repeat(auto-fill; minmax(150px; 1fr))'; 
-      gap: '10px';  
-    }
-    .itemContainer {
-      textAlign: 'center'; 
-      border: '2px solid #ccc';
-      borderRadius: '10px';
-      padding: '5px';
-    }
-    .image {
-      width: '100%';    
-      height: '150px';  
-      objectFit: 'cover';  
-      cursor: 'pointer';  
-      borderRadius: '10px';
-    }
-    .imageBorder {
-      paddingTop: '10px';
-      paddingBottom: '3px';
-      borderBottom: '2px solid #ccc' 
-    } */
+
 .squareImage {       /* Image max height */
     text-align: center;  
     margin: 0 auto;
@@ -29,3 +7,30 @@
 .imageContainer {      /* Horizontally center */
     position: relative;       /* Relative positioning for vertical centering */
 }
+
+.container {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(150px, 1fr)); /* Responsive grid */
+    gap: 10px;  /* Space between images */
+  }
+  
+  .itemContainer {
+    text-align: center; /* Center the content (image and link) inside each grid item */
+    border: 2px solid #ccc;
+    border-radius: 10px;
+    padding: 5px;
+  }
+  
+  .image {
+    width: 100%;    /* Full width in each grid cell */
+    height: 150px;  /* Fixed height for uniformity */
+    object-fit: cover;  /* Ensure the image maintains its aspect ratio */
+    cursor: pointer;  /* Indicate the image is clickable */
+    border-radius: 10px;
+  }
+  
+  .imageBorder {
+    padding-top: 10px;
+    padding-bottom: 3px;
+    border-bottom: 2px solid #ccc; /* Bottom border */
+  }

@@ -3,6 +3,7 @@ import { GetImageList } from '@/pages/api/get-image-list'; // Import the API ser
 import { GetGeneratedImageItem } from '@/types/generation-response';
 import { useRouter } from 'next/router';
 import ImageCard from '@/components/ImageCard';
+import ps from '@/styles/photo-gallery.module.css';
 
 const PhotoGallery = () => {
 
@@ -44,11 +45,11 @@ const PhotoGallery = () => {
       ) : images ? (
         <div>
         <h1 >Generated Images</h1>
-        <div style={galleryStyles.container}>
+        <div className={ps.container}>
           {images.map((image) => (
-            <div key={image.id} style={galleryStyles.itemContainer}>
-              <ImageCard image={image} style={galleryStyles.image}></ImageCard>
-              <div style={galleryStyles.imageBorder}></div>
+            <div key={image.id} className={ps.itemContainer}>
+              <ImageCard image={image}></ImageCard>
+              <div className={ps.imageBorder}></div>
               <a
                 target="_blank"
                 rel="noopener noreferrer"
@@ -71,31 +72,5 @@ const PhotoGallery = () => {
 const ErrorMessage: React.FC<{ message: string }> = ({ message }) => (
   <p><strong>Error:</strong> {message}</p>
 );
-
-const galleryStyles: { container: React.CSSProperties; itemContainer: React.CSSProperties; image: React.CSSProperties, imageBorder: React.CSSProperties } = {
-  container: {
-    display: 'grid',
-    gridTemplateColumns: 'repeat(auto-fill, minmax(150px, 1fr))', // Responsive grid
-    gap: '10px',  // Space between images
-  },
-  itemContainer: {
-    textAlign: 'center', // Center the content (image and link) inside each grid item
-    border: '2px solid #ccc',
-    borderRadius: '10px',
-    padding: '5px',
-  },
-  image: {
-    width: '100%',    // Full width in each grid cell
-    height: '150px',  // Fixed height for uniformity
-    objectFit: 'cover',  // Ensure the image maintains its aspect ratio
-    cursor: 'pointer',  // Indicate the image is clickable
-    borderRadius: '10px',
-  },
-  imageBorder: {
-    paddingTop: '10px',
-    paddingBottom: '3px',
-    borderBottom: '2px solid #ccc' /* Bottom border */
-  }
-};
 
 export default PhotoGallery;
