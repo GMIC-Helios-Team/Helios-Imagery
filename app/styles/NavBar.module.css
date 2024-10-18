@@ -13,16 +13,15 @@
     left: 0;
     width: 100%;
     z-index: 1000; /* Ensure this element is on top */
+    
   }
 
   .navbarCollapseDark {
     color: #fff;
-    margin-top: 7%;
   }
 
   .navbarCollapseLight {
     color: #121212;
-    margin-top: 7%;
   }
 
   @media only screen and (min-width: 600px){
@@ -34,10 +33,14 @@
   @media only screen and (max-width: 600px) {
     .navbarCollapseDark {
       float: right;
-      background-color: #121212;
+      background-color: #2f2f2f;
       text-align: center;
-      border-radius: 0 0 0 25px;
+      border-radius: 0 0 25px 25px;
       color: #fff;
+      margin-top: 6%;    
+      -webkit-box-shadow: 0 8px 6px -6px #999;
+      -moz-box-shadow: 0 8px 6px -6px #999;
+      box-shadow: 0 8px 6px -6px #999;
     }
     .navbarButton{
       position: relative;
@@ -45,9 +48,13 @@
 
     .navbarCollapseLight {
       float: right;
-      background-color: #fff;
+      background-color: #ececec;
       text-align: center;
-      border-radius: 0 0 0 25px;
+      border-radius: 0 0 25px 25px;
       color: #121212;
+      margin-top: 6%;
+      -webkit-box-shadow: 0 8px 6px -6px #999;
+      -moz-box-shadow: 0 8px 6px -6px #999;
+      box-shadow: 0 8px 6px -6px #999;
     }
   }
