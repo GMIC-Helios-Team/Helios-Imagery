@@ -7,10 +7,12 @@
   
   .navLinkDark:hover {
     background-color: #424c85; /* Change color on hover */
+    border-radius: 5px;
   }
 
   .navLinkLight:hover {
-    background-color: #f8c24f; /* Change color on hover */
+    background-color: #f8c24f; /* Change color on hover */    
+    border-radius: 5px;
   }
 
   .navbar {

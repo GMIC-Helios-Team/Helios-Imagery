@@ -2,9 +2,34 @@ import Link from 'next/link';
 import { useTheme } from '../contexts/theme-context';
 import { Navbar, Nav, ButtonGroup, ToggleButton } from 'react-bootstrap';
 import styles from '../styles/NavBar.module.css'; // Import the CSS Module
+import React, { useState, useEffect, useRef } from 'react';
+
 
 const NavBar: React.FC = () => {
   const { isDarkTheme, toggleTheme } = useTheme();
+  const [expanded, setExpanded] = useState(false);
+  const navbarRef = useRef<HTMLDivElement>(null);
+
+  const handleClickOutside = (event: { target: any; }) => {
+    if (navbarRef.current && !navbarRef.current.contains(event.target)) {
+      setExpanded(false);
+    }
+  };
+  
+  const handleNavLinkClick = () => {
+    setExpanded(false);
+  };
+  
+  useEffect(() => {
+    document.addEventListener('mousedown', handleClickOutside);
+    return () => {
+      document.removeEventListener('mousedown', handleClickOutside);
+    };
+  }, []);
+
+  const handleToggle = () => {
+    setExpanded(!expanded);
+  };
 
   const handleRadioChange = (value: string) => {
     if ((value === 'dark' && !isDarkTheme) || (value === 'light' && isDarkTheme)) {
@@ -18,7 +43,12 @@ const NavBar: React.FC = () => {
   ];
 
   return (
-    <Navbar expand="lg" className={`${styles.navbar} ${isDarkTheme ? `navbar-dark bg-dark` : `navbar-light LightThemeBG`}`} >   
+    <Navbar 
+    expand="lg"
+    expanded={expanded}
+    onToggle={handleToggle}
+    ref={navbarRef}
+     className={`${styles.navbar} ${isDarkTheme ? `navbar-dark bg-dark` : `navbar-light LightThemeBG`}`} >   
           <Navbar.Brand className={`${styles.navbarBrand}`} href="/">
           {isDarkTheme ? 'DEP' : 'Helios'}
         </Navbar.Brand>
@@ -47,15 +77,15 @@ const NavBar: React.FC = () => {
         <Navbar.Collapse id="basic-navbar-nav" className={isDarkTheme ? styles.navbarCollapseDark : styles.navbarCollapseLight}>
           <Nav className="ml-auto">   
             <hr />        
-            <Link href="/gallery" legacyBehavior>
-              <a className={`nav-link ${styles.navLink} ${isDarkTheme ? styles.navLinkDark : styles.navLinkLight}`}>Gallery</a>
-            </Link>
-            <Link href="/profile" legacyBehavior>
-              <a className={`nav-link ${styles.navLink} ${isDarkTheme ? styles.navLinkDark : styles.navLinkLight}`}>Profile</a>
-            </Link>
-            <Link href="/ai-gen" legacyBehavior>
-              <a className={`nav-link ${styles.navLink} ${isDarkTheme ? styles.navLinkDark : styles.navLinkLight}`}>Creative Canvas</a>
-            </Link>
+            <Nav.Link as={Link} href="/gallery" className={`nav-link ${styles.navLink} ${isDarkTheme ? styles.navLinkDark : styles.navLinkLight}`} onClick={handleNavLinkClick}>
+            Gallery
+          </Nav.Link>
+          <Nav.Link as={Link} href="/profile" className={`nav-link ${styles.navLink} ${isDarkTheme ? styles.navLinkDark : styles.navLinkLight}`} onClick={handleNavLinkClick}>
+            Profile
+          </Nav.Link>
+          <Nav.Link as={Link} href="/ai-gen" className={`nav-link ${styles.navLink} ${isDarkTheme ? styles.navLinkDark : styles.navLinkLight}`} onClick={handleNavLinkClick}>
+            Creative Canvas
+          </Nav.Link>
           </Nav>
         </Navbar.Collapse>
     </Navbar>

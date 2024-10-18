@@ -5,11 +5,13 @@ import style from '@/styles/profile.module.css';
 import { profiles } from '@/helpers/profiles';
 import { Profile } from "@/types/profile";
 import { CustomMenu, CustomToggle } from "@/components/custom-dropdown";
+import { useTheme } from '../contexts/theme-context';
 
 const ProfilePage = () => {
   const [selectedProfile, setSelectedProfile] = useState<Profile | null | undefined>(profiles[0]);
   const [isClient, setIsClient] = useState<boolean>(false);
-
+  const { isDarkTheme } = useTheme();
+  
   useEffect(() => {
     setIsClient(true);
   }, []);
@@ -37,7 +39,7 @@ const ProfilePage = () => {
       <Container style={{ marginTop: '50px' }}>
         <Row className="mb-4">
           <Col md={{ offset: 3, span: 6 }}>
-            <Card className={`${style.cardBackgroundCustom} ${style.cardShadowCustom}`}>
+            <Card className={`${style.cardBackgroundCustom} ${style.cardShadowCustom} ${isDarkTheme ? 'bg-dark text-light' : 'bg-light text-dark'}`}>
               <Card.Header>
                 Profile
                 <Dropdown style={{ float: "right" }}>

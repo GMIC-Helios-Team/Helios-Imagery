@@ -46,5 +46,21 @@ export const profiles = [
       bio: "In the depths of the earth's embrace, where roots tangle like secrets and darkness whispers long-forgotten tales, there lived a young soul named Will. Raised in the subterranean shadows, his world was painted in hues of deep soil and silent mysteries, a realm untouched by the sun's warm caress. But within this hidden sanctuary, Will found companionship in the most unlikely of creatures - turtles, wise and ancient beings who dwelled with him in the labyrinthine tunnels. With a heart as boundless as the underground rivers that flowed unseen beneath his feet, Will wove grand tapestries of imagination, spinning fantastical stories for himself and his shelled friends. Through the flickering glow of fireflies and the soft murmur of underground streams, he regaled his turtle companions with tales of daring adventures, noble quests, and improbable triumphs, each tale more elaborate than the last.",
       image: "/AlterEgoImages/Will_AlterEgo.jpeg"
     }
+  },
+  {
+    id: 4,
+    display: "Jamian Murray",
+    front: {
+      name: "Jamian Murray",
+      position: "Software Developer",
+      bio: "Hey there! I'm Jamian. My tech journey began with automating medical debt records as an ETL developer, which led to exploring C# programming, APIs, and cloud integration. I also dabbled in game development during college. As a contractor for the 160th, I tackled aviation maintenance software development. At GMIC, I thrived by integrating Helios with Azure APIM and Guidewire's systems, and implementing OKTA tokens for secure communication. Over seven years, I've worked on diverse projects, from cloud platforms to software innovations, always seeking challenges and turning them into opportunities for innovation.",
+      image: "/images/Jamian.jpeg"
+    },
+    back: {
+      name: "Jamison Murphy",
+      position: "Software Developer",
+      bio: "Jamison is a traveling cat herder, roaming from town to town with his mystical feline companions. With a flick of his wrist and a purr of encouragement, he orchestrates their harmonious movements, creating mesmerizing spectacles. Armed with vast patience and a warm heart, Jamison finds joy in guiding his quirky kitty crew through new adventures. Each town becomes a playground for their playful antics and curiosity. Whether purring under starlit skies or leaping through cobblestone streets, Jamison and his enchanting entourage bring magic to every corner. If you see a procession of cats dancing in the moonlight, know that Jamison isn't far behind, spinning tales of whimsy and wonder.",
+      image: "/AlterEgoImages/Jamian_AlterEgo.jpeg"
+    }
   }
 ];
