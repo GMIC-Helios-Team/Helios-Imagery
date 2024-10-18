@@ -49,15 +49,6 @@ const PhotoGallery = () => {
           {images.map((image) => (
             <div key={image.id} className={ps.itemContainer}>
               <ImageCard image={image}></ImageCard>
-              <div className={ps.imageBorder}></div>
-              <a
-                target="_blank"
-                rel="noopener noreferrer"
-                style={{ textDecoration: 'none', color: 'brown', cursor: 'pointer' }}
-                onClick={() => openImageDetail(image.HID)}
-              >
-                View
-              </a>
             </div>
           ))}
         </div>

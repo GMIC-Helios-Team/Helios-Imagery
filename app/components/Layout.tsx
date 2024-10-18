@@ -1,17 +1,17 @@
 import React, { ReactNode } from 'react';
-import { ThemeProvider, useTheme } from '../contexts/theme-context';
 import NavBar from './NavBar';
 import Footer from './Footer';
+import { useTheme } from '@/contexts/theme-context';
 
 const Layout: React.FC<{ children: ReactNode }> = ({ children }) => {
   return (
-    <ThemeProvider>
-      <ThemeWrapper>
-        <NavBar />
-        {children}
-        <Footer />
-      </ThemeWrapper>
-    </ThemeProvider>
+    <>
+      <NavBar />
+      <div style={{ position: 'relative', zIndex: 1 }}>
+      {children}
+      </div>
+      <Footer />
+    </>
   );
 };
 
