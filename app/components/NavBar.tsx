@@ -2,7 +2,6 @@ import Link from 'next/link';
 import { useTheme } from '../contexts/theme-context';
 import { Navbar, Nav, ButtonGroup, ToggleButton } from 'react-bootstrap';
 import styles from '../styles/NavBar.module.css'; // Import the CSS Module
-import NavDropdown from 'react-bootstrap/NavDropdown';
 
 const NavBar: React.FC = () => {
   const { isDarkTheme, toggleTheme } = useTheme();
