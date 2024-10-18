@@ -1,12 +1,10 @@
   .navbarBrand {
     font-size: 1.5rem;
     font-weight: bold;
-  }
-  
-  .navLink {
-    margin-right: 1rem;
+    padding-left: 0.75rem;
   }
 
+  
   .navLinkDark:hover {
     background-color: #424c85; /* Change color on hover */
   }
@@ -20,16 +18,23 @@
     top: 0;
     left: 0;
     width: 100%;
-    z-index: 1000; /* Ensure this element is on top */
-    
+    padding-top: 0.8rem;
+    z-index: 1000; /* Ensure this element is on top */    
+    border-radius: 0 0 5px 5px;    
   }
 
   .navbarCollapseDark {
     color: #fff;
+    padding-top: 0.5rem;
   }
 
   .navbarCollapseLight {
     color: #121212;
+    padding-top: 0.5rem;
+  }
+
+  .navToggle {
+    margin-right: 0.75rem;
   }
 
   @media only screen and (min-width: 600px){
@@ -41,14 +46,8 @@
   @media only screen and (max-width: 600px) {
     .navbarCollapseDark {
       float: right;
-      background-color: #2f2f2f;
       text-align: center;
-      border-radius: 0 0 25px 25px;
       color: #fff;
-      margin-top: 6%;    
-      -webkit-box-shadow: 0 8px 6px -6px #999;
-      -moz-box-shadow: 0 8px 6px -6px #999;
-      box-shadow: 0 8px 6px -6px #999;
     }
     .navbarButton{
       position: relative;
@@ -56,13 +55,7 @@
 
     .navbarCollapseLight {
       float: right;
-      background-color: #ececec;
       text-align: center;
-      border-radius: 0 0 25px 25px;
       color: #121212;
-      margin-top: 6%;
-      -webkit-box-shadow: 0 8px 6px -6px #999;
-      -moz-box-shadow: 0 8px 6px -6px #999;
-      box-shadow: 0 8px 6px -6px #999;
     }
   }

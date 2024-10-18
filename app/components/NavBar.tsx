@@ -2,6 +2,7 @@ import Link from 'next/link';
 import { useTheme } from '../contexts/theme-context';
 import { Navbar, Nav, ButtonGroup, ToggleButton } from 'react-bootstrap';
 import styles from '../styles/NavBar.module.css'; // Import the CSS Module
+import NavDropdown from 'react-bootstrap/NavDropdown';
 
 const NavBar: React.FC = () => {
   const { isDarkTheme, toggleTheme } = useTheme();
@@ -18,11 +19,10 @@ const NavBar: React.FC = () => {
   ];
 
   return (
-    <Navbar expand="lg" className={`${styles.navbar} ${isDarkTheme ? 'navbar-dark bg-dark' : 'navbar-light bg-light'}`} style={{ height: '80px' }}>
-      <div className="container-fluid">
-        <Link href="/" legacyBehavior>
-          <a className={`navbar-brand ${styles.navbarBrand}`}>{isDarkTheme ? 'DEP' : 'Helios'}</a>
-        </Link>
+    <Navbar expand="lg" className={`${styles.navbar} ${isDarkTheme ? `navbar-dark bg-dark` : `navbar-light LightThemeBG`}`} >   
+          <Navbar.Brand className={`${styles.navbarBrand}`} href="/">
+          {isDarkTheme ? 'DEP' : 'Helios'}
+        </Navbar.Brand>
           <ButtonGroup className={`${styles.navbarButton}`}>
             {radios.map((radio, idx) => (
               <ToggleButton
@@ -44,9 +44,10 @@ const NavBar: React.FC = () => {
               </ToggleButton>
             ))}
           </ButtonGroup>
-        <Navbar.Toggle aria-controls="basic-navbar-nav" />
+        <Navbar.Toggle className={`${styles.navToggle}`} aria-controls="basic-navbar-nav" />
         <Navbar.Collapse id="basic-navbar-nav" className={isDarkTheme ? styles.navbarCollapseDark : styles.navbarCollapseLight}>
-          <Nav className="ml-auto">
+          <Nav className="ml-auto">   
+            <hr />        
             <Link href="/gallery" legacyBehavior>
               <a className={`nav-link ${styles.navLink} ${isDarkTheme ? styles.navLinkDark : styles.navLinkLight}`}>Gallery</a>
             </Link>
@@ -58,7 +59,6 @@ const NavBar: React.FC = () => {
             </Link>
           </Nav>
         </Navbar.Collapse>
-      </div>
     </Navbar>
   );
 };
