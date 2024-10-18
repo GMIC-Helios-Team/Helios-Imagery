@@ -1,0 +1,9 @@
+
+.cardBackgroundCustom {
+  background-color: #fdfdfd;
+}
+
+.cardShadowCustom {
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Example shadow */
+  border-radius: 8px; /* Optional: Add rounded corners */
+}
