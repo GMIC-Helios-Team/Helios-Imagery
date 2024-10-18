@@ -7,6 +7,14 @@
     margin-right: 1rem;
   }
 
+  .navLinkDark:hover {
+    background-color: #424c85; /* Change color on hover */
+  }
+
+  .navLinkLight:hover {
+    background-color: #f8c24f; /* Change color on hover */
+  }
+
   .navbar {
     position: relative;
     top: 0;
