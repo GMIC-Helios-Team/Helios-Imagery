@@ -4,10 +4,10 @@ import { Card, Col, Container, Dropdown, Row } from "react-bootstrap";
 import style from '@/styles/profile.module.css';
 import { profiles } from '@/helpers/profiles';
 import { Profile } from "@/types/profile";
-import { CustomMenu, CustomToggle } from "@/components/ai-gen/custom-dropdown";
+import { CustomMenu, CustomToggle } from "@/components/custom-dropdown";
 
 const ProfilePage = () => {
-  const [selectedProfile, setSelectedProfile] = useState<Profile | null | undefined>(null);
+  const [selectedProfile, setSelectedProfile] = useState<Profile | null | undefined>(profiles[0]);
   const [isClient, setIsClient] = useState<boolean>(false);
 
   useEffect(() => {
