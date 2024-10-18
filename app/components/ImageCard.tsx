@@ -5,22 +5,20 @@ import ReactModal from './ReactModal';
 
 interface ImageCardProps {
     image: GetGeneratedImageItem;
-    style?: React.CSSProperties;
 }
 
-const ImageCard: React.FC<ImageCardProps> = ({ image, style }) => {
+const ImageCard: React.FC<ImageCardProps> = ({ image }) => {
     const [data, setData] = useState<GetGeneratedImage | null>(null);
-
+    //let data: GetGeneratedImage;
     useEffect(() => {
     if (!image.HID) return;
 
     const retrieveImage = async () => {
       console.log('Issuing API request');
       try {
-        const generatedImage = await fetchImage(image.HID as string);
-        generatedImage.imagefilename = `${process.env.NEXT_PUBLIC_HELIOS_GALLERY}/${generatedImage.imagefilename}`
-        generatedImage.imageThumbnailfilename = `${process.env.NEXT_PUBLIC_HELIOS_GALLERY}/${generatedImage.imageThumbnailfilename}`
-        setData(generatedImage);
+        data!.imagefilename = `${process.env.NEXT_PUBLIC_HELIOS_GALLERY}/${image.imageThumbnailfilename}`
+        data!.imagefilename = `${process.env.NEXT_PUBLIC_HELIOS_GALLERY}/${image.imageThumbnailfilename}`
+        setData(data)
       } catch (error) {
         const errImage: GetGeneratedImage = {
           imagefilename: '/err-pirate.png',
@@ -40,7 +38,7 @@ const ImageCard: React.FC<ImageCardProps> = ({ image, style }) => {
 
     return (
         <>
-            <ReactModal src={data?.imageThumbnailfilename} image={image} style={style}/>
+            <ReactModal src={`${process.env.NEXT_PUBLIC_HELIOS_GALLERY}/${image.imageThumbnailfilename}`} image={image}/>
         </>
     );
 };

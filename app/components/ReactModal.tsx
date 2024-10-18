@@ -7,9 +7,8 @@ import ps from '@/styles/photo-gallery.module.css';
 interface ImageProperties {
     src?: string;
     image: GetGeneratedImageItem;
-    style?: React.CSSProperties;
 }
-const ModalImage: React.FC<ImageProperties> = ({ src, image, style }) => {
+const ModalImage: React.FC<ImageProperties> = ({ src, image }) => {
     const [show, setShow] = useState(false);
 
     const handleClose = () => setShow(false);
@@ -21,7 +20,6 @@ const ModalImage: React.FC<ImageProperties> = ({ src, image, style }) => {
                 src={src}
                 alt="Image Not Found"
                 onClick={handleShow}
-                style={style}
                 className={ps.image}
             />
             <Modal show={show} onHide={handleClose}>
