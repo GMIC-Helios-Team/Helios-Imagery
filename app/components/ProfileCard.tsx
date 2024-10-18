@@ -1,4 +1,3 @@
-import React, { useState } from 'react';
 import style from '@/styles/ProfileCard.module.css';
 import { Profile } from '@/types/profile';
 import { Card, Container, Image } from "react-bootstrap";
@@ -9,7 +8,6 @@ interface ProfileCardProps {
 }
 
 const ProfileCard: React.FC<ProfileCardProps> = ({ profile }) => {
-  const [isFlipped, setIsFlipped] = useState(false);
   const { isDarkTheme } = useTheme();
 
   return (
