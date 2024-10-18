@@ -8,19 +8,24 @@ interface ThemeContextProps {
 const ThemeContext = createContext<ThemeContextProps | undefined>(undefined);
 
 export const ThemeProvider: React.FC<{ children: ReactNode }> = ({ children }) => {
-  const [isDarkTheme, setIsDarkTheme] = useState<boolean>(() => {
-    if (typeof window !== 'undefined') {
-      const savedTheme = localStorage.getItem('theme');
-      return savedTheme ? JSON.parse(savedTheme) : false;
-    }
-    return false;
-  });
+  const [isDarkTheme, setIsDarkTheme] = useState<boolean>(false);
+  const [isClient, setIsClient] = useState<boolean>(false);
 
   useEffect(() => {
+    setIsClient(true);
     if (typeof window !== 'undefined') {
+      const savedTheme = localStorage.getItem('theme');
+      if (savedTheme) {
+        setIsDarkTheme(JSON.parse(savedTheme));
+      }
+    }
+  }, []);
+
+  useEffect(() => {
+    if (isClient) {
       localStorage.setItem('theme', JSON.stringify(isDarkTheme));
     }
-  }, [isDarkTheme]);
+  }, [isDarkTheme, isClient]);
 
   const toggleTheme = () => {
     setIsDarkTheme((prevTheme) => !prevTheme);
