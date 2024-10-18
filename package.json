@@ -1,6 +1,7 @@
 {
   "dependencies": {
+    "holderjs": "2.9.9",
     "next": "^14.2.15",
-    "react-multi-carousel": "^2.8.5"    
+    "react-multi-carousel": "^2.8.5"
   }
 }
