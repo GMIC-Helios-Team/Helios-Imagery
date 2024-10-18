@@ -47,15 +47,15 @@ const NavBar: React.FC = () => {
         <Navbar.Collapse id="basic-navbar-nav" className={isDarkTheme ? styles.navbarCollapseDark : styles.navbarCollapseLight}>
           <Nav className="ml-auto">   
             <hr />        
-            <Link href="/gallery" legacyBehavior>
-              <a className={`nav-link ${styles.navLink} ${isDarkTheme ? styles.navLinkDark : styles.navLinkLight}`}>Gallery</a>
-            </Link>
-            <Link href="/profile" legacyBehavior>
-              <a className={`nav-link ${styles.navLink} ${isDarkTheme ? styles.navLinkDark : styles.navLinkLight}`}>Profile</a>
-            </Link>
-            <Link href="/ai-gen" legacyBehavior>
-              <a className={`nav-link ${styles.navLink} ${isDarkTheme ? styles.navLinkDark : styles.navLinkLight}`}>Creative Canvas</a>
-            </Link>
+            <Nav.Link as={Link} href="/gallery" className={`nav-link ${styles.navLink} ${isDarkTheme ? styles.navLinkDark : styles.navLinkLight}`}>
+            Gallery
+          </Nav.Link>
+          <Nav.Link as={Link} href="/profile" className={`nav-link ${styles.navLink} ${isDarkTheme ? styles.navLinkDark : styles.navLinkLight}`}>
+            Profile
+          </Nav.Link>
+          <Nav.Link as={Link} href="/ai-gen" className={`nav-link ${styles.navLink} ${isDarkTheme ? styles.navLinkDark : styles.navLinkLight}`}>
+            Creative Canvas
+          </Nav.Link>
           </Nav>
         </Navbar.Collapse>
     </Navbar>
