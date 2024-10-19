@@ -1,6 +1,0 @@
-{
-  "dependencies": {
-    "next": "^14.2.15",
-    "react-multi-carousel": "^2.8.5"    
-  }
-}

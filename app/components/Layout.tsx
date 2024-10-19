@@ -7,7 +7,7 @@ const Layout: React.FC<{ children: ReactNode }> = ({ children }) => {
     <>
       <NavBar />
       <div style={{ position: 'relative', zIndex: 1 }}>
-      {children}
+        {children}
       </div>
       <Footer />
     </>

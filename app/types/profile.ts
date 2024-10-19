@@ -9,6 +9,7 @@ export interface Person {
 export interface Profile {
   id: number;
   display: string;
+  team: string;
   front: Person;
   back: Person;
 }
