@@ -10,8 +10,8 @@ const NavBar: React.FC = () => {
   const [expanded, setExpanded] = useState(false);
   const navbarRef = useRef<HTMLDivElement>(null);
 
-  const handleClickOutside = (event: { target: any; }) => {
-    if (navbarRef.current && !navbarRef.current.contains(event.target)) {
+  const handleClickOutside = (event: MouseEvent) => {
+    if (navbarRef.current && !navbarRef.current.contains(event.target as Node)) {
       setExpanded(false);
     }
   };
