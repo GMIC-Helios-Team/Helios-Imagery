@@ -44,7 +44,39 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
       res.status(503).json({ message: 'Service is not Available' });
     }
 
-  } else {
+  } else if (req.method === 'PATCH') {
+
+    // Credentials
+    const username = process.env.API_USERNAME;;
+    const password = process.env.API_PASSWORD;
+    const apiUrl = process.env.AI_API_URL;
+    const likeImageEndpoint = process.env.LIKE_IMAGE_ENDPOINT;
+    const credentials = Buffer.from(`${username}:${password}`).toString('base64');
+
+    try {
+      const url = new URL(`${apiUrl}/${likeImageEndpoint}`);
+
+      const response = await fetch(url.toString(), {
+        method: 'PATCH',
+        headers: {
+          'Content-Type': 'application/json',
+          'Authorization': `Basic ${credentials}`,
+        },
+        body: JSON.stringify(req.body),
+      });
+
+      if (!response.ok) {
+        throw new Error('Like Image request failed');
+      }
+
+      res.status(200).json({ message: 'Image liked successfully' });
+
+    } catch (error) {
+      res.status(503).json({ message: 'Service is not Available' });
+    }
+    
+  }
+   else {
     res.status(405).json({ message: 'Method not allowed' });
   }
 }
