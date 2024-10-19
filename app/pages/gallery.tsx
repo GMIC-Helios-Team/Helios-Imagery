@@ -3,6 +3,7 @@ import React, { useState, useEffect } from 'react';
 import { Card, Col, Container, Row, Image, Button } from 'react-bootstrap';
 import style from '@/styles/gallery-image.module.css';
 import { GalleryItem } from '@/types/image-gallery';
+import { useTheme } from '@/contexts/theme-context';
 
 interface GalleryListProps {
   items: GalleryItem[];
@@ -98,6 +99,7 @@ const GalleryPage = () => {
 export default GalleryPage;
 
 const GalleryList: React.FC<GalleryListProps> = ({ items, showVote, paging }) => {
+  const { isDarkTheme } = useTheme();
 
   const renderImages = (galleryItems: GalleryItem[]) => {
     return galleryItems.map((item) => (
@@ -108,7 +110,7 @@ const GalleryList: React.FC<GalleryListProps> = ({ items, showVote, paging }) =>
   };
   return (
     <>
-      <Card className={`${style.cardBackgroundCustom} ${style.cardShadowCustom}`}>
+      <Card className={`${style.cardBackgroundCustom} ${style.cardShadowCustom} ${isDarkTheme ? 'bg-dark text-light' : 'LightThemeBG text-dark'}`}>
         <Card.Header>Gallery Image</Card.Header>
         <GalleryPaging paging={paging} />
         <Card.Body>
@@ -122,6 +124,8 @@ const GalleryList: React.FC<GalleryListProps> = ({ items, showVote, paging }) =>
 }
 
 const Vote: React.FC<VoteProps> = ({ showGalleryList, item }) => {
+  const { isDarkTheme } = useTheme();
+
   const [hasVoted, setHasVoted] = useState(false);
 
   const likeImage = async () => {
@@ -151,7 +155,7 @@ const Vote: React.FC<VoteProps> = ({ showGalleryList, item }) => {
   };
 
   return (
-    <Card className={`${style.cardBackgroundCustom} ${style.cardShadowCustom}`}>
+    <Card className={`${style.cardBackgroundCustom} ${style.cardShadowCustom} ${isDarkTheme ? 'bg-dark text-light' : 'LightThemeBG text-dark'}`}>
       <Card.Header>Vote
         <Button variant="link" onClick={showGalleryList} style={{ float: "right" }}>
           Back
