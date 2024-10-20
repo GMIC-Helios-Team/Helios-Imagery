@@ -85,7 +85,6 @@ const LaughWhileYouWait = () => (
     <Card bg="dark" text="white">
       <Card.Header>Laugh while you wait</Card.Header>
       <Card.Img variant="top" src="/wait-comedy.png" alt="Wait for Image Generation" width={500} height={300} style={{padding:'5px'}}/>
-
       <Card.Body>
         <Card.Text>
           <Jokes />
