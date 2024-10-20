@@ -3,7 +3,7 @@ import React, { useEffect, useState } from 'react';
 import { Col, Container, Row, Image, Card, Spinner } from 'react-bootstrap';
 import { fetchImage } from '@/helpers/get-generated-image-api';
 import { GetGeneratedImage } from '@/types/generation-response';
-import style from '@/styles/gallery-image.module.css';
+import style from '@/styles/gallery.module.css';
 
 const GalleryImage = () => {
   const [isLoading, setIsLoading] = useState<boolean>(true);
