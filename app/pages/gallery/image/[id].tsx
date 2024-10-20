@@ -1,11 +1,12 @@
 import { useRouter } from 'next/router';
 import React, { useEffect, useState } from 'react';
-import { Col, Container, Row, Image, Card } from 'react-bootstrap';
+import { Col, Container, Row, Image, Card, Spinner } from 'react-bootstrap';
 import { fetchImage } from '@/helpers/get-generated-image-api';
 import { GetGeneratedImage } from '@/types/generation-response';
 import style from '@/styles/gallery-image.module.css';
 
 const GalleryImage = () => {
+  const [isLoading, setIsLoading] = useState<boolean>(true);
   const [data, setData] = useState<GetGeneratedImage | null>(null);
   const router = useRouter();
   const { id } = router.query;
@@ -13,8 +14,8 @@ const GalleryImage = () => {
     if (!id) return;
 
     const retrieveImage = async () => {
-      console.log('Issuing API request');
       try {
+        setIsLoading(true);
         const generatedImage = await fetchImage(id as string);
         generatedImage.imagefilename = `${process.env.NEXT_PUBLIC_HELIOS_GALLERY}/${generatedImage.imagefilename}`
         setData(generatedImage);
@@ -29,6 +30,9 @@ const GalleryImage = () => {
         }
         setData(errImage);
       }
+      finally {
+        setIsLoading(false);
+      }
     };
 
     retrieveImage();
@@ -40,18 +44,18 @@ const GalleryImage = () => {
       <Row className="mb-4">
         <Col md={{ offset: 3, span: 6 }}>
           <Card className={`${style.cardBackgroundCustom} ${style.cardShadowCustom}`}>
-            <Card.Header>Gallery Image</Card.Header>
+            <Card.Header>Gallery Image {isLoading && <Spinner style={{float:"right"}} animation="border" size="sm" className="ml-2"/>}</Card.Header>
             <Card.Body>
-              <Card.Title>{data?.name}</Card.Title>
-              <Image
-                src={data?.imagefilename}
-                fluid
-                className={style.imageBeveled}
-                alt="Generated Image"
-              />
-              <Card.Text className={style.cardTextCustom}>{data?.prompt}</Card.Text>
+              {isLoading ?
+                (
+                  <p>Loading...</p>) :
+                (
+                  <GalleryImageDetail data={data} />
+                )
+              }
             </Card.Body>
           </Card>
+
         </Col>
       </Row>
     </Container>
@@ -59,3 +63,23 @@ const GalleryImage = () => {
 }
 
 export default GalleryImage;
+
+interface GalleryImageDetailProps {
+  data: GetGeneratedImage | null;
+}
+
+const GalleryImageDetail: React.FC<GalleryImageDetailProps> = ({ data }) => {
+  return (
+    <>
+      <Card.Title>{data?.name}</Card.Title>
+      <Image
+        src={data?.imagefilename}
+        fluid
+        className={style.imageBeveled}
+        alt="Generated Image"
+      />
+      <Card.Text className={style.cardTextCustom}>{data?.prompt}</Card.Text>
+    </>
+  )
+
+}

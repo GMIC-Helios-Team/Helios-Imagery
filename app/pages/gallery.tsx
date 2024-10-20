@@ -1,6 +1,6 @@
 /* eslint-disable jsx-a11y/alt-text */
 import React, { useState, useEffect } from 'react';
-import { Card, Col, Container, Row, Image, Button } from 'react-bootstrap';
+import { Card, Col, Container, Row, Image, Button, Spinner } from 'react-bootstrap';
 import style from '@/styles/gallery-image.module.css';
 import { GalleryItem } from '@/types/image-gallery';
 import { useTheme } from '@/contexts/theme-context';
@@ -25,6 +25,7 @@ interface PagingProps {
   totalPages: number;
   handlePrev: () => void;
   handleNext: () => void;
+  isLoading : boolean;
 }
 
 const GalleryPage = () => {
@@ -34,6 +35,7 @@ const GalleryPage = () => {
   const [galleryItems, setGalleryItems] = useState<GalleryItem[]>([]);
   const [totalPages, setTotalPages] = useState(1);
   const [currentPage, setCurrentPage] = useState(1);
+  const [isLoading, setIsLoading] = useState(false);
 
   const limit = 8;
 
@@ -51,6 +53,7 @@ const GalleryPage = () => {
 
   const fetchImages = async (offset: number, limit: number) => {
     try {
+      setIsLoading(true);
       const response = await fetch(`/api/image-gallery?offset=${offset}&limit=${limit}`);
 
       if (!response.ok) {
@@ -63,6 +66,9 @@ const GalleryPage = () => {
 
     } catch (error) {
       console.error('Error fetching images:', error);
+    }
+    finally {
+      setIsLoading(false);  
     }
   };
 
@@ -86,7 +92,7 @@ const GalleryPage = () => {
               (<GalleryList
                 items={galleryItems}
                 showVote={showVote}
-                paging={{ currentPage, totalPages, handlePrev, handleNext }}
+                paging={{ currentPage, totalPages, handlePrev, handleNext, isLoading }}
               />)
             }
           </Col>
@@ -100,6 +106,7 @@ export default GalleryPage;
 
 const GalleryList: React.FC<GalleryListProps> = ({ items, showVote, paging }) => {
   const { isDarkTheme } = useTheme();
+  const {isLoading} = paging;
 
   const renderImages = (galleryItems: GalleryItem[]) => {
     return galleryItems.map((item) => (
@@ -111,7 +118,7 @@ const GalleryList: React.FC<GalleryListProps> = ({ items, showVote, paging }) =>
   return (
     <>
       <Card className={`${style.cardBackgroundCustom} ${style.cardShadowCustom} ${isDarkTheme ? 'bg-dark text-light' : 'LightThemeBG text-dark'}`}>
-        <Card.Header>Gallery Image</Card.Header>
+        <Card.Header>Gallery Image {isLoading && <Spinner style={{float:"right"}} animation="border" size="sm" className="ml-2"/>} </Card.Header>
         <GalleryPaging paging={paging} />
         <Card.Body>
           <Row>
