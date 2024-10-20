@@ -52,19 +52,19 @@ export const profiles = [
   },
   {
     id: 4,
-    display: "Ankit Jain",
+    display: "Jamian Murray",
     team: "api",
     front: {
-      name: "Ankit Jain",
+      name: "Jamian Murray",
       position: "Software Developer",
-      bio: "Hello, I'm Ankit Jain, and I've been a proud member of Helios API team for the past 2 years, I currently live in Tampa, FL, with my wife and our wonderful 1.5 year old Daughter. Originally from Rajasthan, India, I graduated there before moving to the U.S. in 2015. With 13 years of experience in Software Development, primarily in the insurance industry, I've had the opportunity to work with various Microsoft Technologies. Outside of work, I am passionate about playing cricket, watching movies and hanging out with my friends. however my favorite moments are spent playing and exploring with my daughter.",
-      image: "/images/Ankit.jpeg"
+      bio: "Hey there! I'm Jamian. My tech journey began with automating medical debt records as an ETL developer, which led to exploring C# programming, APIs, and cloud integration. I also dabbled in game development during college. As a contractor for the 160th, I tackled aviation maintenance software development. At GMIC, I thrived by integrating Helios with Azure APIM and Guidewire's systems, and implementing OKTA tokens for secure communication. Over seven years, I've worked on diverse projects, from cloud platforms to software innovations, always seeking challenges and turning them into opportunities for innovation.",
+      image: ""
     },
     back: {
-      name: "Ankit",
+      name: "Jamison Murphy",
       position: "Software Developer",
-      bio: "Ankit, known across the swamps and cities as The Florida Man, is a figure wrapped in both mystery and altruism. He is the kind of man who might be seen in the dead of night, wading waist-deep through alligator-infested waters—not for glory, but to retrieve a single flip-flop someone lost years ago. With a heart as vast as the Everglades, his acts of cryptic kindness have earned him both admiration and confusion. From single-handedly replacing the tires on a stranger’s car with unicycle wheels to returning lost grocery carts to their rightful homes from hundreds of miles away, Ankit operates on a different frequency of logic—one that only he seems to understand.",
-      image: "/AlterEgoImages/Ankit_AlterEgo.jpeg"
+      bio: "Jamison is a traveling cat herder, roaming from town to town with his mystical feline companions. With a flick of his wrist and a purr of encouragement, he orchestrates their harmonious movements, creating mesmerizing spectacles. Armed with vast patience and a warm heart, Jamison finds joy in guiding his quirky kitty crew through new adventures. Each town becomes a playground for their playful antics and curiosity. Whether purring under starlit skies or leaping through cobblestone streets, Jamison and his enchanting entourage bring magic to every corner. If you see a procession of cats dancing in the moonlight, know that Jamison isn't far behind, spinning tales of whimsy and wonder.",
+      image: ""
     }
   },
   {
