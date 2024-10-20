@@ -14,7 +14,7 @@ const Wait = () => {
 
     let elapsedTime = 0;
     const interval = 10000; // 10 seconds
-    const maxTime = 50000; // 50 seconds
+    const maxTime = 60000; // 60 seconds
 
     const intervalId = setInterval(async () => {
       if (elapsedTime >= maxTime) {
