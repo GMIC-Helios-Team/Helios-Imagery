@@ -3,8 +3,11 @@ import { useRouter } from 'next/router'
 import Jokes from '@/components/Jokes';
 import { Alert, Button, Card, Col, Container, Row } from 'react-bootstrap';
 import { fetchImage } from '@/helpers/get-generated-image-api';
+import style from '@/styles/wait.module.css';
+import { useTheme } from '@/contexts/theme-context';
 
 const Wait = () => {
+
   const [isTimeout, setIsTimeout] = useState<boolean>(false);
   const router = useRouter();
   const { id } = router.query;
@@ -23,17 +26,15 @@ const Wait = () => {
         return;
       }
 
-      console.log('Issuing API request');
       try {
-        const generatedImage = await fetchImage(id as string);  
+        const generatedImage = await fetchImage(id as string);
         if (generatedImage.imagefilename) {
           clearInterval(intervalId);
           router.push(`/gallery/image/${id}`);
         }
       } catch (error) {
-        console.error('API request failed:', error);
         clearInterval(intervalId);
-        router.push(`/gallery/image/${id}`);        
+        router.push(`/gallery/image/${id}`);
         return;
       }
 
@@ -58,38 +59,53 @@ const Wait = () => {
 
 export default Wait;
 
-const TimeoutImage = () => (
-  <>
-    <Card >
-      <Card.Header>Sorry for the delay</Card.Header>
+const TimeoutImage = () => {
+
+  const { isDarkTheme } = useTheme();
+
+  const router = useRouter();
+  const navigateHome = () => {
+    router.push('/');
+  };
+
+  return (
+    <Card className={`${style.cardBackgroundCustom} ${style.cardShadowCustom} ${isDarkTheme ? 'bg-dark text-light' : 'bg-light text-dark'}`}>
+      <Card.Header>Sorry for the delay
+        <Button
+          className={style.buttonCustomRight}
+          onClick={navigateHome}
+          variant="link">Home</Button>
+      </Card.Header>
       <Card.Body>
-      <Card.Img variant="top" src="/ImageGenerationTimeout.png" alt="Image Generation Timeout" width={500} height={500}  />
+        <Card.Img variant="top"
+          src="/ImageGenerationTimeout.png"
+          className={style.imageBeveled}
+          alt="Image Generation Timeout" width={500} height={500} />
         <Card.Text>
-          <Alert variant="light">
+          <Alert variant="warning">
             <Alert.Heading>Oh snap! You got an error!</Alert.Heading>
             <p>
-              Change this and that and try again. Duis mollis, est non commodo
-              luctus, nisi erat porttitor ligula, eget lacinia odio sem nec elit.
-              Cras mattis consectetur purus sit amet fermentum.
-            </p>            
+              Our robo-engineers are tightening the bolts and oiling the gears. Hang tight, we&apos;ll be back in a jiffy!
+            </p>
           </Alert>
-          <Button variant="link">Go somewhere</Button>
+
         </Card.Text>
       </Card.Body>
     </Card>
-  </>
-);
+  )
+}
 
-const LaughWhileYouWait = () => (
-  <>
-    <Card bg="dark" text="white">
+const LaughWhileYouWait = () => {
+
+  return (
+    <Card bg="dark" text="white" className={`${style.cardBackgroundCustom} ${style.cardShadowCustom}`}>
       <Card.Header>Laugh while you wait</Card.Header>
-      <Card.Img variant="top" src="/wait-comedy.png" alt="Wait for Image Generation" width={500} height={300} style={{padding:'5px'}}/>
+      <Card.Img variant="top" src="/wait-comedy.png" alt="Wait for Image Generation" width={500} height={300} style={{ padding: '5px' }} />
       <Card.Body>
         <Card.Text>
           <Jokes />
         </Card.Text>
       </Card.Body>
     </Card>
-  </>
-)
+  )
+}
