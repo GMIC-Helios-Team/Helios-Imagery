@@ -1,15 +1,20 @@
 import { useRouter } from 'next/router';
 import React, { useEffect, useState } from 'react';
-import { Col, Container, Row, Image, Card, Spinner } from 'react-bootstrap';
+import { Col, Container, Row, Image, Card, Spinner, Button } from 'react-bootstrap';
 import { fetchImage } from '@/helpers/get-generated-image-api';
 import { GetGeneratedImage } from '@/types/generation-response';
-import style from '@/styles/gallery-image.module.css';
+import style from '@/styles/gallery.module.css';
+
+interface GalleryImageButtonProps {
+  isLoading: boolean;
+}
 
 const GalleryImage = () => {
   const [isLoading, setIsLoading] = useState<boolean>(true);
   const [data, setData] = useState<GetGeneratedImage | null>(null);
   const router = useRouter();
   const { id } = router.query;
+
   useEffect(() => {
     if (!id) return;
 
@@ -44,7 +49,10 @@ const GalleryImage = () => {
       <Row className="mb-4">
         <Col md={{ offset: 3, span: 6 }}>
           <Card className={`${style.cardBackgroundCustom} ${style.cardShadowCustom}`}>
-            <Card.Header>Gallery Image {isLoading && <Spinner style={{float:"right"}} animation="border" size="sm" className="ml-2"/>}</Card.Header>
+            <Card.Header>
+              Gallery Image
+              <GalleryImageButton isLoading={isLoading} ></GalleryImageButton>
+            </Card.Header>
             <Card.Body>
               {isLoading ?
                 (
@@ -82,4 +90,23 @@ const GalleryImageDetail: React.FC<GalleryImageDetailProps> = ({ data }) => {
     </>
   )
 
+}
+
+const GalleryImageButton: React.FC<GalleryImageButtonProps> = ({ isLoading }) => {
+  const router = useRouter();
+
+  const navigateHome = () => {
+    router.push('/');
+  };
+  return (
+    <>
+      {isLoading ? (
+        <Spinner className={`${style.spinnerCustomRight}`} animation="border" size="sm" />
+      ) : (
+        <Button className={style.buttonCustomRight} variant="link" onClick={navigateHome}>
+          Home
+        </Button>
+      )}
+    </>
+  );
 }

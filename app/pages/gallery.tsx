@@ -1,7 +1,7 @@
 /* eslint-disable jsx-a11y/alt-text */
 import React, { useState, useEffect } from 'react';
 import { Card, Col, Container, Row, Image, Button, Spinner } from 'react-bootstrap';
-import style from '@/styles/gallery-image.module.css';
+import style from '@/styles/gallery.module.css';
 import { GalleryItem } from '@/types/image-gallery';
 import { useTheme } from '@/contexts/theme-context';
 
@@ -118,7 +118,7 @@ const GalleryList: React.FC<GalleryListProps> = ({ items, showVote, paging }) =>
   return (
     <>
       <Card className={`${style.cardBackgroundCustom} ${style.cardShadowCustom} ${isDarkTheme ? 'bg-dark text-light' : 'LightThemeBG text-dark'}`}>
-        <Card.Header>Gallery Image {isLoading && <Spinner style={{float:"right"}} animation="border" size="sm" className="ml-2"/>} </Card.Header>
+        <Card.Header>Gallery Image {isLoading && <Spinner className={`${style.spinnerCustomRight} m1-2`} animation="border" size="sm"/>} </Card.Header>
         <GalleryPaging paging={paging} />
         <Card.Body>
           <Row>
@@ -164,14 +164,14 @@ const Vote: React.FC<VoteProps> = ({ showGalleryList, item }) => {
   return (
     <Card className={`${style.cardBackgroundCustom} ${style.cardShadowCustom} ${isDarkTheme ? 'bg-dark text-light' : 'LightThemeBG text-dark'}`}>
       <Card.Header>Vote
-        <Button variant="link" onClick={showGalleryList} style={{ float: "right" }}>
+        <Button variant="link" onClick={showGalleryList} className={style.buttonCustomRight} >
           Back
         </Button>
       </Card.Header>
       <Card.Body>
         <Card.Title>{item?.name}</Card.Title>
         <Image src={`${process.env.NEXT_PUBLIC_HELIOS_GALLERY}/${item?.imagefilename}`} fluid />
-        <Button disabled={hasVoted} variant="link" onClick={handleLike} style={{ marginTop: '10px' }}>
+        <Button disabled={hasVoted} variant="link" onClick={handleLike} className={style.voteButton}>
           Like ({item?.voteCount || 0})
         </Button>
       </Card.Body>
@@ -184,14 +184,14 @@ const GalleryPaging: React.FC<GalleryPagingProps> = ({ paging}) => {
   const { currentPage, totalPages, handlePrev, handleNext } = paging;
 
   return (
-    <div className="d-flex justify-content-between align-items-center mt-4">
+    <div className="d-flex justify-content-between align-items-center mt-1">
       <Button variant="link" onClick={handlePrev} disabled={currentPage === 1}>
-        Previous
+        Prev
       </Button>
-      <span>Page {currentPage} of {totalPages}</span>
+      <span className={style.pagingText}>{currentPage} of {totalPages}</span>
       <Button variant="link" onClick={handleNext} disabled={currentPage === totalPages}>
         Next
-      </Button>
+      </Button>      
     </div>
   );
 }
