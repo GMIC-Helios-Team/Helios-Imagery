@@ -11,4 +11,5 @@ export interface GalleryItem {
   imagefilename: string;
   imageThumbnailfilename: string;
   voteCount: number;
+  Title: string;
 }

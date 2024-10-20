@@ -4,6 +4,7 @@ import { Col, Container, Row, Image, Card, Spinner, Button } from 'react-bootstr
 import { fetchImage } from '@/helpers/get-generated-image-api';
 import { GetGeneratedImage } from '@/types/generation-response';
 import style from '@/styles/gallery.module.css';
+import { fetchTitle } from '@/helpers/get-title';
 
 interface GalleryImageButtonProps {
   isLoading: boolean;
@@ -22,16 +23,19 @@ const GalleryImage = () => {
       try {
         setIsLoading(true);
         const generatedImage = await fetchImage(id as string);
+        console.log(generatedImage);
         generatedImage.imagefilename = `${process.env.NEXT_PUBLIC_HELIOS_GALLERY}/${generatedImage.imagefilename}`
         setData(generatedImage);
       } catch (error) {
         const errImage: GetGeneratedImage = {
           imagefilename: '/err-pirate.png',
           prompt: "Yarr! Our robo-pirates searched every corner of the digital seas, but the image has gone overboard! Maybe it walked the plank? Sail back to safer waters",
-          name: "Lost at Sea-Bot: Image Not Found",
+          name: "Lost at Sea-Bot",
           email: "",
           HID: "",
-          imageThumbnailfilename: ""
+          imageThumbnailfilename: "",
+          Title: "Shiver me timbers!",
+          voteCount: 0
         }
         setData(errImage);
       }
@@ -58,7 +62,7 @@ const GalleryImage = () => {
                 (
                   <p>Loading...</p>) :
                 (
-                  <GalleryImageDetail data={data} />
+                  <GalleryImageDetail item={data} />
                 )
               }
             </Card.Body>
@@ -73,20 +77,46 @@ const GalleryImage = () => {
 export default GalleryImage;
 
 interface GalleryImageDetailProps {
-  data: GetGeneratedImage | null;
+  item: GetGeneratedImage | null;
 }
 
-const GalleryImageDetail: React.FC<GalleryImageDetailProps> = ({ data }) => {
+const GalleryImageDetail: React.FC<GalleryImageDetailProps> = ({ item }) => {
+  const [title, setTitle] = useState('')
+  const [isLoading, setIsLoading] = useState(false);
+
+  useEffect(() => {
+    if (!item) return
+    if (item.Title === undefined || item.Title.trim() === '') {
+      setIsLoading(true);
+      fetchTitle(item.HID).then((data) => {
+        item.Title = data.Title;
+        setTitle(data.Title);
+      })
+        .catch((error) => {
+          console.error('Error fetching title:', error);
+        })
+        .finally(() => {
+          setIsLoading(false);
+        });
+    }
+  },[setIsLoading, item]);
+
+
   return (
     <>
-      <Card.Title>{data?.name}</Card.Title>
+      <Card.Title>{item?.name}</Card.Title>
       <Image
-        src={data?.imagefilename}
+        src={item?.imagefilename}
         fluid
         className={style.imageBeveled}
         alt="Generated Image"
       />
-      <Card.Text className={style.cardTextCustom}>{data?.prompt}</Card.Text>
+      {isLoading ? (
+        <Card.Title className={`${style.cardHeaderCustom} ${style.cardTitleCustom}`} >Generating Title...<Spinner className={`${style.spinnerCustomRight} m1-2`} animation="border" size="sm" /> </Card.Title>
+      ) : (
+        <Card.Title className={`${style.cardHeaderCustom} ${style.cardTitleCustom}`} > {item?.Title || title}</Card.Title>
+      )}
+      <Card.Text className={style.cardTextCustom}>{item?.prompt}</Card.Text>
     </>
   )
 

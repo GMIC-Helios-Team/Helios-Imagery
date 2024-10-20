@@ -4,6 +4,7 @@ import { Card, Col, Container, Row, Image, Button, Spinner } from 'react-bootstr
 import style from '@/styles/gallery.module.css';
 import { GalleryItem } from '@/types/image-gallery';
 import { useTheme } from '@/contexts/theme-context';
+import { fetchTitle } from '@/helpers/get-title';
 
 interface GalleryListProps {
   items: GalleryItem[];
@@ -25,7 +26,7 @@ interface PagingProps {
   totalPages: number;
   handlePrev: () => void;
   handleNext: () => void;
-  isLoading : boolean;
+  isLoading: boolean;
 }
 
 const GalleryPage = () => {
@@ -68,7 +69,7 @@ const GalleryPage = () => {
       console.error('Error fetching images:', error);
     }
     finally {
-      setIsLoading(false);  
+      setIsLoading(false);
     }
   };
 
@@ -106,7 +107,7 @@ export default GalleryPage;
 
 const GalleryList: React.FC<GalleryListProps> = ({ items, showVote, paging }) => {
   const { isDarkTheme } = useTheme();
-  const {isLoading} = paging;
+  const { isLoading } = paging;
 
   const renderImages = (galleryItems: GalleryItem[]) => {
     return galleryItems.map((item) => (
@@ -118,7 +119,7 @@ const GalleryList: React.FC<GalleryListProps> = ({ items, showVote, paging }) =>
   return (
     <>
       <Card className={`${style.cardBackgroundCustom} ${style.cardShadowCustom} ${isDarkTheme ? 'bg-dark text-light' : 'LightThemeBG text-dark'}`}>
-        <Card.Header>Gallery Image {isLoading && <Spinner className={`${style.spinnerCustomRight} m1-2`} animation="border" size="sm"/>} </Card.Header>
+        <Card.Header>Gallery Image {isLoading && <Spinner className={`${style.spinnerCustomRight} m1-2`} animation="border" size="sm" />} </Card.Header>
         <GalleryPaging paging={paging} />
         <Card.Body>
           <Row>
@@ -131,14 +132,33 @@ const GalleryList: React.FC<GalleryListProps> = ({ items, showVote, paging }) =>
 }
 
 const Vote: React.FC<VoteProps> = ({ showGalleryList, item }) => {
-  const { isDarkTheme } = useTheme();
 
+  const { isDarkTheme } = useTheme();
+  const [title, setTitle] = useState('')
   const [hasVoted, setHasVoted] = useState(false);
+  const [isLoading, setIsLoading] = useState(false);
+
+  useEffect(() => {
+    if (!item) return
+    if (item.Title === undefined || item.Title.trim() === '') {
+      setIsLoading(true);
+      fetchTitle(item.HID).then((data) => {
+        item.Title = data.Title;
+        setTitle(data.Title);
+      })
+        .catch((error) => {
+          console.error('Error fetching title:', error);
+        })
+        .finally(() => {
+          setIsLoading(false);
+        });
+    }
+  }, [setIsLoading, item]);
 
   const likeImage = async () => {
     try {
 
-      const response = await fetch("/api/image-gallery",{
+      const response = await fetch("/api/image-gallery", {
         method: 'PATCH',
         headers: {
           'Content-Type': 'application/json',
@@ -171,6 +191,11 @@ const Vote: React.FC<VoteProps> = ({ showGalleryList, item }) => {
       <Card.Body>
         <Card.Title>{item?.name}</Card.Title>
         <Image src={`${process.env.NEXT_PUBLIC_HELIOS_GALLERY}/${item?.imagefilename}`} fluid />
+        {isLoading ? (
+          <Card.Title className={`${style.cardHeaderCustom} ${style.cardTitleCustom}`} >Generating Title...<Spinner className={`${style.spinnerCustomRight} m1-2`} animation="border" size="sm" /> </Card.Title>
+        ) : (
+          <Card.Title className={`${style.cardHeaderCustom} ${style.cardTitleCustom}`} > {item?.Title || title}</Card.Title>
+        )}
         <Button disabled={hasVoted} variant="link" onClick={handleLike} className={style.voteButton}>
           Like ({item?.voteCount || 0})
         </Button>
@@ -179,8 +204,7 @@ const Vote: React.FC<VoteProps> = ({ showGalleryList, item }) => {
   )
 }
 
-
-const GalleryPaging: React.FC<GalleryPagingProps> = ({ paging}) => {
+const GalleryPaging: React.FC<GalleryPagingProps> = ({ paging }) => {
   const { currentPage, totalPages, handlePrev, handleNext } = paging;
 
   return (
@@ -191,7 +215,7 @@ const GalleryPaging: React.FC<GalleryPagingProps> = ({ paging}) => {
       <span className={style.pagingText}>{currentPage} of {totalPages}</span>
       <Button variant="link" onClick={handleNext} disabled={currentPage === totalPages}>
         Next
-      </Button>      
+      </Button>
     </div>
   );
 }
