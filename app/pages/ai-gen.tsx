@@ -225,14 +225,12 @@ const AiGenPage: React.FC<AiGenPageProps> = ({ prompt }) => {
                   <FontStyleInput
                     formData={formData}
                     handleChange={handleChange}
-                    handleBlur={handleBlur}
                     isValid={isValid}
                     isLoading={isLoading}
                   />
                   <ColorPaletteSelect
                     formData={formData}
                     handleChange={handleChange}
-                    handleBlur={handleBlur}
                     isValid={isValid}
                     isLoading={isLoading}
                   />
