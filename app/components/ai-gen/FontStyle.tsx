@@ -3,15 +3,14 @@ import React from "react";
 import { Form, Row } from "react-bootstrap";  
 import { SelectProps } from "@/types/ai-gen";
 
-const FontStyleInput: React.FC<SelectProps> = ({ formData,handleChange, handleBlur,isValid, isLoading }) => ( 
+const FontStyleInput: React.FC<SelectProps> = ({ formData,handleChange, isValid, isLoading }) => ( 
   <Form.Group as={Row} className="mb-3" controlId="fontStyle">
   <Form.Select
     disabled={isLoading}
     size="sm"
     value={formData.fontStyle}
     isValid={isValid.fontStyle}
-    onChange={handleChange}
-    onBlur={handleBlur}>
+    onChange={handleChange}>
     <option value="sans-serif">Sans-Serif (e.g., Helvetica, Arial)</option>
     <option value="serif">Serif (e.g., Times New Roman, Garamond)</option>
     <option value="slab-serif">Slab Serif (e.g., Rockwell, Roboto Slab)</option>
