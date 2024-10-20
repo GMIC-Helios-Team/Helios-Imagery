@@ -86,7 +86,7 @@ const ProfileList: React.FC<ProfileListProps> = ({ items, selectedTeam, handleTe
   const renderImages = (profiles: Profile[]) => {
     return profiles.map((item) => (
       <Col xs={6} md={4} key={item.id}>
-        <Image src={`${item.back.image}`} fluid thumbnail height={150} width={150} onClick={() => handleProfileSelect(item.id)} />
+        <Image src={`${isDarkTheme ? item.back.image : item.front.image}`} fluid thumbnail height={150} width={150} onClick={() => handleProfileSelect(item.id)} />
       </Col>
     ));
   };
