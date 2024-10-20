@@ -14,6 +14,7 @@ interface ProfileFilterProps {
 interface HeliosProfileProps {
   profile: Profile | null | undefined;
   showProfileList: () => void;
+  isDarkTheme: boolean;
 }
 interface ProfileListProps {
   items: Profile[];
@@ -66,7 +67,7 @@ const ProfilePage = () => {
         <Row className="mb-4">
           <Col md={{ offset: 3, span: 6 }}>
             {isProfileVisible ? (
-              <HeliosProfile profile={selectedProfile} showProfileList={showProfileList} />
+              <HeliosProfile profile={selectedProfile} showProfileList={showProfileList} isDarkTheme={isDarkTheme} />
             ) : (
               <ProfileList items={filteredProfiles} selectedTeam={selectedTeam} handleTeamSelect={handleTeamSelect} handleProfileSelect={handleProfileSelect} isDarkTheme={isDarkTheme} />
             )
@@ -107,9 +108,9 @@ const ProfileList: React.FC<ProfileListProps> = ({ items, selectedTeam, handleTe
   )
 }
 
-const HeliosProfile: React.FC<HeliosProfileProps> = ({ profile, showProfileList }) => (
+const HeliosProfile: React.FC<HeliosProfileProps> = ({ profile, showProfileList, isDarkTheme }) => (
   <>
-    <Card className={`${style.cardBackgroundCustom} ${style.cardShadowCustom}`}>
+    <Card className={`${style.cardBackgroundCustom} ${style.cardShadowCustom} ${isDarkTheme ? 'bg-dark text-light' : 'bg-light text-dark'}`}>
       <Card.Header>Profiles
         <Button variant="link" onClick={showProfileList} style={{ float: "right" }}>
           Back
