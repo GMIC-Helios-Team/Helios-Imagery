@@ -58,13 +58,13 @@ export const profiles = [
       name: "Jamian Murray",
       position: "Software Developer",
       bio: "Hey there! I'm Jamian. My tech journey began with automating medical debt records as an ETL developer, which led to exploring C# programming, APIs, and cloud integration. I also dabbled in game development during college. As a contractor for the 160th, I tackled aviation maintenance software development. At GMIC, I thrived by integrating Helios with Azure APIM and Guidewire's systems, and implementing OKTA tokens for secure communication. Over seven years, I've worked on diverse projects, from cloud platforms to software innovations, always seeking challenges and turning them into opportunities for innovation.",
-      image: "/images/Jamian.jpeg"
+      image: ""
     },
     back: {
       name: "Jamison Murphy",
       position: "Software Developer",
       bio: "Jamison is a traveling cat herder, roaming from town to town with his mystical feline companions. With a flick of his wrist and a purr of encouragement, he orchestrates their harmonious movements, creating mesmerizing spectacles. Armed with vast patience and a warm heart, Jamison finds joy in guiding his quirky kitty crew through new adventures. Each town becomes a playground for their playful antics and curiosity. Whether purring under starlit skies or leaping through cobblestone streets, Jamison and his enchanting entourage bring magic to every corner. If you see a procession of cats dancing in the moonlight, know that Jamison isn't far behind, spinning tales of whimsy and wonder.",
-      image: "/AlterEgoImages/Jamian_AlterEgo.jpeg"
+      image: ""
     }
   },
   {
