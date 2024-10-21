@@ -56,7 +56,7 @@ const NavBar: React.FC = () => {
       <div className="max-w-7xl mx-auto px-4">
         {/* Max-width container */}
         <Navbar
-          expand="lg"
+          expand={false}
           expanded={expanded}
           onToggle={handleToggle}
           ref={navbarRef}
@@ -70,13 +70,13 @@ const NavBar: React.FC = () => {
               height={40}
               className={`mr-5 ${isDarkTheme ? 'svg-white' : 'svg-black'}`}
             />
-            <ButtonGroup className="ml-auto flex">
+            <ButtonGroup className="ml-auto flex d-inline">
               {radios.map((radio, idx) => (
                 <ToggleButton
                   key={idx}
                   id={`radio-${idx}`}
                   type="radio"
-                  variant="outline-secondary"
+                  variant="outline-primary"
                   name="radio"
                   value={radio.value}
                   checked={isDarkTheme ? radio.value === 'dark' : radio.value === 'light'}
@@ -106,20 +106,20 @@ const NavBar: React.FC = () => {
               ))}
             </ButtonGroup>
           </Navbar.Brand>
-          <Navbar.Toggle className="ml-3" aria-controls="basic-navbar-nav" />
+          <Navbar.Toggle className={`mx-2 ${isDarkTheme ? 'navbar-dark bg-dark' : 'navbar-light bg-light'}`} aria-controls="basic-navbar-nav" />
           <Navbar.Collapse id="basic-navbar-nav">
             <Nav className="ml-auto flex">
-              <Nav.Link as={Link} href="/gallery" className="mx-2">
+              <Nav.Link as={Link} href="/gallery" className={`mx-2 ${isDarkTheme ? 'text-light' : 'text-dark'}`}>
                 Gallery
               </Nav.Link>
-              <Nav.Link as={Link} href="/profile" className="mx-2">
+              <Nav.Link as={Link} href="/profile" className={`mx-2 ${isDarkTheme ? 'text-light' : 'text-dark'}`}>
                 Profile
               </Nav.Link>
-              <Nav.Link as={Link} href="/ai-gen" className="mx-2">
+              <Nav.Link as={Link} href="/ai-gen" className={`mx-2 ${isDarkTheme ? 'text-light' : 'text-dark'}`}>
                 Creative Canvas
               </Nav.Link>
             {hasFormData && (
-            <Nav.Link as={Link} href="/RockPaperScissors" className="mx-2" onClick={handleNavLinkClick}>
+            <Nav.Link as={Link} href="/RockPaperScissors" className={`mx-2 ${isDarkTheme ? 'text-light' : 'text-dark'}`} onClick={handleNavLinkClick}>
               AI Game
             </Nav.Link>
           )}
