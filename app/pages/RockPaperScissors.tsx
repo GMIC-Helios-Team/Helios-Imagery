@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import styles from '@/styles/RockPaperScissors.module.css';
 import { useTheme } from '../contexts/theme-context';
 import Cookies from 'js-cookie';
+import { useRouter } from 'next/router';
 
 const choices = ['Rock', 'Paper', 'Scissors'];
 let clickCount = 0;
@@ -74,11 +75,17 @@ const RockPaperScissors: React.FC = () => {
   const [result, setResult] = useState<string | null>(null);
   const { isDarkTheme } = useTheme();
   const [hasFormData, setHasFormData] = useState(false);
+  const router = useRouter();
 
   useEffect(() => {
     const formData = Cookies.get('ai-gen-formData');
-    setHasFormData(!!formData);
-  }, []);
+    if (!formData) {
+      router.replace('/404');
+    } else {
+      setHasFormData(true);
+    }
+  }, [router]);
+
 
   const handlePlayerChoice = (choice: string) => {
     const aiChoice = isDarkTheme ? getWinningChoice(choice) : getRandomChoice();
@@ -88,7 +95,7 @@ const RockPaperScissors: React.FC = () => {
   };
 
   if (!hasFormData) {
-    return <div className={styles.gameContainer}><h1>Nothing Here</h1><p>No data available.</p></div>;
+    return null;
   }
 
   return (
