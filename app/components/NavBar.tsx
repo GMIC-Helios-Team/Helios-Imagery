@@ -73,7 +73,24 @@ const NavBar: React.FC = () => {
                 value={radio.value}
                 checked={isDarkTheme ? radio.value === 'dark' : radio.value === 'light'}
                 onChange={() => handleRadioChange(radio.value)}
-                className="mx-1"
+                className={`mx-1 ${
+                  radio.value === 'dark'
+                    ? isDarkTheme
+                      ? 'text-white'
+                      : 'text-[#2d345b]'
+                    : isDarkTheme
+                    ? 'text-[#e1a629]'
+                    : 'text-white'
+                }`}
+                style={{
+                  color: radio.value === 'dark'
+                    ? isDarkTheme
+                      ? 'white'
+                      : '#2d345b'
+                    : isDarkTheme
+                    ? '#e1a629'
+                    : 'white'
+                }}
               >
                 {radio.name}
               </ToggleButton>
