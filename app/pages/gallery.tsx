@@ -1,7 +1,6 @@
 /* eslint-disable jsx-a11y/alt-text */
 import React, { useState, useEffect } from 'react';
 import { Card, Col, Container, Row, Image, Button, Spinner } from 'react-bootstrap';
-import style from '@/styles/gallery-image.module.css';
 import { GalleryItem } from '@/types/image-gallery';
 import { useTheme } from '@/contexts/theme-context';
 
@@ -117,7 +116,7 @@ const GalleryList: React.FC<GalleryListProps> = ({ items, showVote, paging }) =>
   };
   return (
     <>
-      <Card className={`${style.cardBackgroundCustom} ${style.cardShadowCustom} ${isDarkTheme ? 'bg-dark text-light' : 'LightThemeBG text-dark'}`}>
+      <Card className={`${".cardBackgroundCustom"} ${".cardShadowCustom"} ${isDarkTheme ? 'bg-dark text-light' : 'LightThemeBG text-dark'}`}>
         <Card.Header>Gallery Image {isLoading && <Spinner style={{float:"right"}} animation="border" size="sm" className="ml-2"/>} </Card.Header>
         <GalleryPaging paging={paging} />
         <Card.Body>
@@ -162,7 +161,7 @@ const Vote: React.FC<VoteProps> = ({ showGalleryList, item }) => {
   };
 
   return (
-    <Card className={`${style.cardBackgroundCustom} ${style.cardShadowCustom} ${isDarkTheme ? 'bg-dark text-light' : 'LightThemeBG text-dark'}`}>
+    <Card className={`${".cardBackgroundCustom"} ${".cardShadowCustom"} ${isDarkTheme ? 'bg-dark text-light' : 'LightThemeBG text-dark'}`}>
       <Card.Header>Vote
         <Button variant="link" onClick={showGalleryList} style={{ float: "right" }}>
           Back

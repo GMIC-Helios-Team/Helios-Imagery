@@ -1,7 +1,6 @@
 import React from 'react';
-import { Container, Row, Col, Button, Image } from 'react-bootstrap';
 import { useRouter } from 'next/router';
-import style from '@/styles/404.module.css';
+import Image from 'next/image';
 
 const Custom404 = () => {
   const router = useRouter();
@@ -11,22 +10,30 @@ const Custom404 = () => {
   };
 
   return (
-    
-    <Container style={{ marginTop: '50px', textAlign: 'center' }}>
-      <Row className="mb-4">
-        <Col md={{ offset: 3, span: 6 }}>
-          <h1>404 - Page Not Found</h1>
-          <p>Yarr! Our robo-pirates searched every corner of the digital seas, but the page has gone overboard! Maybe it walked the plank? Sail back to safer waters.</p>
+    <div className="container mx-auto mt-12 text-center">
+      <div className="mb-4">
+        <div className="md:col-start-4 md:col-span-6">
+          <h1 className="text-4xl font-bold">404 - Page Not Found</h1>
+          <p className="mt-4 text-lg">
+            Yarr! Our robo-pirates searched every corner of the digital seas, but the page has gone overboard! Maybe it walked the plank? Sail back to safer waters.
+          </p>
           <Image
             src="/err-404.png"
-            className={style.imageBeveled}
-            fluid
+            className="border-2 border-gray-300 rounded-lg shadow-lg max-w-full mt-4"
             alt="Generated Image"
+            width={500}
+            height={300}
           />
-          <Button onClick={handleGoBack} variant="link">Home</Button>
-        </Col>
-      </Row>
-    </Container>
+          
+          <button
+            onClick={handleGoBack}
+            className="mt-4 text-blue-500 hover:underline"
+          >
+            Home
+          </button>
+        </div>
+      </div>
+    </div>
   );
 };
 

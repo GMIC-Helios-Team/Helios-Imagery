@@ -14,7 +14,6 @@ import ThemeInput from '@/components/ai-gen/Theme';
 import ArtStyleInput from '@/components/ai-gen/ArtStyle';
 import { validateWithAPI } from '@/helpers/ValidateWithApi';
 import { initialErrors, initialFormData, initialIsValid } from '@/helpers/Reset';
-import aigen from '@/styles/ai-gen.module.css';
 import { useTheme } from '@/contexts/theme-context';
 import { useRouter } from 'next/router';
 interface AiGenPageProps {
@@ -181,14 +180,14 @@ const AiGenPage: React.FC<AiGenPageProps> = ({ prompt }) => {
     <Container style={{ marginTop: '50px' }}>
       <Row className="mb-4">
         <Col md={{ offset: 3, span: 6 }}>
-          <Card className={`${aigen.cardBackgroundCustom} ${aigen.cardShadowCustom} ${isDarkTheme ? 'bg-dark text-light' : 'bg-light text-dark'}`}>
+          <Card className={`${".cardBackgroundCustom"} ${".cardShadowCustom"} ${isDarkTheme ? 'bg-dark text-light' : 'bg-light text-dark'}`}>
             <Card.Header>
               AI Generator
             </Card.Header>
             <Card.Body>
               <Card.Text>
                 {submissionError && <Alert variant="danger">{submissionError}</Alert>}
-                <Form noValidate className={aigen.marginLeftRight}>
+                <Form noValidate className={".marginLeftRight"}>
                   <EmailInput
                     formData={formData}
                     handleChange={handleChange}
@@ -254,7 +253,7 @@ const AiGenPage: React.FC<AiGenPageProps> = ({ prompt }) => {
                   <Button type="button" variant="link" onClick={handleSubmit} disabled={!isFormValid}>
                     {isLoading ? <Spinner as="span" animation="border" size="sm" role="status" aria-hidden="true" /> : 'Generate'}
                   </Button>
-                  <Button type="button" variant="link" disabled={isLoading} onClick={resetFields} className={aigen.floatRight}>Reset Input</Button>
+                  <Button type="button" variant="link" disabled={isLoading} onClick={resetFields} className={".floatRight"}>Reset Input</Button>
                 </Form>
               </Card.Text>
             </Card.Body>
