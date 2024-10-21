@@ -56,7 +56,7 @@ const GalleryImage = () => {
     <Container style={{ marginTop: '50px' }}>
       <Row className="mb-4">
         <Col md={{ offset: 3, span: 6 }}>
-          <Card className=".cardBackgroundCustom .cardShadowCustom">
+          <Card className="cardBackgroundCustom cardShadowCustom">
             <Card.Header>
               Gallery Image
               <GalleryImageButton isLoading={isLoading} ></GalleryImageButton>
@@ -112,15 +112,15 @@ const GalleryImageDetail: React.FC<GalleryImageDetailProps> = ({ item }) => {
       <Image
         src={item?.imagefilename}
         fluid
-        className={".imageBeveled"}
+        className={"imageBeveled"}
         alt="Generated Image"
       />
       {isLoading ? (
-        <Card.Title className=".cardHeaderCustom .cardTitleCustom" >Generating Title...<Spinner className=".spinnerCustomRight m1-2" animation="border" size="sm" /> </Card.Title>
+        <Card.Title className="cardHeaderCustom cardTitleCustom" >Generating Title...<Spinner className="spinnerCustomRight m1-2" animation="border" size="sm" /> </Card.Title>
       ) : (
-        <Card.Title className=".cardHeaderCustom .cardTitleCustom" > {item?.Title || title}</Card.Title>
+        <Card.Title className="cardHeaderCustom cardTitleCustom" > {item?.Title || title}</Card.Title>
       )}
-      <Card.Text className=".cardTextCustom">{item?.prompt}</Card.Text>
+      <Card.Text className="cardTextCustom">{item?.prompt}</Card.Text>
     </>
   )
 
@@ -135,9 +135,9 @@ const GalleryImageButton: React.FC<GalleryImageButtonProps> = ({ isLoading }) =>
   return (
     <>
       {isLoading ? (
-        <Spinner className=".spinnerCustomRight" animation="border" size="sm" />
+        <Spinner className="spinnerCustomRight" animation="border" size="sm" />
       ) : (
-        <Button className=".buttonCustomRight" variant="link" onClick={navigateHome}>
+        <Button className="buttonCustomRight" variant="link" onClick={navigateHome}>
           Home
         </Button>
       )}

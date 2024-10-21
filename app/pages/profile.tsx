@@ -92,7 +92,7 @@ const ProfileList: React.FC<ProfileListProps> = ({ items, selectedTeam, handleTe
   };
   return (
     <>
-      <Card className={`${".cardBackgroundCustom"} ${".cardShadowCustom"}  ${isDarkTheme ? 'bg-dark text-light' : 'bg-light text-dark'}`}>
+      <Card className={`${"cardBackgroundCustom"} ${"cardShadowCustom"}  ${isDarkTheme ? 'bg-dark text-light' : 'bg-light text-dark'}`}>
         <Card.Header>Profiles</Card.Header>
         <Card.Body>
           <Card.Text>
@@ -109,7 +109,7 @@ const ProfileList: React.FC<ProfileListProps> = ({ items, selectedTeam, handleTe
 
 const HeliosProfile: React.FC<HeliosProfileProps> = ({ profile, showProfileList, isDarkTheme }) => (
   <>
-    <Card className={`${".cardBackgroundCustom"} ${".cardShadowCustom"} ${isDarkTheme ? 'bg-dark text-light' : 'bg-light text-dark'}`}>
+    <Card className={`${"cardBackgroundCustom"} ${"cardShadowCustom"} ${isDarkTheme ? 'bg-dark text-light' : 'bg-light text-dark'}`}>
       <Card.Header>Profiles
         <Button variant="link" onClick={showProfileList} style={{ float: "right" }}>
           Back
