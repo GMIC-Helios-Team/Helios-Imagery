@@ -16,6 +16,8 @@ import { validateWithAPI } from '@/helpers/ValidateWithApi';
 import { initialErrors, initialFormData, initialIsValid } from '@/helpers/Reset';
 import { useTheme } from '@/contexts/theme-context';
 import { useRouter } from 'next/router';
+import Cookies from 'js-cookie';
+
 interface AiGenPageProps {
   prompt: string;
 }
@@ -94,6 +96,9 @@ const AiGenPage: React.FC<AiGenPageProps> = ({ prompt }) => {
       }
 
       const generateImageResult: GenerationResponse = await generateImageResponse.json();
+
+      Cookies.set('ai-gen-name', formData.name, { expires: 30 });
+
       return generateImageResult.HID
 
     }

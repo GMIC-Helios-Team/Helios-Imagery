@@ -3,19 +3,31 @@ import { useTheme } from '../contexts/theme-context';
 import { Navbar, Nav, ButtonGroup, ToggleButton } from 'react-bootstrap';
 import React, { useState, useEffect, useRef } from 'react';
 import Image from 'next/image';
-import HeliosRobotIcon from '@/public/Helios-Robot-Icon.svg';
+import HeliosRobotIcon from '@/public/Helios-Robot-Icon.svg';import Cookies from 'js-cookie';
+import { useRouter } from 'next/router';
 
 const NavBar: React.FC = () => {
   const { isDarkTheme, toggleTheme } = useTheme();
   const [expanded, setExpanded] = useState(false);
   const navbarRef = useRef<HTMLDivElement>(null);
+  const [hasFormData, setHasFormData] = useState(false);
+  const router = useRouter();
 
   const handleClickOutside = (event: MouseEvent) => {
     if (navbarRef.current && !navbarRef.current.contains(event.target as Node)) {
       setExpanded(false);
     }
   };
+  
+  useEffect(() => {
+    const formData = Cookies.get('ai-gen-name');
+    setHasFormData(!!formData);
+  }, [router.asPath]);
 
+  const handleNavLinkClick = () => {
+    setExpanded(false);
+  };
+  
   useEffect(() => {
     document.addEventListener('mousedown', handleClickOutside);
     return () => {
@@ -107,7 +119,12 @@ const NavBar: React.FC = () => {
               <Nav.Link as={Link} href="/ai-gen" className="mx-2">
                 Creative Canvas
               </Nav.Link>
-            </Nav>
+            {hasFormData && (
+            <Nav.Link as={Link} href="/RockPaperScissors" className="mx-2" onClick={handleNavLinkClick}>
+              AI Game
+            </Nav.Link>
+          )}
+          </Nav>
           </Navbar.Collapse>
         </Navbar>
       </div>
