@@ -110,7 +110,7 @@ const GalleryList: React.FC<GalleryListProps> = ({ items, showVote, paging }) =>
 
   const renderImages = (galleryItems: GalleryItem[]) => {
     return galleryItems.map((item) => (
-      <Col xs={6} md={4} key={item.HID}>
+      <Col xs={6} md={4} key={item._id}>
         <Image src={`${process.env.NEXT_PUBLIC_HELIOS_GALLERY}/${item.imageThumbnailfilename}`} fluid thumbnail height={150} width={150} onClick={() => showVote(item)} />
       </Col>
     ));

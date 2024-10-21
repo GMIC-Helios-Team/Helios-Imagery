@@ -4,6 +4,7 @@ export interface Gallery {
 }
 
 export interface GalleryItem {
+  _id: string;
   HID: string;
   name: string;
   email: string;
@@ -12,4 +13,8 @@ export interface GalleryItem {
   imageThumbnailfilename: string;
   voteCount: number;
   Title: string;
+  SendGridMessageId: string;
+  createDatetime: string;
+  updateDatetime: string;
+  EmailSentDateTime: string;
 }
