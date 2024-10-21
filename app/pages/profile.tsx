@@ -49,7 +49,7 @@ const ProfilePage = () => {
     if (team === "all") {
       return profiles;
     }
-    return profiles.filter((profile) => profile.team === team);
+    return profiles.filter((profile) => profile.team === team || profile.team === "");
   }
 
   const filteredProfiles = filterProfiles(profiles, selectedTeam);
@@ -147,6 +147,14 @@ const ProfileFilter: React.FC<ProfileFilterProps> = ({ selectedTeam, handleTeamS
       name="team"
       value="cloud"
       checked={selectedTeam === "cloud"}
+      onChange={handleTeamSelect}
+    />
+    <Form.Check
+      type="radio"
+      label="SRE"
+      name="team"
+      value="sre"
+      checked={selectedTeam === "sre"}
       onChange={handleTeamSelect}
     />
   </Form>
