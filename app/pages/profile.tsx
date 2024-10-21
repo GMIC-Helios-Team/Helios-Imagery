@@ -4,7 +4,7 @@ import ProfileCard from "@/components/ProfileCard";
 import { Card, Col, Container, Row, Image, Form, Button } from "react-bootstrap";
 import { profiles } from '@/helpers/profiles';
 import { Profile } from "@/types/profile";
-
+import { useTheme } from '@/contexts/theme-context';
 
 interface ProfileFilterProps {
   selectedTeam: string;
@@ -13,12 +13,14 @@ interface ProfileFilterProps {
 interface HeliosProfileProps {
   profile: Profile | null | undefined;
   showProfileList: () => void;
+  isDarkTheme: boolean;
 }
 interface ProfileListProps {
   items: Profile[];
   selectedTeam: string;
   handleTeamSelect: (event: React.ChangeEvent<HTMLInputElement>) => void;
   handleProfileSelect: (event: number) => void;
+  isDarkTheme: boolean;
 }
 
 const ProfilePage = () => {
@@ -26,6 +28,7 @@ const ProfilePage = () => {
   const [isClient, setIsClient] = useState<boolean>(false);
   const [selectedTeam, setSelectedTeam] = useState<string>("api");
   const [isProfileVisible, setIsProfileVisible] = useState<boolean>(false);
+  const { isDarkTheme } = useTheme();
 
   useEffect(() => {
     setIsClient(true);
@@ -63,9 +66,9 @@ const ProfilePage = () => {
         <Row className="mb-4">
           <Col md={{ offset: 3, span: 6 }}>
             {isProfileVisible ? (
-              <HeliosProfile profile={selectedProfile} showProfileList={showProfileList} />
+              <HeliosProfile profile={selectedProfile} showProfileList={showProfileList} isDarkTheme={isDarkTheme} />
             ) : (
-              <ProfileList items={filteredProfiles} selectedTeam={selectedTeam} handleTeamSelect={handleTeamSelect} handleProfileSelect={handleProfileSelect} />
+              <ProfileList items={filteredProfiles} selectedTeam={selectedTeam} handleTeamSelect={handleTeamSelect} handleProfileSelect={handleProfileSelect} isDarkTheme={isDarkTheme} />
             )
             }
           </Col>
@@ -78,18 +81,18 @@ const ProfilePage = () => {
 export default ProfilePage;
 
 
-const ProfileList: React.FC<ProfileListProps> = ({ items, selectedTeam, handleTeamSelect, handleProfileSelect }) => {
+const ProfileList: React.FC<ProfileListProps> = ({ items, selectedTeam, handleTeamSelect, handleProfileSelect, isDarkTheme }) => {
 
   const renderImages = (profiles: Profile[]) => {
     return profiles.map((item) => (
       <Col xs={6} md={4} key={item.id}>
-        <Image src={`${item.back.image}`} fluid thumbnail height={150} width={150} onClick={() => handleProfileSelect(item.id)} />
+        <Image src={`${isDarkTheme ? item.back.image : item.front.image}`} fluid thumbnail height={150} width={150} onClick={() => handleProfileSelect(item.id)} />
       </Col>
     ));
   };
   return (
     <>
-      <Card className={`${".cardBackgroundCustom"} ${".cardShadowCustom"}`}>
+      <Card className={`${".cardBackgroundCustom"} ${".cardShadowCustom"}  ${isDarkTheme ? 'bg-dark text-light' : 'bg-light text-dark'}`}>
         <Card.Header>Profiles</Card.Header>
         <Card.Body>
           <Card.Text>
@@ -104,9 +107,9 @@ const ProfileList: React.FC<ProfileListProps> = ({ items, selectedTeam, handleTe
   )
 }
 
-const HeliosProfile: React.FC<HeliosProfileProps> = ({ profile, showProfileList }) => (
+const HeliosProfile: React.FC<HeliosProfileProps> = ({ profile, showProfileList, isDarkTheme }) => (
   <>
-    <Card className={`${".cardBackgroundCustom"} ${".cardShadowCustom"}`}>
+    <Card className={`${".cardBackgroundCustom"} ${".cardShadowCustom"} ${isDarkTheme ? 'bg-dark text-light' : 'bg-light text-dark'}`}>
       <Card.Header>Profiles
         <Button variant="link" onClick={showProfileList} style={{ float: "right" }}>
           Back

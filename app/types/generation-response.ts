@@ -12,4 +12,6 @@ export interface GetGeneratedImage{
   prompt: string;
   imagefilename: string;
   imageThumbnailfilename: string;
+  Title: string;
+  voteCount: number;
 }

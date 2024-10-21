@@ -23,7 +23,6 @@ export interface InputProps {
 export interface SelectProps { 
   formData: InputFields;
   handleChange: (e: React.ChangeEvent<HTMLSelectElement>) => void;
-  handleBlur: (e: React.FocusEvent<HTMLSelectElement>) => void;
   isValid:  Record<keyof InputFields, boolean>;
   isLoading: boolean;
 }

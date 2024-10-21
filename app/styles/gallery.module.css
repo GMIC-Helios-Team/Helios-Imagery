@@ -1,0 +1,46 @@
+.cardTextCustom {
+  padding: 10px;
+  font-size: 12px;
+  font-weight: bold;
+}
+
+.cardBackgroundCustom {
+  background-color: #fdfdfd;
+}
+
+.imageBeveled {
+  border: 2px solid #ccc;
+  border-radius: 8px;
+  box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.1);
+}
+
+.cardShadowCustom {
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Example shadow */
+  border-radius: 8px; /* Optional: Add rounded corners */
+}
+
+.buttonCustomRight {
+  float: right;
+}
+
+.spinnerCustomRight {
+  float: right;
+}
+
+.voteButton {
+   marginTop: 10px;
+}
+
+.pagingText {
+  font-size: 1rem;
+  font-weight: 500;
+}
+
+.cardHeaderCustom {
+  text-align: center;
+}
+
+.cardTitleCustom {
+  margin-top: 5px;
+  margin-bottom: 5px;
+}

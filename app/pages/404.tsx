@@ -3,6 +3,7 @@ import { useRouter } from 'next/router';
 import Image from 'next/image';
 
 const Custom404 = () => {
+  const { isDarkTheme } = useTheme();
   const router = useRouter();
 
   const handleGoBack = () => {
@@ -15,7 +16,7 @@ const Custom404 = () => {
         <div className="md:col-start-4 md:col-span-6">
           <h1 className="text-4xl font-bold">404 - Page Not Found</h1>
           <p className="mt-4 text-lg">
-            Yarr! Our robo-pirates searched every corner of the digital seas, but the page has gone overboard! Maybe it walked the plank? Sail back to safer waters.
+            Page Not Found
           </p>
           <Image
             src="/err-404.png"

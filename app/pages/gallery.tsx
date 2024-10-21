@@ -3,6 +3,7 @@ import React, { useState, useEffect } from 'react';
 import { Card, Col, Container, Row, Image, Button, Spinner } from 'react-bootstrap';
 import { GalleryItem } from '@/types/image-gallery';
 import { useTheme } from '@/contexts/theme-context';
+import { fetchTitle } from '@/helpers/get-title';
 
 interface GalleryListProps {
   items: GalleryItem[];
@@ -24,7 +25,7 @@ interface PagingProps {
   totalPages: number;
   handlePrev: () => void;
   handleNext: () => void;
-  isLoading : boolean;
+  isLoading: boolean;
 }
 
 const GalleryPage = () => {
@@ -67,7 +68,7 @@ const GalleryPage = () => {
       console.error('Error fetching images:', error);
     }
     finally {
-      setIsLoading(false);  
+      setIsLoading(false);
     }
   };
 
@@ -105,7 +106,7 @@ export default GalleryPage;
 
 const GalleryList: React.FC<GalleryListProps> = ({ items, showVote, paging }) => {
   const { isDarkTheme } = useTheme();
-  const {isLoading} = paging;
+  const { isLoading } = paging;
 
   const renderImages = (galleryItems: GalleryItem[]) => {
     return galleryItems.map((item) => (
@@ -116,8 +117,8 @@ const GalleryList: React.FC<GalleryListProps> = ({ items, showVote, paging }) =>
   };
   return (
     <>
-      <Card className={`${".cardBackgroundCustom"} ${".cardShadowCustom"} ${isDarkTheme ? 'bg-dark text-light' : 'LightThemeBG text-dark'}`}>
-        <Card.Header>Gallery Image {isLoading && <Spinner style={{float:"right"}} animation="border" size="sm" className="ml-2"/>} </Card.Header>
+      <Card className={`.cardBackgroundCustom .cardShadowCustom ${isDarkTheme ? 'bg-dark text-light' : 'LightThemeBG text-dark'}`}>
+        <Card.Header>Gallery Image {isLoading && <Spinner className=".spinnerCustomRight m1-2" animation="border" size="sm" />} </Card.Header>
         <GalleryPaging paging={paging} />
         <Card.Body>
           <Row>
@@ -130,14 +131,33 @@ const GalleryList: React.FC<GalleryListProps> = ({ items, showVote, paging }) =>
 }
 
 const Vote: React.FC<VoteProps> = ({ showGalleryList, item }) => {
-  const { isDarkTheme } = useTheme();
 
+  const { isDarkTheme } = useTheme();
+  const [title, setTitle] = useState('')
   const [hasVoted, setHasVoted] = useState(false);
+  const [isLoading, setIsLoading] = useState(false);
+
+  useEffect(() => {
+    if (!item) return
+    if (item.Title === undefined || item.Title.trim() === '') {
+      setIsLoading(true);
+      fetchTitle(item.HID).then((data) => {
+        item.Title = data.Title;
+        setTitle(data.Title);
+      })
+        .catch((error) => {
+          console.error('Error fetching title:', error);
+        })
+        .finally(() => {
+          setIsLoading(false);
+        });
+    }
+  }, [setIsLoading, item]);
 
   const likeImage = async () => {
     try {
 
-      const response = await fetch("/api/image-gallery",{
+      const response = await fetch("/api/image-gallery", {
         method: 'PATCH',
         headers: {
           'Content-Type': 'application/json',
@@ -163,14 +183,19 @@ const Vote: React.FC<VoteProps> = ({ showGalleryList, item }) => {
   return (
     <Card className={`${".cardBackgroundCustom"} ${".cardShadowCustom"} ${isDarkTheme ? 'bg-dark text-light' : 'LightThemeBG text-dark'}`}>
       <Card.Header>Vote
-        <Button variant="link" onClick={showGalleryList} style={{ float: "right" }}>
+        <Button variant="link" onClick={showGalleryList} className={".buttonCustomRight"} >
           Back
         </Button>
       </Card.Header>
       <Card.Body>
         <Card.Title>{item?.name}</Card.Title>
         <Image src={`${process.env.NEXT_PUBLIC_HELIOS_GALLERY}/${item?.imagefilename}`} fluid />
-        <Button disabled={hasVoted} variant="link" onClick={handleLike} style={{ marginTop: '10px' }}>
+        {isLoading ? (
+          <Card.Title className=".cardHeaderCustom .cardTitleCustom" >Generating Title...<Spinner className=".spinnerCustomRight m1-2" animation="border" size="sm" /> </Card.Title>
+        ) : (
+          <Card.Title className=".cardHeaderCustom .cardTitleCustom" > {item?.Title || title}</Card.Title>
+        )}
+        <Button disabled={hasVoted} variant="link" onClick={handleLike} className=".voteButton">
           Like ({item?.voteCount || 0})
         </Button>
       </Card.Body>
@@ -178,16 +203,15 @@ const Vote: React.FC<VoteProps> = ({ showGalleryList, item }) => {
   )
 }
 
-
-const GalleryPaging: React.FC<GalleryPagingProps> = ({ paging}) => {
+const GalleryPaging: React.FC<GalleryPagingProps> = ({ paging }) => {
   const { currentPage, totalPages, handlePrev, handleNext } = paging;
 
   return (
-    <div className="d-flex justify-content-between align-items-center mt-4">
+    <div className="d-flex justify-content-between align-items-center mt-1">
       <Button variant="link" onClick={handlePrev} disabled={currentPage === 1}>
-        Previous
+        Prev
       </Button>
-      <span>Page {currentPage} of {totalPages}</span>
+      <span className=".pagingText">{currentPage} of {totalPages}</span>
       <Button variant="link" onClick={handleNext} disabled={currentPage === totalPages}>
         Next
       </Button>

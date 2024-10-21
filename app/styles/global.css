@@ -108,14 +108,6 @@ input:checked + .slider:before {
   @apply float-right;
 }
 
-.cardBackgroundCustom {
-  @apply bg-light-theme-bg;
-}
-
-.cardShadowCustom {
-  @apply shadow-card rounded-[8px];
-}
-
 /* Gallery Image Styles */
 .cardTextCustom {
   @apply p-[10px] text-[12px] font-bold;
@@ -187,4 +179,16 @@ input:checked + .slider:before {
 
 .cardShadowCustom {
   @apply shadow-card rounded-[8px];
+}
+
+.buttonCustomRight {
+  @apply float-right;
+}
+
+.cardHeaderCustom {
+  @apply  text-center;
+}
+
+.imagePadding {
+  @apply p-[5px];
 }

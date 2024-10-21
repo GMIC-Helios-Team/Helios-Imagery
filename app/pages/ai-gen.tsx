@@ -183,11 +183,12 @@ const AiGenPage: React.FC<AiGenPageProps> = ({ prompt }) => {
           <Card className={`${".cardBackgroundCustom"} ${".cardShadowCustom"} ${isDarkTheme ? 'bg-dark text-light' : 'bg-light text-dark'}`}>
             <Card.Header>
               AI Generator
+              <AigenButtons handleSubmit={handleSubmit} resetFields={resetFields} isLoading={isLoading} isFormValid={isFormValid} />
             </Card.Header>
             <Card.Body>
               <Card.Text>
                 {submissionError && <Alert variant="danger">{submissionError}</Alert>}
-                <Form noValidate className={".marginLeftRight"}>
+                <Form noValidate className=".marginLeftRight">
                   <EmailInput
                     formData={formData}
                     handleChange={handleChange}
@@ -223,14 +224,12 @@ const AiGenPage: React.FC<AiGenPageProps> = ({ prompt }) => {
                   <FontStyleInput
                     formData={formData}
                     handleChange={handleChange}
-                    handleBlur={handleBlur}
                     isValid={isValid}
                     isLoading={isLoading}
                   />
                   <ColorPaletteSelect
                     formData={formData}
                     handleChange={handleChange}
-                    handleBlur={handleBlur}
                     isValid={isValid}
                     isLoading={isLoading}
                   />
@@ -250,15 +249,11 @@ const AiGenPage: React.FC<AiGenPageProps> = ({ prompt }) => {
                     errors={errors}
                     isLoading={isLoading}
                   />
-                  <Button type="button" variant="link" onClick={handleSubmit} disabled={!isFormValid}>
-                    {isLoading ? <Spinner as="span" animation="border" size="sm" role="status" aria-hidden="true" /> : 'Generate'}
-                  </Button>
-                  <Button type="button" variant="link" disabled={isLoading} onClick={resetFields} className={".floatRight"}>Reset Input</Button>
                 </Form>
               </Card.Text>
             </Card.Body>
             <Alert variant="light">
-              <Card.Img variant="top" src="/image-gen.png" alt="Home Page Card" width={300} height={210} style={{ padding: '5px' }} />
+              <Card.Img variant="top" src="/image-gen.png" alt="AI Gen" width={300} height={150}  className=".imagePadding"/>
             </Alert>
           </Card>
         </Col>
@@ -277,3 +272,20 @@ export const getServerSideProps: GetServerSideProps = async () => {
 };
 
 export default AiGenPage;
+
+interface AiGenButtonsProps {
+  handleSubmit: (e: React.FormEvent) => void;
+  resetFields: () => void;
+  isLoading: boolean;
+  isFormValid: boolean;
+}
+
+export const AigenButtons: React.FC<AiGenButtonsProps> = ({ handleSubmit, resetFields, isLoading, isFormValid }) => (
+  <>
+    <Button className=".floatRight" type="button" variant="link" onClick={handleSubmit} disabled={!isFormValid}>
+      {isLoading ? <Spinner as="span" animation="border" size="sm" role="status" aria-hidden="true" /> : 'Generate'}
+    </Button>
+    <Button type="button" variant="link" disabled={isLoading} onClick={resetFields} className=".floatRight">Clear</Button>
+  </>
+
+)
