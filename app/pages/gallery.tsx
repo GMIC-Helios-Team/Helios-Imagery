@@ -1,7 +1,6 @@
 /* eslint-disable jsx-a11y/alt-text */
 import React, { useState, useEffect } from 'react';
 import { Card, Col, Container, Row, Image, Button, Spinner } from 'react-bootstrap';
-import style from '@/styles/gallery.module.css';
 import { GalleryItem } from '@/types/image-gallery';
 import { useTheme } from '@/contexts/theme-context';
 import { fetchTitle } from '@/helpers/get-title';
@@ -118,8 +117,8 @@ const GalleryList: React.FC<GalleryListProps> = ({ items, showVote, paging }) =>
   };
   return (
     <>
-      <Card className={`${style.cardBackgroundCustom} ${style.cardShadowCustom} ${isDarkTheme ? 'bg-dark text-light' : 'LightThemeBG text-dark'}`}>
-        <Card.Header>Gallery Image {isLoading && <Spinner className={`${style.spinnerCustomRight} m1-2`} animation="border" size="sm" />} </Card.Header>
+      <Card className={`.cardBackgroundCustom .cardShadowCustom ${isDarkTheme ? 'bg-dark text-light' : 'LightThemeBG text-dark'}`}>
+        <Card.Header>Gallery Image {isLoading && <Spinner className=".spinnerCustomRight m1-2" animation="border" size="sm" />} </Card.Header>
         <GalleryPaging paging={paging} />
         <Card.Body>
           <Row>
@@ -182,9 +181,9 @@ const Vote: React.FC<VoteProps> = ({ showGalleryList, item }) => {
   };
 
   return (
-    <Card className={`${style.cardBackgroundCustom} ${style.cardShadowCustom} ${isDarkTheme ? 'bg-dark text-light' : 'LightThemeBG text-dark'}`}>
+    <Card className={`${".cardBackgroundCustom"} ${".cardShadowCustom"} ${isDarkTheme ? 'bg-dark text-light' : 'LightThemeBG text-dark'}`}>
       <Card.Header>Vote
-        <Button variant="link" onClick={showGalleryList} className={style.buttonCustomRight} >
+        <Button variant="link" onClick={showGalleryList} className={".buttonCustomRight"} >
           Back
         </Button>
       </Card.Header>
@@ -192,11 +191,11 @@ const Vote: React.FC<VoteProps> = ({ showGalleryList, item }) => {
         <Card.Title>{item?.name}</Card.Title>
         <Image src={`${process.env.NEXT_PUBLIC_HELIOS_GALLERY}/${item?.imagefilename}`} fluid />
         {isLoading ? (
-          <Card.Title className={`${style.cardHeaderCustom} ${style.cardTitleCustom}`} >Generating Title...<Spinner className={`${style.spinnerCustomRight} m1-2`} animation="border" size="sm" /> </Card.Title>
+          <Card.Title className=".cardHeaderCustom .cardTitleCustom" >Generating Title...<Spinner className=".spinnerCustomRight m1-2" animation="border" size="sm" /> </Card.Title>
         ) : (
-          <Card.Title className={`${style.cardHeaderCustom} ${style.cardTitleCustom}`} > {item?.Title || title}</Card.Title>
+          <Card.Title className=".cardHeaderCustom .cardTitleCustom" > {item?.Title || title}</Card.Title>
         )}
-        <Button disabled={hasVoted} variant="link" onClick={handleLike} className={style.voteButton}>
+        <Button disabled={hasVoted} variant="link" onClick={handleLike} className=".voteButton">
           Like ({item?.voteCount || 0})
         </Button>
       </Card.Body>
@@ -212,7 +211,7 @@ const GalleryPaging: React.FC<GalleryPagingProps> = ({ paging }) => {
       <Button variant="link" onClick={handlePrev} disabled={currentPage === 1}>
         Prev
       </Button>
-      <span className={style.pagingText}>{currentPage} of {totalPages}</span>
+      <span className=".pagingText">{currentPage} of {totalPages}</span>
       <Button variant="link" onClick={handleNext} disabled={currentPage === totalPages}>
         Next
       </Button>

@@ -1,47 +1,194 @@
-/* styles/globals.css */
+/* Import Tailwind's base styles */
+@tailwind base;
+/* Import Tailwind's component styles */
+@tailwind components;
+/* Import Tailwind's utility styles */
+@tailwind utilities;
+
+/* Optional: Custom Global Styles using @apply */
 html, body {
   height: 100%;
   margin: 0;
 }
 
-body {
-  transition: background-color 0.3s, color 0.3s;
-}
-
 #__next {
-  display: flex;
-  flex-direction: column;
-  min-height: 100vh;
+  @apply flex flex-col min-h-screen;
 }
 
+body {
+  @apply transition-all duration-300;
+}
+
+/* Theme-specific background and text color */
 body.light-theme {
-  background-color: #ffffff;
-  color: #000000;
-}
-
-.LightThemeBG {
-  background-color: #e5e5e2;
+  @apply bg-white text-black;
 }
 
 body.dark-theme {
-  background-color: #121212;
-  color: #ffffff;
+  @apply bg-dark-theme-bg text-white;
 }
 
-.footer {
-  margin-top: auto;
-}
-
+/* Navbar Margin */
 .navbarMargin {
-  margin-left: 5px; 
-  margin-right: 5px;
+  @apply mx-1;
 }
 
+/* Profile Page Flip Card */
+.flip-card {
+  @apply perspective-1000 cursor-pointer h-full;
+}
+
+.flip-card-inner {
+  @apply relative h-full transition-transform duration-700 transform-style-3d text-center;
+}
+
+.flipped .flip-card-inner {
+  @apply transform rotate-y-180;
+}
+
+.flip-card-front, .flip-card-back {
+  @apply absolute w-full h-full backface-hidden;
+}
+
+.flip-card-front {
+  @apply bg-white flex justify-center items-center p-4;
+}
+
+.flip-card-back {
+  @apply bg-card-back text-black rotate-y-180 p-4;
+}
+
+.bio-image {
+  @apply rounded-full object-cover;
+}
+
+.toggle-container {
+  @apply flex items-center justify-center p-2;
+}
+
+.toggle-switch {
+  @apply relative inline-block w-[120px] h-[40px];
+}
+
+.toggle-switch input {
+  @apply opacity-0 w-0 h-0;
+}
+
+.slider {
+  @apply absolute top-0 left-0 right-0 bottom-0 bg-gray-400 transition rounded-[34px] flex items-center justify-center;
+}
+
+.slider:before {
+  @apply absolute h-[30px] w-[30px] bg-white rounded-full transition;
+}
+
+input:checked + .slider {
+  @apply bg-button-blue;
+}
+
+input:checked + .slider:before {
+  @apply transform translate-x-[80px];
+}
+
+.slider-text {
+  @apply absolute text-sm font-bold text-white;
+}
+
+/* AI-Generated Image Styles */
+
+.generated-image {
+  @apply w-full h-auto max-w-[500px] max-h-[500px] block mx-auto;
+}
+
+.marginLeftRight {
+  @apply ml-[10px] mr-[10px];
+}
+
+.floatRight {
+  @apply float-right;
+}
+
+/* Gallery Image Styles */
+.cardTextCustom {
+  @apply p-[10px] text-[12px] font-bold;
+}
+
+.imageBeveled {
+  @apply border-[2px] border-gray-300 rounded-[8px] shadow-image;
+}
+
+/* Navbar Styles */
+.navbarBrand {
+  @apply text-xl font-bold pl-3;
+}
+
+.navLinkDark:hover {
+  @apply bg-light-purple rounded-[5px];
+}
+
+.navLinkLight:hover {
+  @apply bg-orange rounded-[5px];
+}
+
+.navbar {
+  @apply relative top-0 left-0 w-full pt-[0.8rem] z-[1000] rounded-b-[5px];
+}
+
+.navbarCollapseDark {
+  @apply text-white pt-2;
+}
+
+.navbarCollapseLight {
+  @apply text-dark-theme-bg pt-2;
+}
+
+.navToggle {
+  @apply mr-3;
+}
+
+.navbarButton {
+  @apply absolute right-[5%];
+}
+
+@media (max-width: 600px) {
+  .navbarCollapseDark {
+    @apply float-right text-center text-white;
+  }
+
+  .navbarCollapseLight {
+    @apply float-right text-center text-dark-theme-bg;
+  }
+
+  .navbarButton {
+    @apply relative;
+  }
+}
+
+.svg-white {
+  @apply filter invert;
+}
+
+.svg-black {
+  @apply filter-none;
+}
+
+/* Profile Page Styles */
 .cardBackgroundCustom {
-  background-color: #fdfdfd;
+  @apply bg-light-theme-bg;
 }
 
 .cardShadowCustom {
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Example shadow */
-  border-radius: 8px; /* Optional: Add rounded corners */
+  @apply shadow-card rounded-[8px];
+}
+
+.buttonCustomRight {
+  @apply float-right;
+}
+
+.cardHeaderCustom {
+  @apply  text-center;
+}
+
+.imagePadding {
+  @apply p-[5px];
 }
