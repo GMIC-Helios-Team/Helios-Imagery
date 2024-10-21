@@ -86,6 +86,9 @@ const NavBar: React.FC = () => {
           <Nav.Link as={Link} href="/ai-gen" className={`nav-link ${styles.navLink} ${isDarkTheme ? styles.navLinkDark : styles.navLinkLight}`} onClick={handleNavLinkClick}>
             Creative Canvas
           </Nav.Link>
+          <Nav.Link as={Link} href="/RockPaperScissors" className={`nav-link ${styles.navLink} ${isDarkTheme ? styles.navLinkDark : styles.navLinkLight}`} onClick={handleNavLinkClick}>
+            AI Game
+          </Nav.Link>
           </Nav>
         </Navbar.Collapse>
     </Navbar>
