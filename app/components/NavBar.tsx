@@ -1,5 +1,5 @@
 import Link from 'next/link';
-import { useTheme } from '../contexts/theme-context';
+import { useTheme } from '@/contexts/theme-context';
 import { Navbar, Nav, ButtonGroup, ToggleButton } from 'react-bootstrap';
 import React, { useState, useEffect, useRef } from 'react';
 import Image from 'next/image';
