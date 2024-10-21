@@ -27,6 +27,7 @@ const GalleryImage = () => {
         setData(generatedImage);
       } catch (error) {
         const errImage: GetGeneratedImage = {
+          _id: "",
           imagefilename: '/err-pirate.png',
           prompt: "Yarr! Our robo-pirates searched every corner of the digital seas, but the image has gone overboard! Maybe it walked the plank? Sail back to safer waters",
           name: "Lost at Sea-Bot",
@@ -34,7 +35,11 @@ const GalleryImage = () => {
           HID: "",
           imageThumbnailfilename: "",
           Title: "Shiver me timbers!",
-          voteCount: 0
+          voteCount: 0,
+          SendGridMessageId: "",
+          createDatetime: "",
+          updateDatetime: "",
+          EmailSentDateTime: ""
         }
         setData(errImage);
       }
