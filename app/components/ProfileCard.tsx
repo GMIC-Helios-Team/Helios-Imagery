@@ -1,4 +1,3 @@
-import style from '@/styles/ProfileCard.module.css';
 import { Profile } from '@/types/profile';
 import { Card, Container, Image } from "react-bootstrap";
 import { useTheme } from '../contexts/theme-context';
@@ -12,9 +11,9 @@ const ProfileCard: React.FC<ProfileCardProps> = ({ profile }) => {
 
   return (
     <Container fluid>
-      <div className={`${style.flipCard} ${isDarkTheme ? style.flipped : ''}`} >
-        <div className={` ${style.flipCardInner} ${style.cardTextCustom}`}>
-          <Card className={`${style.flipCardFront}`}>
+      <div className={`${".flipCardFront"} ${isDarkTheme ? ".flipped" : ''}`} >
+        <div className={` ${".flipCardInner"} ${".cardTextCustom"}`}>
+          <Card className={`${".flipCardFront"}`}>
             <Card.Body>
               <Card.Title>{profile?.front.name}</Card.Title>
               <Image src={profile?.front.image} alt={profile?.front.name} fluid width={300} height={300} />
@@ -22,7 +21,7 @@ const ProfileCard: React.FC<ProfileCardProps> = ({ profile }) => {
               <Card.Text style={{ marginTop: '10px' }}>{profile?.front.bio}</Card.Text>
             </Card.Body>
           </Card>
-          <Card className={`${style.flipCardBack}`}>
+          <Card className={`${".flipCardFront"}`}>
             <Card.Body>
               <Card.Title>{profile?.back.name}</Card.Title>
               <Image src={profile?.back.image} alt={profile?.back.name} fluid width={300} height={300} />

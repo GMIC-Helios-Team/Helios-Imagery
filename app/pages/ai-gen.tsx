@@ -14,7 +14,6 @@ import ThemeInput from '@/components/ai-gen/Theme';
 import ArtStyleInput from '@/components/ai-gen/ArtStyle';
 import { validateWithAPI } from '@/helpers/ValidateWithApi';
 import { initialErrors, initialFormData, initialIsValid } from '@/helpers/Reset';
-import style from '@/styles/ai-gen.module.css';
 import { useTheme } from '@/contexts/theme-context';
 import { useRouter } from 'next/router';
 interface AiGenPageProps {
@@ -181,7 +180,7 @@ const AiGenPage: React.FC<AiGenPageProps> = ({ prompt }) => {
     <Container style={{ marginTop: '50px' }}>
       <Row className="mb-4">
         <Col md={{ offset: 3, span: 6 }}>
-          <Card className={`${style.cardBackgroundCustom} ${style.cardShadowCustom} ${isDarkTheme ? 'bg-dark text-light' : 'bg-light text-dark'}`}>
+          <Card className={`${".cardBackgroundCustom"} ${".cardShadowCustom"} ${isDarkTheme ? 'bg-dark text-light' : 'bg-light text-dark'}`}>
             <Card.Header>
               AI Generator
               <AigenButtons handleSubmit={handleSubmit} resetFields={resetFields} isLoading={isLoading} isFormValid={isFormValid} />
@@ -189,7 +188,7 @@ const AiGenPage: React.FC<AiGenPageProps> = ({ prompt }) => {
             <Card.Body>
               <Card.Text>
                 {submissionError && <Alert variant="danger">{submissionError}</Alert>}
-                <Form noValidate className={style.marginLeftRight}>
+                <Form noValidate className=".marginLeftRight">
                   <EmailInput
                     formData={formData}
                     handleChange={handleChange}
@@ -254,7 +253,7 @@ const AiGenPage: React.FC<AiGenPageProps> = ({ prompt }) => {
               </Card.Text>
             </Card.Body>
             <Alert variant="light">
-              <Card.Img variant="top" src="/image-gen.png" alt="AI Gen" width={300} height={150}  className={style.imagePadding}/>
+              <Card.Img variant="top" src="/image-gen.png" alt="AI Gen" width={300} height={150}  className=".imagePadding"/>
             </Alert>
           </Card>
         </Col>
@@ -283,10 +282,10 @@ interface AiGenButtonsProps {
 
 export const AigenButtons: React.FC<AiGenButtonsProps> = ({ handleSubmit, resetFields, isLoading, isFormValid }) => (
   <>
-    <Button className={style.floatRight} type="button" variant="link" onClick={handleSubmit} disabled={!isFormValid}>
+    <Button className=".floatRight" type="button" variant="link" onClick={handleSubmit} disabled={!isFormValid}>
       {isLoading ? <Spinner as="span" animation="border" size="sm" role="status" aria-hidden="true" /> : 'Generate'}
     </Button>
-    <Button type="button" variant="link" disabled={isLoading} onClick={resetFields} className={style.floatRight}>Clear</Button>
+    <Button type="button" variant="link" disabled={isLoading} onClick={resetFields} className=".floatRight">Clear</Button>
   </>
 
 )

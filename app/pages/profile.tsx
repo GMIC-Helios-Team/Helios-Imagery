@@ -2,7 +2,6 @@
 import React, { useState, useEffect } from "react";
 import ProfileCard from "@/components/ProfileCard";
 import { Card, Col, Container, Row, Image, Form, Button } from "react-bootstrap";
-import style from '@/styles/profile.module.css';
 import { profiles } from '@/helpers/profiles';
 import { Profile } from "@/types/profile";
 import { useTheme } from '@/contexts/theme-context';
@@ -93,7 +92,7 @@ const ProfileList: React.FC<ProfileListProps> = ({ items, selectedTeam, handleTe
   };
   return (
     <>
-      <Card className={`${style.cardBackgroundCustom} ${style.cardShadowCustom}  ${isDarkTheme ? 'bg-dark text-light' : 'bg-light text-dark'}`}>
+      <Card className={`${".cardBackgroundCustom"} ${".cardShadowCustom"}  ${isDarkTheme ? 'bg-dark text-light' : 'bg-light text-dark'}`}>
         <Card.Header>Profiles</Card.Header>
         <Card.Body>
           <Card.Text>
@@ -110,7 +109,7 @@ const ProfileList: React.FC<ProfileListProps> = ({ items, selectedTeam, handleTe
 
 const HeliosProfile: React.FC<HeliosProfileProps> = ({ profile, showProfileList, isDarkTheme }) => (
   <>
-    <Card className={`${style.cardBackgroundCustom} ${style.cardShadowCustom} ${isDarkTheme ? 'bg-dark text-light' : 'bg-light text-dark'}`}>
+    <Card className={`${".cardBackgroundCustom"} ${".cardShadowCustom"} ${isDarkTheme ? 'bg-dark text-light' : 'bg-light text-dark'}`}>
       <Card.Header>Profiles
         <Button variant="link" onClick={showProfileList} style={{ float: "right" }}>
           Back

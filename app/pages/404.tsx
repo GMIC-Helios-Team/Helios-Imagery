@@ -1,11 +1,9 @@
 import React from 'react';
-import { Container, Row, Col, Button, Image, Card } from 'react-bootstrap';
 import { useRouter } from 'next/router';
-import style from '@/styles/404.module.css';
-import { useTheme } from '@/contexts/theme-context';
+import Image from 'react-bootstrap/Image';
+import img404 from '@/public/err-404.png';
 
 const Custom404 = () => {
-  const { isDarkTheme } = useTheme();
   const router = useRouter();
 
   const handleGoBack = () => {
@@ -13,30 +11,28 @@ const Custom404 = () => {
   };
 
   return (
-
-    <Container style={{ marginTop: '50px' }}>
-      <Row className="mb-4">
-        <Col md={{ offset: 3, span: 6 }}>
-          <Card className={`cardBackgroundCustom cardShadowCustom ${isDarkTheme ? 'bg-dark text-light' : 'bg-light text-dark'}`}>
-            <Card.Header>
-              Not Found
-                <Button className={style.buttonCustomRight} onClick={handleGoBack} variant="link">Home</Button>
-            </Card.Header>
-            <Card.Body>
-              <Card.Text>
-                <Image
-                  src="/err-404.png"
-                  className={style.imageBeveled}
-                  fluid
-                  alt="Generated Image"
-                />
-                
-              </Card.Text>
-            </Card.Body>
-          </Card>
-        </Col>
-      </Row>
-    </Container>
+    <div className="container mx-auto mt-12 text-center">
+      <div className="mb-4">
+        <div className="md:col-start-4 md:col-span-6">
+          <h1 className="text-4xl font-bold">404 - Page Not Found</h1>
+          <p className="text-lg mb-6">Sorry, we couldn’t find the page you’re looking for.</p>
+          <div className="justify-center items-center relative w-full max-w-md h-64 mb-8 mx-auto">
+            <Image
+              src={img404.src}
+              alt="404 Error Image"
+              style={{ objectFit: 'contain' }}
+              className="rounded-lg shadow-lg"
+            />
+          </div>
+          <button
+            onClick={handleGoBack}
+            className="text-blue-500 hover:underline"
+          >
+            Home
+          </button>
+        </div>
+      </div>
+    </div>
   );
 };
 
