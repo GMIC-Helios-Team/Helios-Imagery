@@ -36,3 +36,11 @@
   font-weight: 500;
 }
 
+.cardHeaderCustom {
+  text-align: center;
+}
+
+.cardTitleCustom {
+  margin-top: 5px;
+  margin-bottom: 5px;
+}
