@@ -3,12 +3,15 @@ import { useTheme } from '../contexts/theme-context';
 import { Navbar, Nav, ButtonGroup, ToggleButton } from 'react-bootstrap';
 import styles from '../styles/NavBar.module.css'; // Import the CSS Module
 import React, { useState, useEffect, useRef } from 'react';
-
+import Cookies from 'js-cookie';
+import { useRouter } from 'next/router';
 
 const NavBar: React.FC = () => {
   const { isDarkTheme, toggleTheme } = useTheme();
   const [expanded, setExpanded] = useState(false);
   const navbarRef = useRef<HTMLDivElement>(null);
+  const [hasFormData, setHasFormData] = useState(false);
+  const router = useRouter();
 
   const handleClickOutside = (event: MouseEvent) => {
     if (navbarRef.current && !navbarRef.current.contains(event.target as Node)) {
@@ -16,6 +19,11 @@ const NavBar: React.FC = () => {
     }
   };
   
+  useEffect(() => {
+    const formData = Cookies.get('ai-gen-formData');
+    setHasFormData(!!formData);
+  }, [router.asPath]);
+
   const handleNavLinkClick = () => {
     setExpanded(false);
   };
@@ -86,9 +94,11 @@ const NavBar: React.FC = () => {
           <Nav.Link as={Link} href="/ai-gen" className={`nav-link ${styles.navLink} ${isDarkTheme ? styles.navLinkDark : styles.navLinkLight}`} onClick={handleNavLinkClick}>
             Creative Canvas
           </Nav.Link>
-          <Nav.Link as={Link} href="/RockPaperScissors" className={`nav-link ${styles.navLink} ${isDarkTheme ? styles.navLinkDark : styles.navLinkLight}`} onClick={handleNavLinkClick}>
-            AI Game
-          </Nav.Link>
+          {hasFormData && (
+            <Nav.Link as={Link} href="/RockPaperScissors" className={`nav-link ${styles.navLink} ${isDarkTheme ? styles.navLinkDark : styles.navLinkLight}`} onClick={handleNavLinkClick}>
+              AI Game
+            </Nav.Link>
+          )}
           </Nav>
         </Navbar.Collapse>
     </Navbar>
