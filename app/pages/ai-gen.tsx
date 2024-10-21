@@ -98,7 +98,7 @@ const AiGenPage: React.FC<AiGenPageProps> = ({ prompt }) => {
 
       const generateImageResult: GenerationResponse = await generateImageResponse.json();
 
-      Cookies.set('ai-gen-formData', JSON.stringify(formData), { expires: 5 });
+      Cookies.set('ai-gen-name', formData.name, { expires: 30 });
 
       return generateImageResult.HID
 

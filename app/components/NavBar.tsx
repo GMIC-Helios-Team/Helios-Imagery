@@ -20,7 +20,7 @@ const NavBar: React.FC = () => {
   };
   
   useEffect(() => {
-    const formData = Cookies.get('ai-gen-formData');
+    const formData = Cookies.get('ai-gen-name');
     setHasFormData(!!formData);
   }, [router.asPath]);
 

@@ -7,12 +7,16 @@ import { InsultResponse } from '@/types/insult-response';
 
 const choices = ['Rock', 'Paper', 'Scissors'];
 let clickCount = 0;
+let aiInsult = false;
 
 const getRandomChoice = () => {
   return choices[Math.floor(Math.random() * choices.length)];
 };
 
+const userName = Cookies.get('ai-gen-name');
+
 const determineWinner = (playerChoice: string, aiChoice: string) => {
+  aiInsult = false;
   if (playerChoice === aiChoice)
   {
     return 'It\'s a tie!';
@@ -34,9 +38,10 @@ const getAIMessage = async (clickCount: number): Promise<string> => {
     headers: {
       'Content-Type': 'application/json',
     },
-    body: JSON.stringify({ clickCount: clickCount }),
+    body: JSON.stringify({ clickCount: clickCount, userName: userName }),
   });
 
+  aiInsult = true;
   const insultResponseJson: InsultResponse = await generateInsultResponse.json();
   return insultResponseJson.Insult;
 };
@@ -56,7 +61,7 @@ const RockPaperScissors: React.FC = () => {
   const router = useRouter();
 
   useEffect(() => {
-    const formData = Cookies.get('ai-gen-formData');
+    const formData = Cookies.get('ai-gen-name');
     if (!formData) {
       router.replace('/404');
     } else {
@@ -96,6 +101,7 @@ const RockPaperScissors: React.FC = () => {
           <p>You chose: {playerChoice}</p>
           <p>AI chose: {aiChoice}</p>
           <h2>{result}</h2>
+          {aiInsult && <h2 className={styles.results}>-GPT 4 Turbo</h2>}
         </div>
       )}
     </div>

@@ -3,7 +3,7 @@ import { NextApiRequest, NextApiResponse } from 'next';
 import { InsultResponse } from '@/types/insult-response';
 
 export default async function handler(req: NextApiRequest, res: NextApiResponse) {
-    const { clickCount } = req.body;
+    const { clickCount, userName } = req.body;
 
     // Credentials
     const username = process.env.API_USERNAME;;
@@ -21,7 +21,7 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
           'Content-Type': 'application/json',
           'Authorization': `Basic ${credentials}`,
         },
-        body: JSON.stringify({ clickCount })
+        body: JSON.stringify({ clickCount, userName })
 
       });
 
