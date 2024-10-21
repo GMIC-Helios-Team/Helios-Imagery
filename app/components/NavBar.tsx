@@ -58,44 +58,43 @@ const NavBar: React.FC = () => {
               height={40}
               className={isDarkTheme ? 'svg-white' : 'svg-black'}
             />
-            <span className="ml-2 font-bold text-xl">
-              {isDarkTheme ? 'DEP' : 'Helios'}
-            </span>
+            <ButtonGroup className="ml-auto hidden sm:flex">
+              {radios.map((radio, idx) => (
+                <ToggleButton
+                  key={idx}
+                  id={`radio-${idx}`}
+                  type="radio"
+                  variant="outline-secondary"
+                  name="radio"
+                  value={radio.value}
+                  checked={isDarkTheme ? radio.value === 'dark' : radio.value === 'light'}
+                  onChange={() => handleRadioChange(radio.value)}
+                  className="mx-1"
+                  style={{
+                    backgroundColor: radio.value === 'dark'
+                      ? isDarkTheme
+                        ? '#2d345b'
+                        : 'white'
+                      : isDarkTheme
+                        ? 'white'
+                        : '#e1a629',
+                    color: radio.value === 'dark'
+                      ? isDarkTheme
+                        ? 'white'
+                        : '#2d345b'
+                      : isDarkTheme
+                        ? '#e1a629'
+                        : 'white',
+                    borderColor: radio.value === 'dark'
+                      ? '#2d345b'
+                      : '#e1a629'
+                  }}
+                >
+                  {radio.name}
+                </ToggleButton>
+              ))}
+            </ButtonGroup>
           </Navbar.Brand>
-          <ButtonGroup className="ml-auto hidden sm:flex">
-            {radios.map((radio, idx) => (
-              <ToggleButton
-                key={idx}
-                id={`radio-${idx}`}
-                type="radio"
-                variant="outline-secondary"
-                name="radio"
-                value={radio.value}
-                checked={isDarkTheme ? radio.value === 'dark' : radio.value === 'light'}
-                onChange={() => handleRadioChange(radio.value)}
-                className={`mx-1 ${
-                  radio.value === 'dark'
-                    ? isDarkTheme
-                      ? 'text-white'
-                      : 'text-[#2d345b]'
-                    : isDarkTheme
-                    ? 'text-[#e1a629]'
-                    : 'text-white'
-                }`}
-                style={{
-                  color: radio.value === 'dark'
-                    ? isDarkTheme
-                      ? 'white'
-                      : '#2d345b'
-                    : isDarkTheme
-                    ? '#e1a629'
-                    : 'white'
-                }}
-              >
-                {radio.name}
-              </ToggleButton>
-            ))}
-          </ButtonGroup>
           <Navbar.Toggle className="ml-3" aria-controls="basic-navbar-nav" />
           <Navbar.Collapse id="basic-navbar-nav">
             <Nav className="ml-auto flex">
