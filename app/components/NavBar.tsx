@@ -107,20 +107,20 @@ const NavBar: React.FC = () => {
               ))}
             </ButtonGroup>
           </Navbar.Brand>
-          <Navbar.Toggle className="ml-3" aria-controls="basic-navbar-nav" />
+          <Navbar.Toggle className={`mx-2 ${isDarkTheme ? 'navbar-dark bg-dark' : 'navbar-light bg-light'}`} aria-controls="basic-navbar-nav" />
           <Navbar.Collapse id="basic-navbar-nav">
             <Nav className="ml-auto flex">
-              <Nav.Link as={Link} href="/gallery" className="mx-2">
+              <Nav.Link as={Link} href="/gallery" className={`mx-2 ${isDarkTheme ? 'text-light' : 'text-dark'}`}>
                 Gallery
               </Nav.Link>
-              <Nav.Link as={Link} href="/profile" className="mx-2">
+              <Nav.Link as={Link} href="/profile" className={`mx-2 ${isDarkTheme ? 'text-light' : 'text-dark'}`}>
                 Profile
               </Nav.Link>
-              <Nav.Link as={Link} href="/ai-gen" className="mx-2">
+              <Nav.Link as={Link} href="/ai-gen" className={`mx-2 ${isDarkTheme ? 'text-light' : 'text-dark'}`}>
                 Creative Canvas
               </Nav.Link>
             {hasFormData && (
-            <Nav.Link as={Link} href="/RockPaperScissors" className="mx-2" onClick={handleNavLinkClick}>
+            <Nav.Link as={Link} href="/RockPaperScissors" className={`mx-2 ${isDarkTheme ? 'text-light' : 'text-dark'}`} onClick={handleNavLinkClick}>
               AI Game
             </Nav.Link>
           )}
