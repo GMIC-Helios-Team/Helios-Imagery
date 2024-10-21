@@ -1,6 +1,6 @@
 import style from '@/styles/ProfileCard.module.css';
 import { Profile } from '@/types/profile';
-import { Card, Container, Image } from "react-bootstrap";
+import { Card, Container, Image } from 'react-bootstrap';
 import { useTheme } from '../contexts/theme-context';
 
 interface ProfileCardProps {
@@ -12,22 +12,35 @@ const ProfileCard: React.FC<ProfileCardProps> = ({ profile }) => {
 
   return (
     <Container fluid>
-      <div className={`${style.flipCard} ${isDarkTheme ? style.flipped : ''}`} >
-        <div className={` ${style.flipCardInner} ${style.cardTextCustom}`}>
-          <Card className={`${style.flipCardFront}`}>
-            <Card.Body>
-              <Card.Title>{profile?.front.name}</Card.Title>
-              <Image src={profile?.front.image} alt={profile?.front.name} fluid width={300} height={300} />
-              <Card.Title>{profile?.position}</Card.Title>
-              <Card.Text style={{ marginTop: '10px' }}>{profile?.front.bio}</Card.Text>
+      <div className={`${style.flipCard} ${isDarkTheme ? style.flipped : ''}`}>
+        <div className={style.flipCardInner}>
+          {/* Front Card */}
+          <Card className={style.flipCardFront}>
+            <Card.Body className="d-flex flex-column h-100">
+              <Card.Title className={style.centeredContent}>{profile?.front.name}</Card.Title>
+              <Image
+                src={profile?.front.image}
+                alt={profile?.front.name}
+                fluid
+                className={style.imageBeveled}
+              />
+              <Card.Title className={style.centeredContent}>{profile?.position}</Card.Title>
+              <Card.Text className={style.scrollableText}>{profile?.front.bio}</Card.Text>
             </Card.Body>
           </Card>
-          <Card className={`${style.flipCardBack}`}>
-            <Card.Body>
-              <Card.Title>{profile?.back.name}</Card.Title>
-              <Image src={profile?.back.image} alt={profile?.back.name} fluid width={300} height={300} />
-              <Card.Title>{profile?.position}</Card.Title>
-              <Card.Text style={{ marginTop: '10px' }}>{profile?.back.bio}</Card.Text>
+
+          {/* Back Card */}
+          <Card className={style.flipCardBack}>
+            <Card.Body className="d-flex flex-column h-100">
+              <Card.Title className={style.centeredContent}>{profile?.back.name}</Card.Title>
+              <Image
+                src={profile?.back.image}
+                alt={profile?.back.name}
+                fluid
+                className={style.imageBeveled}
+              />
+              <Card.Title className={style.centeredContent}>{profile?.position}</Card.Title>
+              <Card.Text className={style.scrollableText}>{profile?.back.bio}</Card.Text>
             </Card.Body>
           </Card>
         </div>

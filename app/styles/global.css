@@ -10,6 +10,9 @@ html, body {
   height: 100%;
   margin: 0;
 }
+.card-body > img {
+  @apply mx-auto;
+}
 
 #__next {
   @apply flex flex-col min-h-screen;
