@@ -17,13 +17,15 @@ const Footer: React.FC = () => {
             helios.gallery
           </a>
           <span className="mx-2">|</span>
-          <Link href="/privacy" className="hover:underline">
-            Privacy Policy
+          <Link href="/privacy" legacyBehavior>
+            <a className="hover:underline">Privacy Policy</a>
           </Link>
         </div>
         <div className="flex items-center">
-          <Link href="https://github.com/GMIC-Helios-Team/" className="hover:text-gray-300">
-            <FaGithub size={30} />
+          <Link href="https://github.com/GMIC-Helios-Team/" legacyBehavior>
+            <a className="hover:text-gray-300">
+              <FaGithub size={30} />
+            </a>
           </Link>
         </div>
       </div>

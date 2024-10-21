@@ -1,9 +1,9 @@
 import React from 'react';
 import { useRouter } from 'next/router';
-import Image from 'next/image';
+import Image from 'react-bootstrap/Image';
+import img404 from '@/public/err-404.png';
 
 const Custom404 = () => {
-  const { isDarkTheme } = useTheme();
   const router = useRouter();
 
   const handleGoBack = () => {
@@ -15,20 +15,18 @@ const Custom404 = () => {
       <div className="mb-4">
         <div className="md:col-start-4 md:col-span-6">
           <h1 className="text-4xl font-bold">404 - Page Not Found</h1>
-          <p className="mt-4 text-lg">
-            Page Not Found
-          </p>
-          <Image
-            src="/err-404.png"
-            className="border-2 border-gray-300 rounded-lg shadow-lg max-w-full mt-4"
-            alt="Generated Image"
-            width={500}
-            height={300}
-          />
-          
+          <p className="text-lg mb-6">Sorry, we couldn’t find the page you’re looking for.</p>
+          <div className="justify-center items-center relative w-full max-w-md h-64 mb-8 mx-auto">
+            <Image
+              src={img404.src}
+              alt="404 Error Image"
+              style={{ objectFit: 'contain' }}
+              className="rounded-lg shadow-lg"
+            />
+          </div>
           <button
             onClick={handleGoBack}
-            className="mt-4 text-blue-500 hover:underline"
+            className="text-blue-500 hover:underline"
           >
             Home
           </button>
