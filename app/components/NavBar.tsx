@@ -67,7 +67,7 @@ const NavBar: React.FC = () => {
           ref={navbarRef}
           className="flex justify-between items-center py-2 w-full"
         >
-          {/* Left: Logo + Theme Toggle */}
+          {/* Logo and Theme Toggle */}
           <div className="flex items-center space-x-3">
             <Navbar.Brand href="/" className="flex items-center space-x-2">
               <Image
@@ -120,7 +120,7 @@ const NavBar: React.FC = () => {
             </Navbar.Brand>
           </div>
 
-          {/* Navbar Toggle for Mobile */}
+          {/* Toggle Button */}
           <Navbar.Toggle
             className={`border-2 rounded focus:outline-none transition-all duration-300`}
             aria-controls="basic-navbar-nav"
@@ -142,30 +142,35 @@ const NavBar: React.FC = () => {
             </div>
           </Navbar.Toggle>
 
-          {/* Right: Navigation Links */}
+          {/* Navbar Links */}
           <Navbar.Collapse
             id="basic-navbar-nav"
-            className="justify-between lg:justify-end w-full"
+            className="justify-center items-center text-center mt-4 lg:mt-0 lg:justify-end w-full"
           >
             <Nav className="flex flex-col lg:flex-row lg:space-x-6 space-y-3 lg:space-y-0 w-full lg:w-auto">
-              {Object.keys(pageNames).map((path) => (
-                <Nav.Link
-                  as={Link}
-                  href={path}
-                  key={path}
-                  className={`text-lg transition-all duration-300 ${
-                    router.pathname === path ? 'font-bold' : ''
-                  } ${isDarkTheme ? 'text-light' : 'text-dark'}`}
-                  style={{
-                    borderBottom:
-                      router.pathname === path ? `2px solid ${toggleColor}` : 'none',
-                    color: router.pathname === path ? toggleColor : 'inherit',
-                  }}
-                  onClick={() => setExpanded(false)}
-                >
-                  {pageNames[path]}
-                </Nav.Link>
-              ))}
+              {Object.keys(pageNames).map((path) => {
+                // Conditionally render AI Game link
+                if (path === '/RockPaperScissors' && !hasFormData) return null;
+
+                return (
+                  <Nav.Link
+                    as={Link}
+                    href={path}
+                    key={path}
+                    className={`text-lg transition-all duration-300 ${
+                      router.pathname === path ? 'font-bold' : ''
+                    } ${isDarkTheme ? 'text-light' : 'text-dark'}`}
+                    style={{
+                      borderBottom:
+                        router.pathname === path ? `2px solid ${toggleColor}` : 'none',
+                      color: router.pathname === path ? toggleColor : 'inherit',
+                    }}
+                    onClick={() => setExpanded(false)}
+                  >
+                    {pageNames[path]}
+                  </Nav.Link>
+                );
+              })}
             </Nav>
           </Navbar.Collapse>
         </Navbar>
