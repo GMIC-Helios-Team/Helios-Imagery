@@ -56,7 +56,7 @@ const NavBar: React.FC = () => {
       <div className="max-w-7xl mx-auto px-4">
         {/* Max-width container */}
         <Navbar
-          expand="lg"
+          expand={false}
           expanded={expanded}
           onToggle={handleToggle}
           ref={navbarRef}
@@ -70,13 +70,13 @@ const NavBar: React.FC = () => {
               height={40}
               className={isDarkTheme ? 'svg-white' : 'svg-black'}
             />
-            <ButtonGroup className="ml-auto hidden sm:flex">
+            <ButtonGroup className="ml-auto hidden sm:flex d-inline">
               {radios.map((radio, idx) => (
                 <ToggleButton
                   key={idx}
                   id={`radio-${idx}`}
                   type="radio"
-                  variant="outline-secondary"
+                  variant="outline-primary"
                   name="radio"
                   value={radio.value}
                   checked={isDarkTheme ? radio.value === 'dark' : radio.value === 'light'}
