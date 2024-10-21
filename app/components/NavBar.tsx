@@ -1,5 +1,5 @@
 import Link from 'next/link';
-import { useTheme } from '../contexts/theme-context';
+import { useTheme } from '@/contexts/theme-context';
 import { Navbar, Nav, ButtonGroup, ToggleButton } from 'react-bootstrap';
 import React, { useState, useEffect, useRef } from 'react';
 import Image from 'next/image';
@@ -68,9 +68,9 @@ const NavBar: React.FC = () => {
               alt="Helios Robot Icon"
               width={40}
               height={40}
-              className={isDarkTheme ? 'svg-white' : 'svg-black'}
+              className={`mr-5 ${isDarkTheme ? 'svg-white' : 'svg-black'}`}
             />
-            <ButtonGroup className="ml-auto hidden sm:flex d-inline">
+            <ButtonGroup className="ml-auto flex d-inline">
               {radios.map((radio, idx) => (
                 <ToggleButton
                   key={idx}
@@ -80,8 +80,7 @@ const NavBar: React.FC = () => {
                   name="radio"
                   value={radio.value}
                   checked={isDarkTheme ? radio.value === 'dark' : radio.value === 'light'}
-                  onChange={() => handleRadioChange(radio.value)}
-                  className="mx-1"
+                  onChange={() => handleRadioChange(radio.value)}                 
                   style={{
                     backgroundColor: radio.value === 'dark'
                       ? isDarkTheme
