@@ -68,17 +68,17 @@ const TimeoutImage = () => {
   };
 
   return (
-    <Card className={`${".cardBackgroundCustom"} ${".cardShadowCustom"} ${isDarkTheme ? 'bg-dark text-light' : 'bg-light text-dark'}`}>
+    <Card className={`${"cardBackgroundCustom"} ${"cardShadowCustom"} ${isDarkTheme ? 'bg-dark text-light' : 'bg-light text-dark'}`}>
       <Card.Header>Sorry for the delay
         <Button
-          className={".buttonCustomRight"}
+          className={"buttonCustomRight"}
           onClick={navigateHome}
           variant="link">Home</Button>
       </Card.Header>
       <Card.Body>
         <Card.Img variant="top"
           src="/ImageGenerationTimeout.png"
-          className={".imageBeveled"}
+          className={"imageBeveled"}
           alt="Image Generation Timeout" width={500} height={500} />
         <Card.Text>
           <Alert variant="warning">
@@ -97,7 +97,7 @@ const TimeoutImage = () => {
 const LaughWhileYouWait = () => {
 
   return (
-    <Card bg="dark" text="white" className={`${".cardBackgroundCustom"} ${".cardShadowCustom"}`}>
+    <Card bg="dark" text="white" className={`${"cardBackgroundCustom"} ${"cardShadowCustom"}`}>
       <Card.Header>Laugh while you wait</Card.Header>
       <Card.Img variant="top" src="/wait-comedy.png" alt="Wait for Image Generation" width={500} height={300} style={{ padding: '5px' }} />
       <Card.Body>
