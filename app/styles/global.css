@@ -178,6 +178,9 @@ input:checked + .slider:before {
 /* Profile Page Styles */
 .cardBackgroundCustom {
   @apply bg-light-theme-bg;
+  display: flex;
+  flex-direction: column;
+  height: 100%;
 }
 
 .cardShadowCustom {
@@ -209,4 +212,33 @@ input:checked + .slider:before {
 .pagingText {
   font-size: 1rem;
   font-weight: 500;
+}
+
+/* Ensure the card body stretches and aligns properly */
+.card-body-custom {
+  @apply flex flex-col h-full;
+}
+
+/* Scrollable content with respect to the footer */
+.scrollable-content {
+  @apply flex-grow overflow-y-auto overflow-x-hidden mt-4;
+  max-height: calc(100vh - 100px); /* Adjust if footer height changes */
+}
+
+/* Ensure the parent containers fill the height */
+html, body, #__next, .container-fluid {
+  @apply h-full min-h-full;
+}
+
+/* Optional: Customize scrollbar appearance */
+.scrollable-content::-webkit-scrollbar {
+  width: 8px;
+}
+
+.scrollable-content::-webkit-scrollbar-thumb {
+  @apply bg-gray-400 rounded;
+}
+
+.scrollable-content::-webkit-scrollbar-thumb:hover {
+  @apply bg-gray-600;
 }
