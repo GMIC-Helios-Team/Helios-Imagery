@@ -71,6 +71,7 @@ const RockPaperScissors: React.FC = () => {
 
 
   const handlePlayerChoice = async (choice: string) => {
+    setResult("AI is thinking...");
     const aiChoice = isDarkTheme ? getWinningChoice(choice) : getRandomChoice();
     setPlayerChoice(choice);
     setAiChoice(aiChoice);
@@ -84,12 +85,12 @@ const RockPaperScissors: React.FC = () => {
 
   return (
     <div className={styles.gameContainer}>
-      <h1>Rock-Paper-Scissors</h1>
-      <div className={styles.choices}>
+      <h1 className="font-bold underline mb-6">Rock-Paper-Scissors</h1>
+      <div className="flex justify-center space-x-4">
         {choices.map((choice) => (
           <button
             key={choice}
-            className={styles.choiceButton}
+            className="px-4 py-2 border-2 border-gray-300 rounded hover:bg-gray-200 hover:border-gray-400 transition duration-300"
             onClick={() => handlePlayerChoice(choice)}
           >
             {choice}
@@ -98,8 +99,12 @@ const RockPaperScissors: React.FC = () => {
       </div>
       {playerChoice && aiChoice && (
         <div className={styles.results}>
-          <p>You chose: {playerChoice}</p>
-          <p>AI chose: {aiChoice}</p>
+        <p className={result === 'You win!\nCongratulations!' ? 'font-bold' : ''}>
+          You chose: {playerChoice}
+        </p>
+        <p className={result?.includes("AI") ? 'font-bold' : ''}>
+          AI chose: {aiChoice}   
+        </p>
           <h2>{result}</h2>
           {aiInsult && <h2 className={styles.results}>-GPT 4 Turbo</h2>}
         </div>
