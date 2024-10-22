@@ -1,4 +1,4 @@
-import Jokes from '@/components/Jokes';
+import HeroSection from '@/components/HeroImage';
 import { LeaderBoardItem } from '@/types/leader-board';
 import React, { useEffect, useState } from 'react';
 import { Alert, Card, Col, Container, ListGroup, Row, Spinner } from 'react-bootstrap';
@@ -7,16 +7,18 @@ const HomePage = () => {
 
   return (
     <>
-      <Container style={{ marginTop: '50px' }}>
+      <Container
+        style={{
+          display: 'flex',
+          justifyContent: 'center',
+          alignItems: 'center',
+          height: '100vh',
+          marginTop: '50px',
+          padding: 0,
+        }}>
         <Row className="mb-4">
-          <Col md={{ offset: 3, span: 6 }}>
-            <Card bg="dark" text='white'>
-              <Card.Header>Home</Card.Header>
-              <Card.Img variant="top" src="/robot.png" alt="Home Page Card" width={300} height={200} style={{ padding: '5px' }} />
-              <Card.Body>
-                <Jokes />
-              </Card.Body>
-            </Card>
+          <Col >
+            <HeroSection />
           </Col>
         </Row>
       </Container>
@@ -41,7 +43,7 @@ const LeaderBoard = () => {
   const fetchRequeueItems = async () => {
     const limit = 5;
     try {
-  
+
       setIsLoading(true);
       setSuccessMessage('');
       setErrorMessage('');
