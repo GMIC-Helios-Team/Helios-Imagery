@@ -20,6 +20,10 @@ const Footer: React.FC = () => {
           <Link href="/privacy" legacyBehavior>
             <a className="hover:underline">Privacy Policy</a>
           </Link>
+          <span className="mx-2">|</span>
+          <Link href="/tos" legacyBehavior>
+            <a className="hover:underline">Terms of Service</a>
+          </Link>
         </div>
         <div className="flex items-center">
           <Link href="https://github.com/GMIC-Helios-Team/" legacyBehavior>
