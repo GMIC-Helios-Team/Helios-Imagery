@@ -69,6 +69,20 @@ const Requeue = () => {
       setIsLoading(false);
     }
   }
+
+  const formatDateTime = (datetime: string) => {
+    const date = new Date(datetime);
+    return new Intl.DateTimeFormat('en-US', {
+      year: 'numeric',
+      month: 'short',
+      day: '2-digit',
+      hour: '2-digit',
+      minute: '2-digit',
+      second: '2-digit',
+    }).format(date);
+  };
+
+
   return (
     <Container style={{ marginTop: '50px' }}>
       <Row className="mb-4">
@@ -87,8 +101,9 @@ const Requeue = () => {
                   requeueItems.map(item => (
                     <ListGroup.Item key={item.name}>
                       <Button style={{ float: 'right', fontSize: 11, fontWeight: "bold"  }} variant="link" onClick={() => postItemForRequeue(item.HID)}>requeue</Button>
-                      <Row>{item.name}</Row>
-                      <Row style={{ fontSize: 10, fontWeight: "bold" }}>{item.HID}</Row>
+                      <div>{item.name}</div>
+                      <div style={{ fontSize: 10, fontWeight: "bold" }}>{item.HID}</div>        
+                      <div style={{ fontSize: 10, fontWeight: "bold" }}>{formatDateTime(item.createDatetime)}</div>
                     </ListGroup.Item>
                   ))
                 ) : (
