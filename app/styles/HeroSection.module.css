@@ -1,0 +1,76 @@
+/* components/HeroSection.module.css */
+
+.heroContainer {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 100vw;
+    height: 100vh;
+    overflow: hidden;
+    position: relative;
+    background-color: black; /* Optional: fallback background */
+  }
+  
+  .heroVideo {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 100%;
+    height: 100%;
+    object-fit: contain; /* Ensures the entire video fits */
+    z-index: 0;
+    background-color: black; /* Fallback for transparency */
+  }
+  
+  .videoOverlay {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.5); /* Optional: Dark overlay */
+    z-index: 1;
+  }
+  
+  .overlayText {
+    position: absolute;
+    text-align: center;
+    z-index: 2;
+    color: white;
+    padding: 20px;
+  }
+  
+  .overlayText h1 {
+    font-size: 4rem;
+    font-weight: 900;
+    margin: 0;
+  }
+  
+  .overlayText p {
+    font-size: 1.5rem;
+    font-weight: 700;
+    margin-top: 10px;
+  }
+  
+  /* Responsive Styling for Mobile */
+  @media (max-width: 768px) {
+    .overlayText h1 {
+      font-size: 2.5rem;
+    }
+  
+    .overlayText p {
+      font-size: 1rem;
+    }
+  }
+  
+  @media (max-width: 480px) {
+    .overlayText h1 {
+      font-size: 2rem;
+    }
+  
+    .overlayText p {
+      font-size: 0.875rem;
+    }
+  }
+  
