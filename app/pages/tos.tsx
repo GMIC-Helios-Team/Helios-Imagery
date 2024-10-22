@@ -172,8 +172,8 @@ const TermsOfService: React.FC = () => {
         <h2 className="text-2xl font-semibold mb-4">11. Governing Law</h2>
         <p className="mb-6">
           These Terms shall be governed and construed in accordance with the laws of the State of
-          California, without regard to its conflict of law provisions. Any disputes will be settled in
-          the courts of Sunnyville, CA, unless Zeus intervenes.
+          Texas, without regard to its conflict of law provisions. Any disputes will be settled in
+          the courts of Sunnyville, TX, unless Zeus intervenes.
         </p>
 
         <h2 className="text-2xl font-semibold mb-4">12. Changes to the Terms</h2>
