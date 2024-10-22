@@ -1,6 +1,6 @@
 import HeroSection from '@/components/HeroImage';
 import React from 'react';
-import { Card, Col, Container, Row} from 'react-bootstrap';
+import { Container} from 'react-bootstrap';
 
 const HomePage = () => {
 
