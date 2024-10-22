@@ -85,7 +85,7 @@ const GalleryPage = () => {
     <>
       <Container style={{ marginTop: '50px' }}>
         <Row className="mb-4">
-          <Col md={{ offset: 3, span: 6 }}>
+          <Col sm={{span:12}} md={{ span: 12 }} xl={{ span: 12 }} >
             {vote ?
               (<Vote showGalleryList={showGalleryList} item={selectedGalleryItem} />)
               :
@@ -110,7 +110,7 @@ const GalleryList: React.FC<GalleryListProps> = ({ items, showVote, paging }) =>
 
   const renderImages = (galleryItems: GalleryItem[]) => {
     return galleryItems.map((item) => (
-      <Col xs={6} md={4} key={item._id}>
+      <Col  xs={6} md={4} key={item._id}>
         <Image src={`${process.env.NEXT_PUBLIC_HELIOS_GALLERY}/${item.imageThumbnailfilename}`} fluid thumbnail height={150} width={150} onClick={() => showVote(item)} />
       </Col>
     ));
