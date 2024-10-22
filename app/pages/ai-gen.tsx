@@ -131,21 +131,41 @@ const AiGenPage: React.FC<AiGenPageProps> = ({ prompt }) => {
   };
 
   const validateField = async (name: string, value: string) => {
-    const singleWordRegex = /^[a-zA-Z\s'-]+$/;
-
-    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    // Regular expressions for validation
+    const singleWordRegex = /^[a-zA-Z]+$/; // Name: Only letters, no spaces or special characters
+    const alphaWithSpacesRegex = /^[a-zA-Z\s]+$/; // Other fields: Letters and spaces only
+    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/; // Email validation
+  
+    // Capitalize field name for error messages
     const capitalizedFieldName = capitalizeFirstLetter(name);
-    const regex = name === 'email' ? emailRegex : singleWordRegex;
-    const regexError = name === 'email'
-      ? 'Email must be a valid email address'
-      : `${capitalizedFieldName} must be a single word with no spaces or special characters`;
-
+  
+    // Choose the appropriate regex and error message based on the field
+    let regex, regexError;
+  
+    if (name === 'email') {
+      regex = emailRegex;
+      regexError = 'Email must be a valid email address';
+    } else if (name === 'name') {
+      regex = singleWordRegex;
+      regexError = `${capitalizedFieldName} must be a single word with no spaces or special characters`;
+    } else {
+      regex = alphaWithSpacesRegex;
+      regexError = `${capitalizedFieldName} must contain only letters and spaces, no special characters`;
+    }
+  
+    // Set initial invalid state
     setIsValid({ ...isValid, [name]: false });
+  
+    // Check for empty value
     if (value.trim() === '') {
       setErrors({ ...errors, [name]: `${capitalizedFieldName} is required` });
-    } else if (!regex.test(value)) {
+    } 
+    // Validate against the appropriate regex
+    else if (!regex.test(value)) {
       setErrors({ ...errors, [name]: regexError });
-    } else {
+    } 
+    // If regex passes, perform API validation
+    else {
       try {
         const result: ApiResponse = await validateWithAPI(name, value);
         if (!result.isValid) {
@@ -155,6 +175,7 @@ const AiGenPage: React.FC<AiGenPageProps> = ({ prompt }) => {
           setIsValid({ ...isValid, [name]: true });
         }
       } catch (error) {
+        // Handle errors
         if (error instanceof Error) {
           setErrors({ ...errors, [name]: error.message });
         } else {
@@ -162,8 +183,7 @@ const AiGenPage: React.FC<AiGenPageProps> = ({ prompt }) => {
         }
       }
     }
-
-  }
+  };  
 
   const handleBlur = (e: React.FocusEvent<HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement>) => {
     const { id, value } = e.target;

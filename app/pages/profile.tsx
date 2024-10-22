@@ -26,7 +26,7 @@ interface ProfileListProps {
 const ProfilePage = () => {
   const [selectedProfile, setSelectedProfile] = useState<Profile | null | undefined>(profiles[0]);
   const [isClient, setIsClient] = useState<boolean>(false);
-  const [selectedTeam, setSelectedTeam] = useState<string>("api");
+  const [selectedTeam, setSelectedTeam] = useState<string>("all");
   const [isProfileVisible, setIsProfileVisible] = useState<boolean>(false);
   const { isDarkTheme } = useTheme();
 
