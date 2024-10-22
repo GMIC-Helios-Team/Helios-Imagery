@@ -3,12 +3,25 @@ import 'bootstrap/dist/css/bootstrap.min.css';
 import '@/styles/global.css';
 import { AppProps } from 'next/app';
 import Layout from '@/components/Layout';
+import posthog from "posthog-js"
+import { PostHogProvider } from 'posthog-js/react'
 
 import { useEffect } from 'react';
 import { matchRoutes } from 'react-router-dom';
 import { initializeFaro, createReactRouterV6DataOptions, ReactIntegration, getWebInstrumentations } from '@grafana/faro-react';
 import { TracingInstrumentation } from '@grafana/faro-web-tracing';
 import { ThemeProvider } from '@/contexts/theme-context';
+
+
+if (typeof window !== 'undefined') { // checks that we are client-side
+  posthog.init(process.env.NEXT_PUBLIC_POSTHOG_KEY as string, {
+    api_host: process.env.NEXT_PUBLIC_POSTHOG_HOST || 'https://us.i.posthog.com',
+    person_profiles: 'identified_only', // or 'always' to create profiles for anonymous users as well
+    loaded: (posthog) => {
+      if (process.env.NODE_ENV === 'development') posthog.debug(); // debug mode in development
+    },
+  });
+}
 
 
 function HeliosFuturamaApp({ Component, pageProps }: AppProps) {
@@ -39,9 +52,12 @@ function HeliosFuturamaApp({ Component, pageProps }: AppProps) {
     });
   }, []);
   return (
+    
     <ThemeProvider>
       <Layout>
+      <PostHogProvider client={posthog}>
         <Component {...pageProps} />
+        </PostHogProvider>
       </Layout>
     </ThemeProvider>
   );

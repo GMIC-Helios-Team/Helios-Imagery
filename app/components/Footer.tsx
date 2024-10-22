@@ -9,23 +9,25 @@ const Footer: React.FC = () => {
   return (
     <div className={`w-full ${isDarkTheme ? 'bg-dark-theme-bg text-white' : 'bg-light-gray text-black'}`}>
       {/* Full-width background */}
-      <div className="w-full px-4 py-4 flex justify-between items-center">
-        {/* Max-width container */}
-        <div className="flex items-center">
-          <span>© 2024 Copyright:&nbsp;</span>
-          <a className="hover:underline" href={process.env.NEXT_FUTURAMA_URL}>
-            helios.gallery
-          </a>
-          <span className="mx-2">|</span>
+      <div className="w-full px-4 py-4 flex flex-col items-center space-y-2 sm:space-y-0 sm:flex-row sm:justify-between">
+        {/* Link Container */}
+        <div className="flex flex-col items-center space-y-2 sm:flex-row sm:space-y-0 sm:space-x-4">
+          <span>
+            © 2024&nbsp;
+            <a className="hover:underline" href={process.env.NEXT_FUTURAMA_URL}>
+              helios.gallery
+            </a>
+          </span>
           <Link href="/privacy" legacyBehavior>
             <a className="hover:underline">Privacy Policy</a>
           </Link>
-          <span className="mx-2">|</span>
           <Link href="/tos" legacyBehavior>
             <a className="hover:underline">Terms of Service</a>
           </Link>
         </div>
-        <div className="flex items-center">
+
+        {/* GitHub Icon */}
+        <div className="flex justify-center mt-2 sm:mt-0">
           <Link href="https://github.com/GMIC-Helios-Team/" legacyBehavior>
             <a className="hover:text-gray-300">
               <FaGithub size={30} />
@@ -38,3 +40,5 @@ const Footer: React.FC = () => {
 };
 
 export default Footer;
+
+

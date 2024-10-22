@@ -1,12 +1,13 @@
 import Document, { Html, Head, Main, NextScript } from 'next/document';
 import { ThemeProvider, useTheme } from '@/contexts/theme-context';
 import React from 'react';
-
+import { CSPostHogProvider } from '@/providers'
 class MyDocument extends Document {
   render() {
     return (
       <Html>
         <Head />
+        <CSPostHogProvider>
         <body>
           <ThemeProvider>
             <ThemeWrapper>
@@ -15,6 +16,7 @@ class MyDocument extends Document {
             </ThemeWrapper>
           </ThemeProvider>
         </body>
+        </CSPostHogProvider>
       </Html>
     );
   }
