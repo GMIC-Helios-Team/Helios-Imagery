@@ -9,7 +9,7 @@ const Footer: React.FC = () => {
   return (
     <div className={`w-full ${isDarkTheme ? 'bg-dark-theme-bg text-white' : 'bg-light-gray text-black'}`}>
       {/* Full-width background */}
-      <div className="max-w-7xl mx-auto px-4 py-4 flex justify-between items-center">
+      <div className="w-full px-4 py-4 flex justify-between items-center">
         {/* Max-width container */}
         <div className="flex items-center">
           <span>© 2024 Copyright:&nbsp;</span>
