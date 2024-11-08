@@ -61,7 +61,6 @@ The **Helios Gallery Project** is a web-based, AI-driven platform that enables u
 
 ## 4. Key Links and References
 
-- **Project GitHub Repository**: [Helios Gallery Project on GitHub](https://github.com/GMIC-Helios-Team/HeliosGallery)
 - **n8n Documentation**: [n8n Docs](https://docs.n8n.io/)
 - **MongoDB Documentation**: [MongoDB Docs](https://docs.mongodb.com/)
 - **BullMQ Documentation**: [BullMQ Docs](https://docs.bullmq.io/)
