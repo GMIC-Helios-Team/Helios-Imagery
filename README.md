@@ -1,8 +1,9 @@
 ![Project Logo](./.github/Helios-logo.png)
+
 # Helios-Imagery
 
 ## Description
-To build an epic website to generate images and display Helios themed images created by OpenAI. 
+Welcome to **Helios-Imagery**! This project aims to build an epic website to generate and display Helios-themed images created by OpenAI.
 
 ## Flow Diagram
 
@@ -63,18 +64,36 @@ To get started with the DevContainer for this repository, follow these steps:
     - Open your web browser and navigate to `http://localhost:9000`.
     - Log in using the `MINIO_ROOT_USER` and `MINIO_ROOT_PASSWORD` you specified in the `.env` file.
 
-8. **Create S3 Access Key / Secret**:
-    - Once logged in, click on your username in the top right corner and select `Access Keys`.
-    - Click on `Create Access Key`.
-    - Note down the `Access Key` and `Secret Key` generated. These will be used as `S3_ACCESS_KEY_ID` and `S3_SECRET_ACCESS_KEY` in your `.env` file.
+## Running the Next.js App
 
-9. **Verify the Setup**:
-    - Ensure that the MongoDB and Minio services are running correctly.
-    - You can check the logs in the Docker extension in VS Code or use the terminal to verify the services.
+To run the Next.js app, follow these steps:
 
-10. **Start Developing**:
-    Once the container is up and running, you can start developing within the DevContainer environment.
+1. **Install Dependencies**:
+    Navigate to the `app` directory and install the required dependencies:
+    ```sh
+    cd app
+    npm install
+    ```
 
-11. **Happy Coding**
+2. **Run the Development Server**:
+    Start the Next.js development server:
+    ```sh
+    npm run dev
+    ```
 
-For more details on DevContainers, refer to the [Visual Studio Code documentation](https://code.visualstudio.com/docs/remote/containers).
+3. **Open the App in Your Browser**:
+    Open your web browser and navigate to `http://localhost:3000` to see the app in action.
+
+4. **Build the App for Production**:
+    To build the app for production, run:
+    ```sh
+    npm run build
+    ```
+
+5. **Start the Production Server**:
+    After building the app, you can start the production server with:
+    ```sh
+    npm start
+    ```
+
+Enjoy building and exploring Helios-Imagery!
